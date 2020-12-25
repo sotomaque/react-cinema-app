@@ -1,0 +1,46 @@
+{
+  "env": {
+      "browser": true,
+      "es6": true
+  },
+  "extends": [
+      "plugin:react/recommended",
+      "standard"
+  ],
+  "globals": {
+      "Atomics": "readonly",
+      "SharedArrayBuffer": "readonly"
+  },
+  "parserOptions": {
+      "ecmaFeatures": {
+          "jsx": true
+      },
+      "ecmaVersion": 2018,
+      "sourceType": "module"
+  },
+  "settings": {
+    "react": {
+      "version": "16.0"
+    }
+  },
+  "plugins": [
+      "react",
+      "jest"
+  ],
+  "rules": {
+      // suppress errors for missing 'import React' in files
+      "react/react-in-jsx-scope": "off",
+      // allow jsx syntax in js files (for next.js project)
+      "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }], //should add ".ts" if typescript project
+      "semi": [2, "always"],
+      "space-before-function-paren": [0, {"anonymous": "always", "named": "always"}],
+      "camelcase": 0,
+      "no-return-assign": 0,
+      // jest
+      "jest/no-disabled-tests": "warn",
+      "jest/no-focused-tests": "error",
+      "jest/no-identical-title": "error",
+      "jest/prefer-to-have-length": "warn",
+      "jest/valid-expect": "error"
+  }
+}

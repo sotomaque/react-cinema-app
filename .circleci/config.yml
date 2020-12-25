@@ -18,6 +18,10 @@ aliases:
       keys:
         - app-{{ checksum "package.json" }}
         - app-
+  - &lint-code:
+      run:
+        name: Run Linting
+        command: npm run lint
   - &install-dependencies
     run:
       name: Install dependancies
@@ -55,6 +59,14 @@ jobs:
       - *restore-cache
       - *install-dependencies
       - *save-cache
+
+  linting:
+    executor: app-executor
+    steps:
+      - checkout
+      - *show-current-branch-name
+      - *restore-cache
+      - *lint-code
 
   deploy-to-aws-s3:
     executor: app-executor
@@ -102,9 +114,18 @@ workflows:
   build_and_deploy:
     jobs:
       - build
-      - deploy-to-aws-s3:
+      - linting
           requires:
             - build
+          filters:
+            branches:
+              only:
+                - develop
+                - staging
+                - main
+      - deploy-to-aws-s3:
+          requires:
+            - linting
           filters:
             branches:
               only:
