@@ -1,5 +1,6 @@
 import React from 'react';
 import { format } from 'date-fns';
+import Header from './app/components/Header';
 
 function App() {
   const [today] = React.useState(new Date());
@@ -23,31 +24,39 @@ function App() {
   }, [currentHour]);
 
   return (
-    <div
-      style={{
-        display: 'flex',
-        justifyContent: 'center',
-        backgroundColor: 'purple',
-      }}>
+    <>
+      <Header />
       <div
         style={{
           display: 'flex',
-          flexDirection: 'column',
+          justifyContent: 'center',
         }}>
-        <p style={{ textAlign: 'center' }}>{date}</p>
-        <p style={{ textAlign: 'center' }}>{greeting}</p>
-        <div>
-          <ul style={{ listStyle: 'none' }}>
-            <li style={{ color: 'white' }}>
-              ✅ Set up React Redux
-            </li>
-            <li style={{ marginTop: 10, color: 'white' }}>
-              Set up React Redux
-            </li>
-          </ul>
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+          }}>
+          <p
+            style={{ color: 'white', textAlign: 'center' }}>
+            {date}
+          </p>
+          <p
+            style={{ color: 'white', textAlign: 'center' }}>
+            {greeting}
+          </p>
+          <div>
+            <ul style={{ listStyle: 'none' }}>
+              <li style={{ color: 'white' }}>
+                ✅ Set up React Redux
+              </li>
+              <li style={{ marginTop: 10, color: 'white' }}>
+                Set up React Redux
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }
 
