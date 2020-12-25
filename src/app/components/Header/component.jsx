@@ -1,11 +1,11 @@
 import React from 'react';
 
-function Header() {
+const Header = () => {
   return (
-    <div>
-      header component
-    </div>
+      <p style={{ color: 'white' }}>
+        header component
+      </p>
   );
-}
+};
 
 export default Header;

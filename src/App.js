@@ -30,15 +30,20 @@ function App() {
         style={{
           display: 'flex',
           justifyContent: 'center',
-          backgroundColor: 'purple',
         }}>
         <div
           style={{
             display: 'flex',
             flexDirection: 'column',
           }}>
-          <p style={{ textAlign: 'center' }}>{date}</p>
-          <p style={{ textAlign: 'center' }}>{greeting}</p>
+          <p
+            style={{ color: 'white', textAlign: 'center' }}>
+            {date}
+          </p>
+          <p
+            style={{ color: 'white', textAlign: 'center' }}>
+            {greeting}
+          </p>
           <div>
             <ul style={{ listStyle: 'none' }}>
               <li style={{ color: 'white' }}>
