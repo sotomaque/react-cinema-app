@@ -19,9 +19,9 @@ aliases:
         - app-{{ checksum "package.json" }}
         - app-
   - &lint-code:
-      run:
-        name: Run Linting
-        command: npm run lint
+    run:
+      name: Run Linting
+      command: npm run lint
   - &install-dependencies
     run:
       name: Install dependancies
