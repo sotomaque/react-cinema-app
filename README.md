@@ -1,8 +1,6 @@
-# Cinema
+# Scalable React Development Boilerplate
 
-## Scalable React Development Boilerplate
-
-Idea:
+## Idea
 
 - pull this repo
 - set up with new AWS config / Circle CI config / Slack config
@@ -11,8 +9,6 @@ Idea:
   - with automated builds / releases managed by CircleCI
 
 ## Tech Stack
-
-Ignite apps include the following rock-solid technical decisions out of the box:
 
 - AWS
   - S3 (storage)
