@@ -21,13 +21,17 @@
     - Main
   - Slack Notification Integration
 - React
-- React Navigation 5
 - Redux
 - Redux-Thunk
-- MaterialUI
 - Scss
 - Datefns
+
+Coming Soon:
+
+- React Navigation 5
+- MaterialUI
 - I18n
+- Semantic
 
 ## Quick Start
 
