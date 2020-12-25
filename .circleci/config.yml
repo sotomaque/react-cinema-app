@@ -1,0 +1,187 @@
+version: 2.1
+
+orbs:
+  slack: circleci/slack@4.1.4
+
+# Define env (docker image in this case)
+executors:
+  app-executor:
+    docker:
+      - image: circleci/node:12.19.0
+    working_directory: ~/repo
+  slack-executor:
+    docker:
+      - image: 'cibuilds/base:latest'
+    resource_class: small
+
+# Define resusable variables
+aliases:
+  - &show-current-branch-name
+    run:
+      name: Show current branch
+      command: echo ${CIRCLE_BRANCH}
+  - &restore-cache
+    restore_cache:
+      keys:
+        - app-{{ checksum "package.json" }}
+        - app-
+  - &install-dependencies
+    run:
+      name: Install dependancies
+      command: npm install
+  - &save-cache
+    save_cache:
+      paths:
+        - node_modules
+      key: app-{{ checksum "package.json" }}
+  - &install-aws-cli
+    run:
+      name: Installing AWS CLI
+      working_directory: /
+      command: |
+        sudo apt-get -y -qq update
+        sudo apt-get install -y awscli
+        sudo apt-get install -y python-pip python-dev build-essential
+  - &build-project
+    run:
+      name: Build Project
+      command: |
+        npm install
+        npm run build
+        cd build
+        zip ../build.zip -r * .[^.]*
+        echo "Build successful"
+
+# Define the jobs we want to run for this project
+jobs:
+  build:
+    executor: app-executor
+    steps:
+      - checkout
+      - *show-current-branch-name
+      - *restore-cache
+      - *install-dependencies
+      - *save-cache
+
+  linting:
+    executor: app-executor
+    steps:
+      - checkout
+      - *show-current-branch-name
+      - *restore-cache
+      - run:
+          name: Run Linting
+          command: npm run lint
+
+  prettier:
+    executor: app-executor
+    steps:
+      - checkout
+      - *show-current-branch-name
+      - *restore-cache
+      - run:
+          name: Run Prettier Check
+          command: npm run prettier:check
+
+  deploy-to-aws-s3:
+    executor: app-executor
+    steps:
+      - checkout
+      - *show-current-branch-name
+      - *install-aws-cli
+      - *build-project
+      - run:
+          name: Deploy to AWS S3
+          command: |
+            if [ "${CIRCLE_BRANCH}" == "main" ]
+            then
+              aws --region ${AWS_REGION} s3 sync ~/repo/build s3://${AWS_BUCKET_PRODUCTION} --delete
+            elif [ "${CIRCLE_BRANCH}" == "staging" ]
+            then
+              aws --region ${AWS_REGION} s3 sync ~/repo/build s3://${AWS_BUCKET_STAGING} --delete
+            else
+              aws --region ${AWS_REGION} s3 sync ~/repo/build s3://${AWS_BUCKET_DEV} --delete
+            fi
+
+  deploy-to-aws-cloudfront:
+    executor: app-executor
+    steps:
+      - checkout
+      - *show-current-branch-name
+      - *install-aws-cli
+      - *build-project
+      - run:
+          name: Deploy to AWS Cloudfront
+          command: |
+            aws configure set preview.cloudfront true
+            if [ "${CIRCLE_BRANCH}" == "main" ]
+            then
+              aws cloudfront create-invalidation --distribution-id ${AWS_PROD_DISTRIBUTION_ID} --paths /\*
+            elif [ "${CIRCLE_BRANCH}" == "staging" ]
+            then
+              aws cloudfront create-invalidation --distribution-id ${AWS_STAGING_DISTRIBUTION_ID} --paths /\*
+            else
+              aws cloudfront create-invalidation --distribution-id ${AWS_DEV_DISTRIBUTION_ID} --paths /\*
+            fi
+
+  notify-via-slack:
+    executor: slack-executor
+    steps:
+      - slack/notify:
+          event: fail
+          template: basic_fail_1
+      - slack/notify:
+          event: pass
+          template: success_tagged_deploy_1
+
+# Orchestrate our job run sequence
+workflows:
+  build_and_deploy:
+    jobs:
+      - build
+      - linting:
+          requires:
+            - build
+          filters:
+            branches:
+              only:
+                - develop
+                - staging
+                - main
+      - prettier:
+          requires:
+            - build
+          filters:
+            branches:
+              only:
+                - develop
+                - staging
+                - main
+      - deploy-to-aws-s3:
+          requires:
+            - linting
+            - prettier
+          filters:
+            branches:
+              only:
+                - develop
+                - staging
+                - main
+      - deploy-to-aws-cloudfront:
+          requires:
+            - deploy-to-aws-s3
+          filters:
+            branches:
+              only:
+                - develop
+                - staging
+                - main
+      - notify-via-slack:
+          requires:
+            - deploy-to-aws-cloudfront
+          filters:
+            branches:
+              only:
+                - develop
+                - staging
+                - main
