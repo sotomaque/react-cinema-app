@@ -1,7 +1,7 @@
 version: 2.1
 
 orbs:
-  slack: circleci/slack@3.4.2
+  slack: circleci/slack@4.1.4
 
 # Define env (docker image in this case)
 executors:
@@ -128,10 +128,11 @@ jobs:
     executor: slack-executor
     steps:
       - slack/notify:
-          message: '${CIRCLE_BRANCH} branch deployment complete 🎉'
-          webhook: $CIRCLECI_SLACK_WEBHOOK
-      - slack/status:
-          webhook: $CIRCLECI_SLACK_WEBHOOK
+          event: fail
+          template: basic_fail_1
+      - slack/notify:
+          event: pass
+          template: success_tagged_deploy_1
 
 # Orchestrate our job run sequence
 workflows:
