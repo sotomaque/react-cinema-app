@@ -128,7 +128,7 @@ jobs:
     executor: slack-executor
     steps:
       - slack/notify:
-          message: '${CIRCLE_BRANCH} branch deployment complete🎉'
+          message: '${CIRCLE_BRANCH} branch deployment complete 🎉'
           webhook: $CIRCLECI_SLACK_WEBHOOK
       - slack/status:
           webhook: $CIRCLECI_SLACK_WEBHOOK
