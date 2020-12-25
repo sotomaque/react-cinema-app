@@ -1,7 +1,7 @@
 import React from 'react';
 import { format } from 'date-fns';
 import Header from './app/components/Header';
-import Paginated from './app/components/Paginated/component';
+import Main from './app/components/Main';
 
 function App() {
   const [today] = React.useState(new Date());
@@ -27,7 +27,7 @@ function App() {
   return (
     <>
       <Header />
-      <Paginated />
+      <Main />
       <div
         style={{
           display: 'flex',
