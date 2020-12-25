@@ -1,11 +1,14 @@
 import React from 'react';
+import MainContent from '../Content/MainContent';
 
-function Main() {
+import './styles.scss';
+
+const Main = () => {
   return (
-    <div>
-    Main
+    <div className="main">
+      <MainContent />
     </div>
   );
-}
+};
 
 export default Main;
