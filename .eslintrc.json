@@ -36,6 +36,7 @@
       "space-before-function-paren": [0, {"anonymous": "always", "named": "always"}],
       "camelcase": 0,
       "no-return-assign": 0,
+      "comma-dangle": "off",
       // jest
       "jest/no-disabled-tests": "warn",
       "jest/no-focused-tests": "error",
