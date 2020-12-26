@@ -23,13 +23,13 @@
 - React
 - Redux
 - Redux-Thunk
+- React Router Dom
 - Scss
+- Axios
 - Datefns
 
 Coming Soon:
 
-- Axios
-- React Navigation 5
 - MaterialUI
 - I18n
 - Semantic
