@@ -16,6 +16,7 @@ const MainContent = () => {
       url: 'https://static.boredpanda.com/blog/wp-content/uploads/2017/12/funny-weird-wtf-stock-photos-3-5a3914a3873e1__700.jpg'
     }
   ];
+
   return (
     <div className="main-content">
       {/* Slideshow Components */}

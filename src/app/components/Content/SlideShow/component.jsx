@@ -1,5 +1,5 @@
-/* eslint-disable react/prop-types */
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import './styles.scss';
 
@@ -146,6 +146,13 @@ const SlideShow = ({ images, auto = false, arrows = false }) => {
       }
     </div>
   );
+};
+
+SlideShow.propTypes = {
+  images: PropTypes.array.isRequired,
+  auto: PropTypes.bool,
+  arrows: PropTypes.bool,
+  currentSlide: PropTypes.number
 };
 
 export default SlideShow;
