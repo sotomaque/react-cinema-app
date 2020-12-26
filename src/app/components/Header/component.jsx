@@ -1,6 +1,9 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
+import { SET_ERROR, SET_MOVIE_LIST } from '../../actions/types';
 
 import { logo } from '../../assets';
+import { usePopularMoviesFetch } from '../../hooks/usePopularMoviesFetch';
 import './styles.scss';
 
 const HEADER_LIST = [
@@ -33,6 +36,18 @@ const HEADER_LIST = [
 const Header = () => {
   const [navClass, setNavClass] = React.useState(false);
   const [menuClass, setMenuClass] = React.useState(false);
+  const dispatch = useDispatch();
+
+  const [{ state: { movies, heroImage, currentPage, totalPages }, loading, error }, fetchPopularMovies ] = usePopularMoviesFetch();
+
+  React.useEffect(async () => {
+    if (movies) {
+      dispatch({ type: SET_MOVIE_LIST, payload: movies });
+    }
+    if (error) {
+      dispatch({ type: SET_ERROR, payload: 'Error Fetching Popular Movies' });
+    }
+  }, [movies, error]);
 
   const handleClick = () => {
     setMenuClass(prev => !prev);

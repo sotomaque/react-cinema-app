@@ -4,7 +4,6 @@ import { format } from 'date-fns';
 import Header from '../../components/Header';
 import Main from '../../components/Main';
 
-import { usePopularMoviesFetch } from '../../hooks/usePopularMoviesFetch';
 
 const HomePage = () => {
   const [today] = React.useState(new Date());
@@ -12,10 +11,6 @@ const HomePage = () => {
   const [date, setDate] = React.useState('');
   const currentHour = today?.getHours();
   const [greeting, setGreeting] = React.useState('');
-
-  const [{ state: { movies } }] = usePopularMoviesFetch();
-
-  if (movies) console.log('movies', movies);
 
   React.useEffect(() => {
     setDate(format(today, 'cccc, LLLL do'));
