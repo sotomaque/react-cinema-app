@@ -1,0 +1,20 @@
+.star-rating {
+  display: flex;
+}
+
+.back-stars {
+  display: flex;
+  color: #bdbdbd;
+  position: relative;
+}
+
+// front stars are in front of back star
+// render grey background, yellow on top if
+// necessary
+.front-stars {
+  display: flex;
+  color: #ffbc0b;
+  position: absolute;
+  overflow: hidden;
+  top: 0;
+}

@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 
-import Header from './component';
+import HomePage from './component';
 
 const mapStateToProps = ({ errors, movieReducers }) => {
   return {
@@ -9,6 +9,6 @@ const mapStateToProps = ({ errors, movieReducers }) => {
   };
 };
 
-const Connected = connect(mapStateToProps)(Header);
+const Connected = connect(mapStateToProps)(HomePage);
 
 export { Connected };
