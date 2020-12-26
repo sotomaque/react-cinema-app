@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 
-import Paginated from './component';
+import Grid from './component';
 
 const mapStateToProps = ({ errors, movieReducers }) => {
   return {
@@ -9,6 +9,6 @@ const mapStateToProps = ({ errors, movieReducers }) => {
   };
 };
 
-const Connected = connect(mapStateToProps)(Paginated);
+const Connected = connect(mapStateToProps)(Grid);
 
 export { Connected };
