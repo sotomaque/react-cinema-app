@@ -3,17 +3,21 @@ import React from 'react';
 import SlideShow from '../SlideShow';
 import Paginated from '../../Paginated';
 import './styles.scss';
+import Grid from '../Grid';
 
 const MainContent = () => {
   const images = [
     {
-      url: 'https://static.boredpanda.com/blog/wp-content/uploads/2017/12/funny-weird-wtf-stock-photos-4-5a391635d4441__700.jpg'
+      url: 'https://static.boredpanda.com/blog/wp-content/uploads/2017/12/funny-weird-wtf-stock-photos-4-5a391635d4441__700.jpg',
+      rating: 7.5
     },
     {
-      url: 'https://static.boredpanda.com/blog/wp-content/uploads/2017/12/funny-weird-wtf-stock-photos-29-5a3bbf6b34a98__700.jpg'
+      url: 'https://static.boredpanda.com/blog/wp-content/uploads/2017/12/funny-weird-wtf-stock-photos-29-5a3bbf6b34a98__700.jpg',
+      rating: 6.8
     },
     {
-      url: 'https://static.boredpanda.com/blog/wp-content/uploads/2017/12/funny-weird-wtf-stock-photos-3-5a3914a3873e1__700.jpg'
+      url: 'https://static.boredpanda.com/blog/wp-content/uploads/2017/12/funny-weird-wtf-stock-photos-3-5a3914a3873e1__700.jpg',
+      rating: 5.9
     }
   ];
 
@@ -50,7 +54,7 @@ const MainContent = () => {
         </div>
       </div>
       {/* Grid Components */}
-
+      <Grid images={images} />
     </div>
   );
 };

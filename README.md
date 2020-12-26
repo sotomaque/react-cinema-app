@@ -28,6 +28,7 @@
 
 Coming Soon:
 
+- Axios
 - React Navigation 5
 - MaterialUI
 - I18n
