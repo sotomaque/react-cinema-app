@@ -14,17 +14,17 @@ const Paginated = ({ currentPage, paginate, totalPages }) => {
 
   return (
     <>
-      <span className="pageCount">
-       {page} - {totalPageNumber}
-      </span>
       <button
-        className="paginate-button"
+        className={`paginate-button ${page === 1 ? 'disabled' : ''} `}
         onClick={() => paginate('prev')}
       >
         Prev
       </button>
+      <span className="pageCount">
+       {page} - {totalPageNumber}
+      </span>
       <button
-        className="paginate-button"
+        className={`paginate-button ${page === totalPages ? 'disabled' : ''} `}
         onClick={() => paginate('next')}
       >
         Next
