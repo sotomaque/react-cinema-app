@@ -63,7 +63,7 @@ const Header = () => {
       dispatch({
         type: SET_SLIDESHOW_PICTURES,
         payload: heroImages
-      })
+      });
     }
   }, [movies, error]);
 

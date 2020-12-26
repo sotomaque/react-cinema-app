@@ -14,10 +14,10 @@ const Grid = ({ gridMovies }) => {
             style={{
               backgroundImage: `url(${movie.url})`,
             }}>
-            {/* Read More Button */}
+            {/* See More Button */}
             <div className="grid-read-more">
               <button className="grid-cell-button">
-                Read More
+                See More
               </button>
             </div>
             {/* Details */}
