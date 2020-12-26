@@ -17,6 +17,20 @@ const MainContent = () => {
     }
   ];
 
+  const [currentPage, setCurrentPage] = React.useState(1);
+
+  const paginate = (type) => {
+    if (type === 'prev') {
+      currentPage > 1
+        ? setCurrentPage(prev => prev - 1)
+        : setCurrentPage(10);
+    } else {
+      currentPage < 10
+        ? setCurrentPage(prev => prev + 1)
+        : setCurrentPage(1);
+    }
+  };
+
   return (
     <div className="main-content">
       {/* Slideshow Components */}
@@ -28,7 +42,11 @@ const MainContent = () => {
       <div className="grid-movie-title">
         <div className="movieType">Now Playing</div>
         <div className="paginate">
-          <Paginated />
+          <Paginated
+            currentPage={currentPage}
+            paginate={paginate}
+            totalPages={10}
+          />
         </div>
       </div>
       {/* Grid Components */}
