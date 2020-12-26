@@ -4,36 +4,42 @@ import PropTypes from 'prop-types';
 import Rating from '../Rating';
 import './styles.scss';
 
-const Grid = ({ images }) => {
+const Grid = ({ gridMovies }) => {
   return (
     <div className="grid">
-      {images.map((image, index) => (
+      {gridMovies.map((movie, index) => (
         <div key={index}>
           <div
             className="grid-cell"
             style={{
-              backgroundImage: `url(${image.url})`,
+              backgroundImage: `url(${movie.url})`,
             }}>
-            {/* Read More Button */}
+            {/* See More Button */}
             <div className="grid-read-more">
               <button className="grid-cell-button">
-                Read More
+                See More
               </button>
             </div>
             {/* Details */}
             <div>
               <div className="grid-detail">
                 <span className="grid-detail-title">
-                  Mission Impossible
+                  {movie.title}
                 </span>
                 <div className="grid-detail-rating">
                   <Rating
-                    rating={image.rating}
+                    rating={
+                      movie.vote_average
+                        ? movie.vote_average
+                        : 1
+                    }
                     totalStars={10}
                   />
                   &nbsp;&nbsp;
                   <div className="grid-vote-average">
-                    {image.rating}
+                    {movie.vote_average
+                      ? movie.vote_average
+                      : 1}
                   </div>
                 </div>
               </div>
@@ -46,7 +52,7 @@ const Grid = ({ images }) => {
 };
 
 Grid.propTypes = {
-  images: PropTypes.array.isRequired,
+  gridMovies: PropTypes.array.isRequired,
 };
 
 export default Grid;

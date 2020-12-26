@@ -135,7 +135,7 @@ const SlideShow = ({ images, auto = false, arrows = false }) => {
           images && images.length > 0 && slideShow && (
             <div
               className="slider-image"
-              style={{ backgroundImage: `url(${slideShow.url})` }}
+              style={{ backgroundImage: `url(${images[slideIndex].url})` }}
             />
           )
         }

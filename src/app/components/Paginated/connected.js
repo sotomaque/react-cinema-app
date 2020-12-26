@@ -2,10 +2,10 @@ import { connect } from 'react-redux';
 
 import Paginated from './component';
 
-const mapStateToProps = ({ errors, movies }) => {
+const mapStateToProps = ({ errors, movieReducers }) => {
   return {
     errors,
-    movies,
+    movieReducers,
   };
 };
 

@@ -2,10 +2,10 @@ import { connect } from 'react-redux';
 
 import SlideShow from './component';
 
-const mapStateToProps = ({ errors, movies }) => {
+const mapStateToProps = ({ errors, movieReducers }) => {
   return {
     errors,
-    movies,
+    movieReducers,
   };
 };
 

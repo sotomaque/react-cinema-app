@@ -5,7 +5,7 @@ import movieReducers from './movieReducers';
 
 const rootReducer = combineReducers({
   errors: errorReducers,
-  movies: movieReducers,
+  movieReducers,
 });
 
 export default rootReducer;

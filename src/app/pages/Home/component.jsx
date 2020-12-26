@@ -4,6 +4,7 @@ import { format } from 'date-fns';
 import Header from '../../components/Header';
 import Main from '../../components/Main';
 
+
 const HomePage = () => {
   const [today] = React.useState(new Date());
 
