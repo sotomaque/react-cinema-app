@@ -2,10 +2,10 @@ import { connect } from 'react-redux';
 
 import Header from './component';
 
-const mapStateToProps = ({ errors, movies }) => {
+const mapStateToProps = ({ errors, movieReducers }) => {
   return {
     errors,
-    movies,
+    movieReducers,
   };
 };
 

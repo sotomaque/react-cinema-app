@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { SET_ERROR, SET_MOVIE_LIST } from '../../actions/types';
+import { SET_ERROR, SET_MOVIE_LIST, SET_PAGE, SET_SLIDESHOW_PICTURES } from '../../actions/types';
 
 import { logo } from '../../assets';
 import { usePopularMoviesFetch } from '../../hooks/usePopularMoviesFetch';
@@ -38,14 +38,32 @@ const Header = () => {
   const [menuClass, setMenuClass] = React.useState(false);
   const dispatch = useDispatch();
 
-  const [{ state: { movies, heroImage, currentPage, totalPages }, loading, error }, fetchPopularMovies ] = usePopularMoviesFetch();
+  // fetchPopularMovies (for slideshow and grid)
+  const [{ state: { movies, currentPage, totalPages, heroImages }, error }] = usePopularMoviesFetch();
 
+  // update movie state
   React.useEffect(async () => {
     if (movies) {
       dispatch({ type: SET_MOVIE_LIST, payload: movies });
     }
     if (error) {
       dispatch({ type: SET_ERROR, payload: 'Error Fetching Popular Movies' });
+    }
+    if (currentPage && totalPages) {
+      dispatch({
+        type: SET_PAGE,
+        payload:
+        {
+          page: currentPage,
+          totalPages,
+        }
+      });
+    }
+    if (heroImages) {
+      dispatch({
+        type: SET_SLIDESHOW_PICTURES,
+        payload: heroImages
+      })
     }
   }, [movies, error]);
 

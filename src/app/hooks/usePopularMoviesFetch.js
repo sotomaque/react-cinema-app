@@ -24,18 +24,22 @@ export const usePopularMoviesFetch = () => {
       const response = await axios.get(
         `${API_URL}movie/popular?api_key=${API_KEY}`,
       );
-      const randomIndex = Math.floor(Math.random() * 20);
       const movieResults = response?.data?.results;
       const currentPage = response?.data?.page;
       const totalPages = response?.data?.total_pages;
+      // Get 5 random images for the slide show
+      const randomMovies = movieResults
+        .sort(() => Math.random() - Math.random())
+        .slice(0, 5);
+
+      // update state with movies, heroImages, currentPage, totalPages
       setState((prev) => ({
         ...prev,
         movies:
           isLoadMore !== -1
             ? [...prev.movies, ...movieResults]
             : [...movieResults],
-        heroImage:
-          prev.heroImage || movieResults[randomIndex],
+        heroImages: prev.heroImages || [...randomMovies],
         currentPage,
         totalPages,
       }));

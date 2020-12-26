@@ -4,9 +4,10 @@ import MainContent from '../Content/MainContent';
 import './styles.scss';
 
 const Main = () => {
+  const list = [];
   return (
     <div className="main">
-      <MainContent />
+      <MainContent list={list} />
     </div>
   );
 };
