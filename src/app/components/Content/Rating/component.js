@@ -5,9 +5,10 @@ import React, {
   useRef,
 } from 'react';
 import PropTypes from 'prop-types';
+
 import './styles.scss';
 
-const Rating = ({ rating, totalStars, className }) => {
+const Rating = ({ rating, totalStars, className = '' }) => {
   const [numberOfStars, setNumberOfStars] = useState();
   const ratingRef = useRef();
 
@@ -36,7 +37,9 @@ const Rating = ({ rating, totalStars, className }) => {
             </Fragment>
           ))}
         {/* filled stars */}
-        <div className={`front-stars ${className}`}>
+        <div
+          className={`front-stars ${className}`}
+          ref={ratingRef}>
           {numberOfStars &&
             numberOfStars.map((i) => (
               <Fragment key={i}>
