@@ -10,14 +10,14 @@ import { API_URL, API_KEY } from '../const';
  *
  * @returns [{ state, loading, error}, fetchPopularMovies]
  */
-export const usePopularMoviesFetch = () => {
+export const useNowPlayingMoviesFetch = () => {
   const history = useHistory();
   console.log('history', history);
   const [state, setState] = useState({ movies: [] });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
 
-  const fetchPopularMovies = async (endpoint) => {
+  const fetchNowPlayingMovies = async (endpoint) => {
     setError(false);
     setLoading(true);
 
@@ -54,10 +54,10 @@ export const usePopularMoviesFetch = () => {
   };
 
   useEffect(() => {
-    fetchPopularMovies(
-      `${API_URL}movie/popular?api_key=${API_KEY}`,
+    fetchNowPlayingMovies(
+      `${API_URL}movie/now_playing?api_key=${API_KEY}`,
     );
   }, []);
 
-  return [{ state, loading, error }, fetchPopularMovies];
+  return [{ state, loading, error }, fetchNowPlayingMovies];
 };
