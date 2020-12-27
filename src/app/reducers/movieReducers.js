@@ -3,31 +3,47 @@ import {
   SET_NOW_PLAYING_MOVIE_LIST,
   SET_TOP_RATED_MOVIE_LIST,
   SET_PAGE,
-  SET_SLIDESHOW_PICTURES,
+  SET_POPULAR_SLIDESHOW_PICTURES,
+  SET_NOW_PLAYING_SLIDESHOW_PICTURES,
+  SET_TOP_RATED_SLIDESHOW_PICTURES,
 } from '../actions/types';
 
 const initialState = {
-  popular: [],
-  now_playing: [],
-  top_rated: [],
+  popularMovies: [],
+  nowPlayingMovies: [],
+  topRatedMovies: [],
   page: 1,
   totalPages: 0,
-  heroImages: [],
+  popularSlideShow: [],
+  nowPlayingSlideShow: [],
+  topRatedSlideShow: [],
 };
 
 export default (state = initialState, action) => {
   switch (action.type) {
     case SET_POPULAR_MOVIE_LIST:
-      return { ...state, popular: action.payload };
+      return { ...state, popularMovies: action.payload };
 
     case SET_NOW_PLAYING_MOVIE_LIST:
-      return { ...state, now_playing: action.payload };
+      return { ...state, nowPlayingMovies: action.payload };
 
     case SET_TOP_RATED_MOVIE_LIST:
-      return { ...state, top_rated: action.payload };
+      return { ...state, topRatedMovies: action.payload };
 
-    case SET_SLIDESHOW_PICTURES:
-      return { ...state, heroImages: action.payload };
+    case SET_POPULAR_SLIDESHOW_PICTURES:
+      return { ...state, popularSlideShow: action.payload };
+
+    case SET_NOW_PLAYING_SLIDESHOW_PICTURES:
+      return {
+        ...state,
+        nowPlayingSlideShow: action.payload,
+      };
+
+    case SET_TOP_RATED_SLIDESHOW_PICTURES:
+      return {
+        ...state,
+        topRatedSlideShow: action.payload,
+      };
 
     case SET_PAGE:
       return {

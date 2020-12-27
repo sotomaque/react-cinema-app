@@ -13,44 +13,44 @@ const MainContent = ({ movieReducers }) => {
   const location = useLocation();
   const currentPath = location.pathname;
   const {
-    heroImages = '',
-    popular = [],
-    now_playing = [],
-    top_rated = []
+    popularSlideShow = [],
+    popularMovies = [],
+    nowPlayingMovies = [],
+    topRatedMovies = []
   } = movieReducers;
   const [slideShowImages, setSlideShowImages] = React.useState([]);
   const [gridMovies, setGridMovies] = React.useState([]);
 
   React.useEffect(() => {
-    if (heroImages) {
+    if (popularSlideShow) {
       const temp = [];
-      heroImages.forEach(movie => {
+      popularSlideShow.forEach(movie => {
         const tempObj = { ...movie, url: `${IMAGE_URL}${movie.backdrop_path}` };
         temp.push(tempObj);
       });
       setSlideShowImages(temp);
     }
-    if (popular) {
+    if (popularMovies) {
       const tempGrid = [];
       if (currentPath.includes('now_playing')) {
-        now_playing.forEach(movie => {
+        nowPlayingMovies.forEach(movie => {
           const tempObj = { ...movie, url: `${IMAGE_URL}${movie.poster_path}` };
           tempGrid.push(tempObj);
         });
       } else if (currentPath.includes('top_rated')) {
-        top_rated.forEach(movie => {
+        topRatedMovies.forEach(movie => {
           const tempObj = { ...movie, url: `${IMAGE_URL}${movie.poster_path}` };
           tempGrid.push(tempObj);
         });
       } else {
-        popular.forEach(movie => {
+        popularMovies.forEach(movie => {
           const tempObj = { ...movie, url: `${IMAGE_URL}${movie.poster_path}` };
           tempGrid.push(tempObj);
         });
       }
       setGridMovies(tempGrid);
     }
-  }, [heroImages, popular]);
+  }, [popularSlideShow, popularMovies]);
 
   const [currentPage, setCurrentPage] = React.useState(1);
 

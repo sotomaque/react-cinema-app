@@ -1,10 +1,7 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { SET_ERROR, SET_POPULAR_MOVIE_LIST, SET_PAGE, SET_SLIDESHOW_PICTURES } from '../../actions/types';
 
 import { logo } from '../../assets';
-import { usePopularMoviesFetch } from '../../hooks';
 import './styles.scss';
 
 const HEADER_LIST = [
@@ -42,36 +39,6 @@ const HEADER_LIST = [
 const Header = () => {
   const [navClass, setNavClass] = React.useState(false);
   const [menuClass, setMenuClass] = React.useState(false);
-  const dispatch = useDispatch();
-
-  // fetchPopularMovies (for slideshow and grid)
-  const [{ state: { movies, currentPage, totalPages, heroImages }, error }] = usePopularMoviesFetch();
-
-  // update movie state
-  React.useEffect(async () => {
-    if (movies) {
-      dispatch({ type: SET_POPULAR_MOVIE_LIST, payload: movies });
-    }
-    if (error) {
-      dispatch({ type: SET_ERROR, payload: 'Error Fetching Popular Movies' });
-    }
-    if (currentPage && totalPages) {
-      dispatch({
-        type: SET_PAGE,
-        payload:
-        {
-          page: currentPage,
-          totalPages,
-        }
-      });
-    }
-    if (heroImages) {
-      dispatch({
-        type: SET_SLIDESHOW_PICTURES,
-        payload: heroImages
-      });
-    }
-  }, [movies, error]);
 
   const handleClick = () => {
     setMenuClass(prev => !prev);
