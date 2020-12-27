@@ -1,6 +1,7 @@
 import {
   SET_POPULAR_MOVIE_LIST,
   SET_NOW_PLAYING_MOVIE_LIST,
+  SET_TOP_RATED_MOVIE_LIST,
   SET_PAGE,
   SET_SLIDESHOW_PICTURES,
 } from '../actions/types';
@@ -8,6 +9,7 @@ import {
 const initialState = {
   popular: [],
   now_playing: [],
+  top_rated: [],
   page: 1,
   totalPages: 0,
   heroImages: [],
@@ -20,6 +22,9 @@ export default (state = initialState, action) => {
 
     case SET_NOW_PLAYING_MOVIE_LIST:
       return { ...state, now_playing: action.payload };
+
+    case SET_TOP_RATED_MOVIE_LIST:
+      return { ...state, top_rated: action.payload };
 
     case SET_SLIDESHOW_PICTURES:
       return { ...state, heroImages: action.payload };

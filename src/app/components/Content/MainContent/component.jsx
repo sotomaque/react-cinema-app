@@ -12,7 +12,12 @@ import './styles.scss';
 const MainContent = ({ movieReducers }) => {
   const location = useLocation();
   const currentPath = location.pathname;
-  const { heroImages = '', popular = [], now_playing = [] } = movieReducers;
+  const {
+    heroImages = '',
+    popular = [],
+    now_playing = [],
+    top_rated = []
+  } = movieReducers;
   const [slideShowImages, setSlideShowImages] = React.useState([]);
   const [gridMovies, setGridMovies] = React.useState([]);
 
@@ -29,6 +34,11 @@ const MainContent = ({ movieReducers }) => {
       const tempGrid = [];
       if (currentPath.includes('now_playing')) {
         now_playing.forEach(movie => {
+          const tempObj = { ...movie, url: `${IMAGE_URL}${movie.poster_path}` };
+          tempGrid.push(tempObj);
+        });
+      } else if (currentPath.includes('top_rated')) {
+        top_rated.forEach(movie => {
           const tempObj = { ...movie, url: `${IMAGE_URL}${movie.poster_path}` };
           tempGrid.push(tempObj);
         });
@@ -56,10 +66,14 @@ const MainContent = ({ movieReducers }) => {
     }
   };
 
-  const title =
-    currentPath.includes('now_playing')
-      ? 'Now Playing'
-      : 'Popular';
+  let title = '';
+  if (currentPath.includes('now_playing')) {
+    title = 'Now Playing';
+  } else if (currentPath.includes('top_rated')) {
+    title = 'Top Rated';
+  } else {
+    title = 'Popular';
+  }
 
   return (
     <div className="main-content">
