@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useHistory } from 'react-router-dom';
 
 import { API_URL, API_KEY } from '../const';
 
@@ -11,8 +10,6 @@ import { API_URL, API_KEY } from '../const';
  * @returns [{ state, loading, error}, fetchPopularMovies]
  */
 export const usePopularMoviesFetch = () => {
-  const history = useHistory();
-  console.log('history', history);
   const [state, setState] = useState({ movies: [] });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);

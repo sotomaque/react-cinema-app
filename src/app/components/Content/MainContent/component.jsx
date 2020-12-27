@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { useLocation } from 'react-router-dom';
 
 import { IMAGE_URL } from '../../../const';
 import SlideShow from '../SlideShow';
@@ -8,10 +9,13 @@ import Grid from '../Grid';
 
 import './styles.scss';
 
-const MainContent = ({ movieReducers = {} }) => {
-  const { heroImages = '', list = [] } = movieReducers;
+const MainContent = ({ movieReducers }) => {
+  const location = useLocation();
+  const currentPath = location.pathname;
+  const { heroImages = '', popular = [], now_playing = [] } = movieReducers;
   const [slideShowImages, setSlideShowImages] = React.useState([]);
   const [gridMovies, setGridMovies] = React.useState([]);
+
   React.useEffect(() => {
     if (heroImages) {
       const temp = [];
@@ -21,15 +25,22 @@ const MainContent = ({ movieReducers = {} }) => {
       });
       setSlideShowImages(temp);
     }
-    if (list) {
+    if (popular) {
       const tempGrid = [];
-      list.forEach(movie => {
-        const tempObj = { ...movie, url: `${IMAGE_URL}${movie.poster_path}` };
-        tempGrid.push(tempObj);
-      });
+      if (currentPath.includes('now_playing')) {
+        now_playing.forEach(movie => {
+          const tempObj = { ...movie, url: `${IMAGE_URL}${movie.poster_path}` };
+          tempGrid.push(tempObj);
+        });
+      } else {
+        popular.forEach(movie => {
+          const tempObj = { ...movie, url: `${IMAGE_URL}${movie.poster_path}` };
+          tempGrid.push(tempObj);
+        });
+      }
       setGridMovies(tempGrid);
     }
-  }, [heroImages, list]);
+  }, [heroImages, popular]);
 
   const [currentPage, setCurrentPage] = React.useState(1);
 
@@ -45,6 +56,11 @@ const MainContent = ({ movieReducers = {} }) => {
     }
   };
 
+  const title =
+    currentPath.includes('now_playing')
+      ? 'Now Playing'
+      : 'Popular';
+
   return (
     <div className="main-content">
       {/* Slideshow Components */}
@@ -56,7 +72,7 @@ const MainContent = ({ movieReducers = {} }) => {
         />
       )}
       <div className="grid-movie-title">
-        <div className="movieType">Now Playing</div>
+        <div className="movieType">{title}</div>
         <div className="paginate">
           <Paginated
             currentPage={currentPage}
@@ -72,7 +88,7 @@ const MainContent = ({ movieReducers = {} }) => {
 };
 
 MainContent.propTypes = {
-  movieReducers: PropTypes.object,
+  movieReducers: PropTypes.object.isRequired,
 };
 
 export default MainContent;

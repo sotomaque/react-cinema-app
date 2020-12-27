@@ -1,7 +1,7 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { SET_ERROR, SET_MOVIE_LIST, SET_PAGE, SET_SLIDESHOW_PICTURES } from '../../actions/types';
+import { SET_ERROR, SET_POPULAR_MOVIE_LIST, SET_PAGE, SET_SLIDESHOW_PICTURES } from '../../actions/types';
 
 import { logo } from '../../assets';
 import { usePopularMoviesFetch } from '../../hooks';
@@ -50,7 +50,7 @@ const Header = () => {
   // update movie state
   React.useEffect(async () => {
     if (movies) {
-      dispatch({ type: SET_MOVIE_LIST, payload: movies });
+      dispatch({ type: SET_POPULAR_MOVIE_LIST, payload: movies });
     }
     if (error) {
       dispatch({ type: SET_ERROR, payload: 'Error Fetching Popular Movies' });
@@ -88,7 +88,9 @@ const Header = () => {
       <div className="header-navbar">
         {/* Logo */}
         <div className="header-image">
-          <img src={logo} alt="header logo" />
+          <Link to="/" >
+            <img src={logo} alt="header logo" />
+          </Link>
         </div>
         {/* Menu Button */}
         <div

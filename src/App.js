@@ -5,16 +5,18 @@ import {
   Route,
   Redirect,
 } from 'react-router-dom';
+
 import HomePage from './app/pages/Home';
+import NowPlayingPage from './app/pages/NowPlaying/index';
 
 const App = () => {
   return (
     <Router>
       <Switch>
+        <Route exact path="/" render={() => <HomePage />} />
         <Route
-          expact
-          path="/"
-          render={() => <HomePage />}
+          path="/now_playing"
+          render={() => <NowPlayingPage />}
         />
         <Redirect to="/" />
       </Switch>
