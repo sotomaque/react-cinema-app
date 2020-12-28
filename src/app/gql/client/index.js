@@ -6,19 +6,19 @@ import { getMainDefinition } from 'apollo-utilities';
 import { HttpLink } from '@apollo/react-hooks';
 import {
   HASURA_SECRET,
-  HTTP_URL,
-  WS_URL,
+  HTTPS_URL,
+  WSS_URL,
 } from '../../const';
 
 const httpsLink = new HttpLink({
-  uri: HTTP_URL,
+  uri: HTTPS_URL,
   headers: {
     'x-hasura-admin-secret': HASURA_SECRET,
   },
 });
 
 const wssLink = new WebSocketLink({
-  uri: WS_URL,
+  uri: WSS_URL,
   options: {
     reconnect: true,
     connectionParams: {
