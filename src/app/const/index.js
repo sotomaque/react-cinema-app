@@ -3,8 +3,10 @@ export const __prod__ =
   process.env.NODE_ENV === 'production';
 
 // GQL
+// DOCKER LINKS
 export const HTTP_URL = 'http://localhost:8080/v1/graphql';
 export const WS_URL = 'ws://localhost:8080/v1/graphql';
+// HASURA CLOUD + AWS LINKS
 export const HTTPS_URL =
   'https://cinema.hasura.app/v1/graphql';
 export const WSS_URL = 'wss://cinema.hasura.app/v1/graphql';
