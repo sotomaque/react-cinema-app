@@ -5,22 +5,22 @@ import { API_URL, API_KEY, IMAGE_URL } from '../const';
 
 /**
  * hook used to make a request to
- * `movie/top_rated` endpoint
+ * `movie/upcoming` endpoint
  *
- * @returns [{ state, loading, error}, fetchTopRatedMovies]
+ * @returns [{ state, loading, error}, fetchUpcomingMovies]
  */
-export const useTopRatedMoviesFetch = () => {
+export const useUpcomingMoviesFetch = () => {
   const [state, setState] = useState({ movies: [] });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
 
-  const fetchTopRatedMovies = async () => {
+  const fetchUpcomingMovies = async () => {
     setError(false);
     setLoading(true);
 
     try {
       const response = await axios.get(
-        `${API_URL}movie/top_rated?api_key=${API_KEY}`,
+        `${API_URL}movie/upcoming?api_key=${API_KEY}`,
       );
       const tempMovieResults = response?.data?.results;
       const movieResults = [];
@@ -49,10 +49,10 @@ export const useTopRatedMoviesFetch = () => {
   };
 
   useEffect(() => {
-    fetchTopRatedMovies(
-      `${API_URL}movie/top_rated?api_key=${API_KEY}`,
+    fetchUpcomingMovies(
+      `${API_URL}movie/upcoming?api_key=${API_KEY}`,
     );
   }, []);
 
-  return [{ state, loading, error }, fetchTopRatedMovies];
+  return [{ state, loading, error }, fetchUpcomingMovies];
 };

@@ -52,7 +52,7 @@ const Grid = ({ gridMovies }) => {
 };
 
 Grid.propTypes = {
-  gridMovies: PropTypes.array.isRequired,
+  gridMovies: PropTypes.array,
 };
 
 export default Grid;

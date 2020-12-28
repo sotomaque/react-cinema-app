@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 
-import { API_URL, API_KEY } from '../const';
+import { API_URL, API_KEY, IMAGE_URL } from '../const';
 
 /**
  * hook used to make a request to
@@ -22,7 +22,14 @@ export const useNowPlayingMoviesFetch = () => {
       const response = await axios.get(
         `${API_URL}movie/now_playing?api_key=${API_KEY}`,
       );
-      const movieResults = response?.data?.results;
+      const tempMovieResults = response?.data?.results;
+      const movieResults = [];
+      tempMovieResults.forEach((movie) => {
+        movieResults.push({
+          ...movie,
+          url: `${IMAGE_URL}${movie.backdrop_path}`,
+        });
+      });
       // Get 5 random images for the slide show
       const randomMovies = movieResults
         .sort(() => Math.random() - Math.random())
