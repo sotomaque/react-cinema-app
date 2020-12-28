@@ -17,8 +17,22 @@ import {
   useNowPlayingMoviesFetch,
 } from '../../hooks';
 
+/**
+ * MOVIE FETCHING SERVICE
+ *
+ * Fetches:
+ *  - popular movies
+ *  - top rated movies
+ *  - now playing movies
+ *  - upcoming movies
+ *
+ * if not in redux ||
+ *  (in redux and older than 10 min) => updates redux state
+ */
 const useRefreshMovies = () => {
   const dispatch = useDispatch();
+  // GET REDUX STATE VALUES
+  // POPULAR MOVIES
   const popularMoviesState = useSelector(
     (state) => state.movieReducers.popularMovies,
   );
@@ -27,7 +41,7 @@ const useRefreshMovies = () => {
     fetchedAt: popularMoviesFetchedAt,
     heroImages: popularHeroImagesState,
   } = popularMoviesState;
-
+  // TOP RATED MOVIES
   const topRatedMoviesState = useSelector(
     (state) => state.movieReducers.topRatedMovies,
   );
@@ -36,7 +50,7 @@ const useRefreshMovies = () => {
     fetchedAt: topRatedMoviesFetchedAt,
     heroImages: topRatedHeroImagesState,
   } = topRatedMoviesState;
-
+  // NOW PLAYING MOVIES
   const nowPlayingMoviesState = useSelector(
     (state) => state.movieReducers.nowPlayingMovies,
   );
@@ -45,7 +59,7 @@ const useRefreshMovies = () => {
     fetchedAt: nowPlayingMoviesFetchedAt,
     heroImages: nowPlayingHeroImagesState,
   } = nowPlayingMoviesState;
-
+  // GET API VALUES
   const [
     {
       state: {
@@ -78,11 +92,13 @@ const useRefreshMovies = () => {
       error: nowPlayingError,
     },
   ] = useNowPlayingMoviesFetch();
-
-  // Popular
+  // COMPARE REDUX TO API VALUES
+  // CONDITIONALLY UPDATE REDUX IF STALE
+  // POPULAR MOVIES
   useEffect(() => {
     // Loading
     if (popularLoading) {
+      // TODO: SET SPINNER STATE
       console.log('popularLoading', popularLoading);
     }
     // Errors
@@ -130,7 +146,7 @@ const useRefreshMovies = () => {
     popularLoading,
     popularError,
   ]);
-  // Top Rated
+  // TOP RATED MOVIES
   useEffect(() => {
     // Loading
     if (topRatedLoading) {
@@ -184,7 +200,7 @@ const useRefreshMovies = () => {
     topRatedLoading,
     topRatedError,
   ]);
-  // Now Playing
+  // NOW PLAYING MOVIES
   useEffect(() => {
     // Loading
     if (nowPlayingLoading) {
