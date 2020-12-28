@@ -8,27 +8,30 @@ import Main from '../../components/Main';
 import {
   usePopularMoviesFetch,
   useTopRatedMoviesFetch,
+  useNowPlayingMoviesFetch,
 } from '../../hooks';
 import {
   SET_ERROR,
-  SET_PAGE,
   SET_POPULAR_MOVIE_LIST,
   SET_POPULAR_SLIDESHOW_PICTURES,
   SET_TOP_RATED_MOVIE_LIST,
-  SET_TOP_RATED_SLIDESHOW_PICTURES
+  SET_TOP_RATED_SLIDESHOW_PICTURES,
+  SET_NOW_PLAYING_MOVIE_LIST,
+  SET_NOW_PLAYING_SLIDESHOW_PICTURES
 } from '../../actions/types';
 
 const HomePage = ({ movieReducers }) => {
   const {
     popularMovies: popularMoviesState,
     topRatedMovies: topRatedMoviesState,
+    nowPlayingMoviews: nowPlayingMoviesState,
     popularSlideShow,
-    topRatedSlideShow,
   } = movieReducers;
 
   const dispatch = useDispatch();
   const [{ state: { movies: popularMovies, currentPage, totalPages, heroImages: popularHeroImages }, loading: popularLoading, error: popularError }] = usePopularMoviesFetch();
   const [{ state: { movies: topRatedMovies, heroImages: topRatedHeroImages }, loading: topRatedLoading, error: topRatedError }] = useTopRatedMoviesFetch();
+  const [{ state: { movies: nowPlayingMovies, heroImages: nowPlayingHeroImages }, loading: nowPlayingLoading, error: nowPlayingError }] = useNowPlayingMoviesFetch();
   // Popular
   React.useEffect(() => {
     // Loading
@@ -73,17 +76,9 @@ const HomePage = ({ movieReducers }) => {
       dispatch({ type: SET_TOP_RATED_MOVIE_LIST, payload: topRatedMovies });
     }
     // Pagination
-    if (currentPage && totalPages) {
-      dispatch({
-        type: SET_PAGE,
-        payload: { 
-          page: currentPage,
-          totalPages: totalPages
-        }
-      });
-    }
+
     // Slideshows
-    if (topRatedHeroImages && topRatedHeroImages !== topRatedSlideShow) {
+    if (topRatedHeroImages) {
       dispatch({
         type: SET_TOP_RATED_SLIDESHOW_PICTURES,
         payload: topRatedHeroImages
@@ -91,12 +86,41 @@ const HomePage = ({ movieReducers }) => {
     }
 
   }, [
-    currentPage,
-    totalPages,
     topRatedMovies,
     topRatedHeroImages,
     topRatedLoading,
     topRatedError
+  ]);
+
+  // Now Playing
+  React.useEffect(() => {
+    // Loading
+    if (nowPlayingLoading) {
+      console.log("nowPlayingLoading", nowPlayingLoading)
+    }
+    // Errors
+    if (nowPlayingError) {
+      dispatch({ type: SET_ERROR, payload: 'Error Fetching Now Playing Movies' });
+    }
+    // Movie Listss
+    if (nowPlayingMovies && nowPlayingMovies !== nowPlayingMoviesState) {
+      dispatch({ type: SET_NOW_PLAYING_MOVIE_LIST, payload: nowPlayingMovies });
+    }
+    // Pagination
+
+    // Slideshows
+    if (nowPlayingHeroImages) {
+      dispatch({
+        type: SET_NOW_PLAYING_SLIDESHOW_PICTURES,
+        payload: nowPlayingHeroImages
+      });
+    }
+
+  }, [
+    nowPlayingMovies,
+    nowPlayingHeroImages,
+    nowPlayingLoading,
+    nowPlayingError
   ]);
 
   return (

@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useLocation } from 'react-router-dom';
@@ -13,44 +14,69 @@ const MainContent = ({ movieReducers }) => {
   const location = useLocation();
   const currentPath = location.pathname;
   const {
-    popularSlideShow = [],
-    popularMovies = [],
-    nowPlayingMovies = [],
-    topRatedMovies = []
+    popularMovies = {},
+    topRatedMovies = {},
+    nowPlayingMovies = {},
   } = movieReducers;
   const [slideShowImages, setSlideShowImages] = React.useState([]);
   const [gridMovies, setGridMovies] = React.useState([]);
 
   React.useEffect(() => {
-    if (popularSlideShow) {
-      const temp = [];
-      popularSlideShow.forEach(movie => {
-        const tempObj = { ...movie, url: `${IMAGE_URL}${movie.backdrop_path}` };
-        temp.push(tempObj);
-      });
-      setSlideShowImages(temp);
-    }
-    if (popularMovies) {
-      const tempGrid = [];
-      if (currentPath.includes('now_playing')) {
-        nowPlayingMovies.forEach(movie => {
-          const tempObj = { ...movie, url: `${IMAGE_URL}${movie.poster_path}` };
-          tempGrid.push(tempObj);
-        });
-      } else if (currentPath.includes('top_rated')) {
-        topRatedMovies.forEach(movie => {
-          const tempObj = { ...movie, url: `${IMAGE_URL}${movie.poster_path}` };
-          tempGrid.push(tempObj);
-        });
-      } else {
-        popularMovies.forEach(movie => {
+    const tempGrid = [];
+    if (currentPath.includes('/now_playing')) {
+      if (nowPlayingMovies?.list) {
+        // Grid Images
+        nowPlayingMovies.list.forEach(movie => {
           const tempObj = { ...movie, url: `${IMAGE_URL}${movie.poster_path}` };
           tempGrid.push(tempObj);
         });
       }
-      setGridMovies(tempGrid);
+      if (nowPlayingMovies?.heroImages && nowPlayingMovies.heroImages.length !== 0) {
+        // Slideshow Images
+        const temp = [];
+        nowPlayingMovies?.heroImages?.forEach(movie => {
+          const tempObj = { ...movie, url: `${IMAGE_URL}${movie.backdrop_path}` };
+          temp.push(tempObj);
+        });
+        setSlideShowImages(temp);
+      }
+    } else if (currentPath.includes('/top_rated')) {
+      if (topRatedMovies?.list) {
+        topRatedMovies.list.forEach(movie => {
+          const tempObj = { ...movie, url: `${IMAGE_URL}${movie.poster_path}` };
+          tempGrid.push(tempObj);
+        });
+      }
+      if (topRatedMovies?.heroImages && topRatedMovies.heroImages.length !== 0) {
+        // Slideshow Images
+        const temp = [];
+        topRatedMovies?.heroImages.forEach(movie => {
+          const tempObj = { ...movie, url: `${IMAGE_URL}${movie.backdrop_path}` };
+          temp.push(tempObj);
+        });
+        setSlideShowImages(temp);
+      }
+    } else {
+      if (popularMovies?.list) {
+        popularMovies.list.forEach(movie => {
+          const tempObj = { ...movie, url: `${IMAGE_URL}${movie.poster_path}` };
+          tempGrid.push(tempObj);
+        });
+      }
+      if (popularMovies?.heroImages && popularMovies.heroImages.length !== 0) {
+        // Slideshow Images
+        const temp = [];
+        popularMovies?.heroImages.forEach(movie => {
+          const tempObj = {
+            ...movie, url: `${IMAGE_URL}${movie.backdrop_path}`
+          };
+          temp.push(tempObj);
+        });
+        setSlideShowImages(temp);
+      }
     }
-  }, [popularSlideShow, popularMovies]);
+    setGridMovies(tempGrid);
+  }, [popularMovies]);
 
   const [currentPage, setCurrentPage] = React.useState(1);
 

@@ -2,54 +2,119 @@ import {
   SET_POPULAR_MOVIE_LIST,
   SET_NOW_PLAYING_MOVIE_LIST,
   SET_TOP_RATED_MOVIE_LIST,
-  SET_PAGE,
+  SET_POPULAR_PAGE,
+  SET_TOP_RATED_PAGE,
+  SET_NOW_PLAYING_PAGE,
   SET_POPULAR_SLIDESHOW_PICTURES,
   SET_NOW_PLAYING_SLIDESHOW_PICTURES,
   SET_TOP_RATED_SLIDESHOW_PICTURES,
 } from '../actions/types';
 
 const initialState = {
-  popularMovies: [],
-  nowPlayingMovies: [],
-  topRatedMovies: [],
-  page: 1,
-  totalPages: 0,
-  popularSlideShow: [],
-  nowPlayingSlideShow: [],
-  topRatedSlideShow: [],
+  popularMovies: {
+    page: 1,
+    totalPages: 0,
+    list: [],
+    heroImages: [],
+  },
+  topRatedMovies: {
+    page: 1,
+    totalPages: 0,
+    list: [],
+    heroImages: [],
+  },
+  nowPlayingMovies: {
+    page: 1,
+    totalPages: 0,
+    list: [],
+    heroImages: [],
+  },
 };
 
 export default (state = initialState, action) => {
   switch (action.type) {
     case SET_POPULAR_MOVIE_LIST:
-      return { ...state, popularMovies: action.payload };
+      return {
+        ...state,
+        popularMovies: {
+          ...state.popularMovies,
+          list: action.payload,
+        },
+      };
 
     case SET_NOW_PLAYING_MOVIE_LIST:
-      return { ...state, nowPlayingMovies: action.payload };
+      return {
+        ...state,
+        nowPlayingMovies: {
+          ...state.nowPlayingMovies,
+          list: action.payload,
+        },
+      };
 
     case SET_TOP_RATED_MOVIE_LIST:
-      return { ...state, topRatedMovies: action.payload };
+      return {
+        ...state,
+        topRatedMovies: {
+          ...state.topRatedMovies,
+          list: action.payload,
+        },
+      };
 
     case SET_POPULAR_SLIDESHOW_PICTURES:
-      return { ...state, popularSlideShow: action.payload };
+      return {
+        ...state,
+        popularMovies: {
+          ...state.popularMovies,
+          heroImages: action.payload,
+        },
+      };
 
     case SET_NOW_PLAYING_SLIDESHOW_PICTURES:
       return {
         ...state,
-        nowPlayingSlideShow: action.payload,
+        nowPlayingMovies: {
+          ...state.nowPlayingMovies,
+          heroImages: action.payload,
+        },
       };
 
     case SET_TOP_RATED_SLIDESHOW_PICTURES:
       return {
         ...state,
-        topRatedSlideShow: action.payload,
+        topRatedMovies: {
+          ...state.topRatedMovies,
+          heroImages: action.payload,
+        },
       };
 
-    case SET_PAGE:
+    case SET_POPULAR_PAGE:
       return {
         ...state,
-        page: action.payload.page,
-        totalPages: action.payload.totalPages,
+        popularMovies: {
+          ...state.popularMovies,
+          page: action.payload.page,
+          totalPages: action.payload.totalPages,
+        },
+      };
+
+    case SET_TOP_RATED_PAGE:
+      return {
+        ...state,
+        topRatedMovies: {
+          ...state.topRatedMovies,
+          page: action.payload.page,
+          totalPages: action.payload.totalPages,
+        },
+      };
+
+    case SET_NOW_PLAYING_PAGE:
+      return {
+        ...state,
+        nowPlayingMovies: {
+          ...state.nowPlayingMovies,
+          page: action.payload.page,
+          totalPages: action.payload.totalPages,
+        },
       };
 
     default:
