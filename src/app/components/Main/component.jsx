@@ -1,6 +1,6 @@
 import React from 'react';
-import MainContent from '../Content/MainContent';
 
+import MainContent from '../Content/MainContent';
 import './styles.scss';
 
 const Main = () => {

@@ -1,9 +1,11 @@
 import { useNowPlayingMoviesFetch } from './useNowPlayingMoviesFetch';
-import { useTopRatedMoviesFetch } from './useTopRatedMoviesFetch';
 import { usePopularMoviesFetch } from './usePopularMoviesFetch';
+import { useTopRatedMoviesFetch } from './useTopRatedMoviesFetch';
+import { useUpcomingMoviesFetch } from './useUpcomingMoviesFetch';
 
 export {
   useNowPlayingMoviesFetch,
-  useTopRatedMoviesFetch,
   usePopularMoviesFetch,
+  useTopRatedMoviesFetch,
+  useUpcomingMoviesFetch,
 };

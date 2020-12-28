@@ -1,9 +1,10 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
-import { useRefreshMovies } from '../../services/movies';
 import { logo } from '../../assets';
 import './styles.scss';
+import { useDispatch } from 'react-redux';
+import { SET_QUERY } from '../../actions/types';
 
 const HEADER_LIST = [
   {
@@ -11,37 +12,39 @@ const HEADER_LIST = [
     iconClass: 'fas fa-film',
     name: 'Now Playing',
     type: 'now_playing',
-    route: '/now_playing'
   },
   {
     id: 2,
     iconClass: 'fas fa-fire',
     name: 'Popular',
     type: 'popular',
-    route: '/popular'
-
   },
   {
     id: 3,
     iconClass: 'fas fa-star',
     name: 'Top Rated',
     type: 'top_rated',
-    route: '/top_rated'
   },
   {
     id: 4,
     iconClass: 'fas fa-plus-square',
     name: 'Upcoming',
     type: 'upcoming',
-    route: '/upcoming'
   },
 ];
 
-const Header = () => {
+/**
+ * Nav bar component
+ *
+ * @param {string} query (state) - selected query
+ *  i.e. 'popular', 'upcoming', 'nowPlaying', etc
+ * @param {funct} setQuery - sets query state value
+ */
+const Header = ({ pageReducers }) => {
+  const dispatch = useDispatch();
+  const { query = 'popular' } = pageReducers;
   const [navClass, setNavClass] = React.useState(false);
   const [menuClass, setMenuClass] = React.useState(false);
-
-  useRefreshMovies();
 
   const handleClick = () => {
     setMenuClass(prev => !prev);
@@ -57,9 +60,7 @@ const Header = () => {
       <div className="header-navbar">
         {/* Logo */}
         <div className="header-image">
-          <Link to="/" >
-            <img src={logo} alt="header logo" />
-          </Link>
+          <img src={logo} alt="header logo" />
         </div>
         {/* Menu Button */}
         <div
@@ -77,16 +78,19 @@ const Header = () => {
           {/* Links */}
           {
             HEADER_LIST.map(item => {
+              const isActive = item.type === query;
               return (
-                <Link to={`${item.route}`} key={item.id} >
-                  <li className="header-nav-item">
-                    <span className="header-list-name">
-                      <i className={item.iconClass} />
-                    </span>
-                    &nbsp;
-                    <span className="header-list-name">{item.name}</span>
-                  </li>
-                </Link>
+                <li
+                  key={item.id}
+                  className={`header-nav-item ${isActive ? 'active-item' : ''}`}
+                  onClick={() => !isActive && dispatch({ type: SET_QUERY, payload: `${item.type}` })}
+                >
+                  <span className="header-list-name">
+                    <i className={item.iconClass} />
+                  </span>
+                  &nbsp;
+                  <span className="header-list-name">{item.name}</span>
+                </li>
               );
             })
           }
@@ -100,6 +104,10 @@ const Header = () => {
       </div>
     </div>
   );
+};
+
+Header.propTypes = {
+  pageReducers: PropTypes.object.isRequired,
 };
 
 export default Header;

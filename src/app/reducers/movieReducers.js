@@ -8,6 +8,10 @@ import {
   SET_TOP_RATED_MOVIE_LIST,
   SET_TOP_RATED_PAGE,
   SET_TOP_RATED_SLIDESHOW_PICTURES,
+  SET_UPCOMING_MOVIE_LIST,
+  SET_UPCOMING_PAGE,
+  SET_UPCOMING_SLIDESHOW_PICTURES,
+  UPDATE_POPULAR_LIST,
 } from '../actions/types';
 
 const initialState = {
@@ -32,6 +36,13 @@ const initialState = {
     heroImages: [],
     fetchedAt: '',
   },
+  upcomingMovies: {
+    page: 1,
+    totalPages: 0,
+    list: [],
+    heroImages: [],
+    fetchedAt: '',
+  },
 };
 
 export default (state = initialState, action) => {
@@ -49,7 +60,7 @@ export default (state = initialState, action) => {
         popularMovies: {
           ...state.popularMovies,
           list: action.payload,
-          fetchedAt: new Date().toISOString(),
+          fetchedAt: new Date(),
         },
       };
 
@@ -66,7 +77,7 @@ export default (state = initialState, action) => {
         nowPlayingMovies: {
           ...state.nowPlayingMovies,
           list: action.payload,
-          fetchedAt: new Date().toISOString(),
+          fetchedAt: new Date(),
         },
       };
 
@@ -83,7 +94,41 @@ export default (state = initialState, action) => {
         topRatedMovies: {
           ...state.topRatedMovies,
           list: action.payload,
-          fetchedAt: new Date().toISOString(),
+          fetchedAt: new Date(),
+        },
+      };
+
+    case SET_UPCOMING_MOVIE_LIST:
+      if (
+        !action.payload ||
+        !action.payload?.length ||
+        action.payload?.length === 0
+      ) {
+        return state;
+      }
+      return {
+        ...state,
+        upcomingMovies: {
+          ...state.upcomingMovies,
+          list: action.payload,
+          fetchedAt: new Date(),
+        },
+      };
+
+    case SET_UPCOMING_SLIDESHOW_PICTURES:
+      if (
+        !action.payload ||
+        !action.payload?.length ||
+        action.payload?.length === 0
+      ) {
+        return state;
+      }
+      return {
+        ...state,
+        upcomingMovies: {
+          ...state.upcomingMovies,
+          heroImages: action.payload,
+          fetchedAt: new Date(),
         },
       };
 
@@ -100,7 +145,7 @@ export default (state = initialState, action) => {
         popularMovies: {
           ...state.popularMovies,
           heroImages: action.payload,
-          fetchedAt: new Date().toISOString(),
+          fetchedAt: new Date(),
         },
       };
 
@@ -117,7 +162,7 @@ export default (state = initialState, action) => {
         nowPlayingMovies: {
           ...state.nowPlayingMovies,
           heroImages: action.payload,
-          fetchedAt: new Date().toISOString(),
+          fetchedAt: new Date(),
         },
       };
 
@@ -134,7 +179,7 @@ export default (state = initialState, action) => {
         topRatedMovies: {
           ...state.topRatedMovies,
           heroImages: action.payload,
-          fetchedAt: new Date().toISOString(),
+          fetchedAt: new Date(),
         },
       };
 
@@ -143,6 +188,16 @@ export default (state = initialState, action) => {
         ...state,
         popularMovies: {
           ...state.popularMovies,
+          page: action.payload.page,
+          totalPages: action.payload.totalPages,
+        },
+      };
+
+    case SET_UPCOMING_PAGE:
+      return {
+        ...state,
+        upcomingMovies: {
+          ...state.upcomingMovies,
           page: action.payload.page,
           totalPages: action.payload.totalPages,
         },
@@ -165,6 +220,15 @@ export default (state = initialState, action) => {
           ...state.nowPlayingMovies,
           page: action.payload.page,
           totalPages: action.payload.totalPages,
+        },
+      };
+
+    case UPDATE_POPULAR_LIST:
+      return {
+        ...state,
+        popularMovies: {
+          ...state.popularMovies,
+          list: action.payload,
         },
       };
 

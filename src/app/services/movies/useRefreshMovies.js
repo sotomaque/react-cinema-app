@@ -1,20 +1,27 @@
-/* eslint-disable */
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-
+import { differenceInMinutes } from 'date-fns';
 import {
   SET_ERROR,
+  SET_LOADING,
+  SET_NOW_PLAYING_PAGE,
   SET_NOW_PLAYING_MOVIE_LIST,
   SET_NOW_PLAYING_SLIDESHOW_PICTURES,
+  SET_POPULAR_PAGE,
   SET_POPULAR_MOVIE_LIST,
   SET_POPULAR_SLIDESHOW_PICTURES,
+  SET_TOP_RATED_PAGE,
   SET_TOP_RATED_MOVIE_LIST,
   SET_TOP_RATED_SLIDESHOW_PICTURES,
+  SET_UPCOMING_PAGE,
+  SET_UPCOMING_MOVIE_LIST,
+  SET_UPCOMING_SLIDESHOW_PICTURES,
 } from '../../actions/types';
 import {
+  useNowPlayingMoviesFetch,
   usePopularMoviesFetch,
   useTopRatedMoviesFetch,
-  useNowPlayingMoviesFetch,
+  useUpcomingMoviesFetch,
 } from '../../hooks';
 
 /**
@@ -31,7 +38,17 @@ import {
  */
 const useRefreshMovies = () => {
   const dispatch = useDispatch();
+
+  // return true if timestamp passed in
+  // is older than 10 min
+  const isStale = (timestamp = new Date()) => {
+    return differenceInMinutes(new Date(), timestamp) >= 10;
+  };
+
   // GET REDUX STATE VALUES
+  const loadingState = useSelector(
+    (state) => state.hardwareReducers.loading,
+  );
   // POPULAR MOVIES
   const popularMoviesState = useSelector(
     (state) => state.movieReducers.popularMovies,
@@ -40,6 +57,7 @@ const useRefreshMovies = () => {
     list: popularMoviesList,
     fetchedAt: popularMoviesFetchedAt,
     heroImages: popularHeroImagesState,
+    page: popularMoviesCurrentPageState,
   } = popularMoviesState;
   // TOP RATED MOVIES
   const topRatedMoviesState = useSelector(
@@ -49,6 +67,7 @@ const useRefreshMovies = () => {
     list: topRatedMoviesList,
     fetchedAt: topRatedMoviesFetchedAt,
     heroImages: topRatedHeroImagesState,
+    page: topRatedMoviesCurrentPageState,
   } = topRatedMoviesState;
   // NOW PLAYING MOVIES
   const nowPlayingMoviesState = useSelector(
@@ -58,14 +77,25 @@ const useRefreshMovies = () => {
     list: nowPlayingMoviesList,
     fetchedAt: nowPlayingMoviesFetchedAt,
     heroImages: nowPlayingHeroImagesState,
+    page: nowPlayingMoviesCurrentPageState,
   } = nowPlayingMoviesState;
+  // UPCOMING MOVIES
+  const upcomingMoviesState = useSelector(
+    (state) => state.movieReducers.upcomingMovies,
+  );
+  const {
+    list: upcomingMoviesList,
+    fetchedAt: upcomingMoviesFetchedAt,
+    heroImages: upcomingHeroImagesState,
+    page: upcomingMoviesCurrentPageState,
+  } = upcomingMoviesState;
   // GET API VALUES
   const [
     {
       state: {
         movies: popularMovies,
-        currentPage,
-        totalPages,
+        currentPage: popularMoviesCurrentPage,
+        totalPages: popularMoviesTotalPages,
         heroImages: popularHeroImages,
       },
       loading: popularLoading,
@@ -76,6 +106,8 @@ const useRefreshMovies = () => {
     {
       state: {
         movies: topRatedMovies,
+        currentPage: topRatedMoviesCurrentPage,
+        totalPages: topRatedMoviesTotalPages,
         heroImages: topRatedHeroImages,
       },
       loading: topRatedLoading,
@@ -86,173 +118,242 @@ const useRefreshMovies = () => {
     {
       state: {
         movies: nowPlayingMovies,
+        currentPage: nowPlayingMoviesCurrentPage,
+        totalPages: nowPlayingMoviesTotalPages,
         heroImages: nowPlayingHeroImages,
       },
       loading: nowPlayingLoading,
       error: nowPlayingError,
     },
   ] = useNowPlayingMoviesFetch();
+  const [
+    {
+      state: {
+        movies: upcomingMovies,
+        currentPage: upcomingMoviesCurrentPage,
+        totalPages: upcomingMoviesTotalPages,
+        heroImages: upcomingHeroImages,
+      },
+      loading: upcomingLoading,
+      error: upcomingError,
+    },
+  ] = useUpcomingMoviesFetch();
+
   // COMPARE REDUX TO API VALUES
   // CONDITIONALLY UPDATE REDUX IF STALE
   // POPULAR MOVIES
   useEffect(() => {
     // Loading
-    if (popularLoading) {
-      // TODO: SET SPINNER STATE
-      console.log('popularLoading', popularLoading);
+    if (
+      popularLoading ||
+      topRatedLoading ||
+      nowPlayingLoading ||
+      upcomingLoading
+    ) {
+      if (!loadingState) {
+        dispatch({ type: SET_LOADING, payload: true });
+      }
+    } else {
+      if (loadingState) {
+        dispatch({ type: SET_LOADING, payload: false });
+      }
     }
     // Errors
-    if (popularError) {
+    if (
+      popularError ||
+      topRatedError ||
+      nowPlayingError ||
+      upcomingError
+    ) {
       dispatch({
         type: SET_ERROR,
-        payload: 'Error Fetching Popular Movies',
+        payload: 'Error',
       });
     }
-    // Movie Lists
-    if (popularMovies) {
-      if (popularMoviesList?.length) {
-        console.log('already have popular movies in state');
-      } else if (popularMoviesFetchedAt) {
-        console.log(
-          'already have fetched at for popular movies',
-        );
-      } else {
+    // popularMovies
+    // list
+    if (popularMovies && popularMovies?.length > 0) {
+      if (
+        !popularMoviesList?.length &&
+        (!popularMoviesFetchedAt ||
+          isStale(popularMoviesFetchedAt))
+      ) {
         dispatch({
           type: SET_POPULAR_MOVIE_LIST,
           payload: popularMovies,
         });
       }
     }
-    // Slideshows
+    // slides
     if (popularHeroImages) {
-      if (popularHeroImagesState?.length) {
-        console.log(
-          'already have popularHeroImages in state',
-        );
-      } else if (popularHeroImagesState?.fetchedAt) {
-        console.log(
-          'already have fetched at for popularHeroImages movies',
-        );
-      } else {
+      if (
+        !popularHeroImagesState?.length &&
+        (!popularHeroImagesState?.fetchedAt ||
+          isStale(popularHeroImagesState.fetchedAt))
+      ) {
         dispatch({
           type: SET_POPULAR_SLIDESHOW_PICTURES,
           payload: popularHeroImages,
         });
       }
     }
-  }, [
-    popularMovies,
-    popularHeroImages,
-    popularLoading,
-    popularError,
-  ]);
-  // TOP RATED MOVIES
-  useEffect(() => {
-    // Loading
-    if (topRatedLoading) {
-      console.log('topRatedLoading', topRatedLoading);
-    }
-    // Errors
-    if (topRatedError) {
+    // pagination
+    if (
+      popularMoviesCurrentPage &&
+      popularMoviesCurrentPage !==
+        popularMoviesCurrentPageState
+    ) {
       dispatch({
-        type: SET_ERROR,
-        payload: 'Error Fetching Popular Movies',
+        type: SET_POPULAR_PAGE,
+        payload: {
+          page: popularMoviesCurrentPage,
+          totalPages: popularMoviesTotalPages,
+        },
       });
     }
-    // Movie Lists
-    if (topRatedMovies) {
-      if (topRatedMoviesList?.length) {
-        console.log(
-          'already have top rated movies in state',
-        );
-      } else if (topRatedMoviesFetchedAt) {
-        console.log(
-          'already have fetched at for top rated movies',
-        );
-      } else {
+
+    // topRatedMovies
+    // list
+    if (topRatedMovies && topRatedMovies?.length > 0) {
+      if (
+        !topRatedMoviesList?.length &&
+        (!topRatedMoviesFetchedAt ||
+          isStale(topRatedMoviesFetchedAt))
+      ) {
         dispatch({
           type: SET_TOP_RATED_MOVIE_LIST,
           payload: topRatedMovies,
         });
       }
     }
-    // Pagination
-    // Slideshows
+    // slides
     if (topRatedHeroImages) {
-      if (topRatedHeroImagesState?.length) {
-        console.log(
-          'already have topRatedHeroImages in state',
-        );
-      } else if (topRatedHeroImagesState?.fetchedAt) {
-        console.log(
-          'already have fetched at for topRatedHeroImages movies',
-        );
-      } else {
+      if (
+        !topRatedHeroImagesState?.length &&
+        (!topRatedHeroImagesState?.fetchedAt ||
+          isStale(topRatedHeroImagesState.fetchedAt))
+      ) {
         dispatch({
           type: SET_TOP_RATED_SLIDESHOW_PICTURES,
           payload: topRatedHeroImages,
         });
       }
     }
-  }, [
-    topRatedMovies,
-    topRatedHeroImages,
-    topRatedLoading,
-    topRatedError,
-  ]);
-  // NOW PLAYING MOVIES
-  useEffect(() => {
-    // Loading
-    if (nowPlayingLoading) {
-      console.log('nowPlayingLoading', nowPlayingLoading);
-    }
-    // Errors
-    if (nowPlayingError) {
+    // pagination
+    if (
+      topRatedMoviesCurrentPage &&
+      topRatedMoviesCurrentPage !==
+        topRatedMoviesCurrentPageState
+    ) {
       dispatch({
-        type: SET_ERROR,
-        payload: 'Error Fetching Now Playing Movies',
+        type: SET_TOP_RATED_PAGE,
+        payload: {
+          page: topRatedMoviesCurrentPage,
+          totalPages: topRatedMoviesTotalPages,
+        },
       });
     }
-    // Movie Lists
-    if (nowPlayingMovies) {
-      if (nowPlayingMoviesList?.length) {
-        console.log(
-          'already have now playing movies in state',
-        );
-      } else if (nowPlayingMoviesFetchedAt) {
-        console.log(
-          'already have fetched at for now playing movies',
-        );
-      } else {
+
+    // nowPlayingMovies
+    // list
+    if (nowPlayingMovies && nowPlayingMovies?.length > 0) {
+      if (
+        !nowPlayingMoviesList?.length &&
+        (!nowPlayingMoviesFetchedAt ||
+          isStale(nowPlayingMoviesFetchedAt))
+      ) {
         dispatch({
           type: SET_NOW_PLAYING_MOVIE_LIST,
           payload: nowPlayingMovies,
         });
       }
     }
-    // Pagination
-    // Slideshows
+    // slides
     if (nowPlayingHeroImages) {
-      if (nowPlayingHeroImagesState?.length) {
-        console.log(
-          'already have nowPlayingHeroImages in state',
-        );
-      } else if (nowPlayingHeroImagesState?.fetchedAt) {
-        console.log(
-          'already have fetched at for nowPlayingHeroImages movies',
-        );
-      } else {
+      if (
+        !nowPlayingHeroImagesState?.length &&
+        (!nowPlayingHeroImagesState?.fetchedAt ||
+          isStale(nowPlayingHeroImagesState.fetchedAt))
+      ) {
         dispatch({
           type: SET_NOW_PLAYING_SLIDESHOW_PICTURES,
           payload: nowPlayingHeroImages,
         });
       }
     }
+    // pagination
+    if (
+      nowPlayingMoviesCurrentPage &&
+      nowPlayingMoviesCurrentPage !==
+        nowPlayingMoviesCurrentPageState
+    ) {
+      dispatch({
+        type: SET_NOW_PLAYING_PAGE,
+        payload: {
+          page: nowPlayingMoviesCurrentPage,
+          totalPages: nowPlayingMoviesTotalPages,
+        },
+      });
+    }
+
+    // upcomingMovies Lists
+    // list
+    if (upcomingMovies && upcomingMovies?.length > 0) {
+      if (
+        !upcomingMoviesList?.length &&
+        (!upcomingMoviesFetchedAt ||
+          isStale(upcomingMoviesFetchedAt))
+      ) {
+        dispatch({
+          type: SET_UPCOMING_MOVIE_LIST,
+          payload: upcomingMovies,
+        });
+      }
+    }
+    // slides
+    if (upcomingHeroImages) {
+      if (
+        !upcomingHeroImagesState?.length &&
+        (!upcomingHeroImagesState?.fetchedAt ||
+          isStale(upcomingHeroImagesState.fetchedAt))
+      ) {
+        dispatch({
+          type: SET_UPCOMING_SLIDESHOW_PICTURES,
+          payload: upcomingHeroImages,
+        });
+      }
+    }
+    // pagination
+    if (
+      upcomingMoviesCurrentPage &&
+      upcomingMoviesCurrentPage !==
+        upcomingMoviesCurrentPageState
+    ) {
+      dispatch({
+        type: SET_UPCOMING_PAGE,
+        payload: {
+          page: upcomingMoviesCurrentPage,
+          totalPages: upcomingMoviesTotalPages,
+        },
+      });
+    }
   }, [
-    nowPlayingMovies,
+    nowPlayingError,
     nowPlayingHeroImages,
     nowPlayingLoading,
-    nowPlayingError,
+    nowPlayingMovies,
+    popularError,
+    popularHeroImages,
+    popularLoading,
+    popularMovies,
+    topRatedError,
+    topRatedHeroImages,
+    topRatedLoading,
+    topRatedMovies,
+    upcomingError,
+    upcomingHeroImages,
+    upcomingLoading,
+    upcomingMovies,
   ]);
 };
 

@@ -2,10 +2,13 @@ import { connect } from 'react-redux';
 
 import Main from './component';
 
-const mapStateToProps = ({ errors, movieReducers }) => {
+const mapStateToProps = ({
+  movieReducers,
+  pageReducers,
+}) => {
   return {
-    errors,
     movieReducers,
+    pageReducers,
   };
 };
 
