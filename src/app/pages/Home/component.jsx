@@ -6,10 +6,12 @@ import Header from '../../components/Header';
 import Main from '../../components/Main';
 import { useRefreshMovies } from '../../services/movies';
 import { NUMBER_OF_USERS_QUERY } from '../../gql/queries';
-// import { AuthContext } from '../../../auth';
+import { AuthContext } from '../../../auth';
 
 // TODO: ADD LOADING SPINNER COMPONENT
 const HomePage = ({ hardwareReducers }) => {
+  const { authState } = React.useContext(AuthContext);
+  console.log('authState,', authState);
   const { loading } = hardwareReducers;
   useRefreshMovies();
 

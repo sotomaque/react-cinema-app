@@ -33,13 +33,6 @@ const HEADER_LIST = [
   },
 ];
 
-/**
- * Nav bar component
- *
- * @param {string} query (state) - selected query
- *  i.e. 'popular', 'upcoming', 'nowPlaying', etc
- * @param {funct} setQuery - sets query state value
- */
 const Header = ({ pageReducers }) => {
   const dispatch = useDispatch();
   const { query = 'popular' } = pageReducers;
@@ -52,6 +45,14 @@ const Header = ({ pageReducers }) => {
     navClass
       ? document.body.classList.add('header-nav-open')
       : document.body.classList.remove('header-nav-open');
+  };
+
+  const handleListItemClicked = ({ isActive, type }) => {
+    !isActive && dispatch({ type: SET_QUERY, payload: `${type}` });
+    if (navClass) {
+      setMenuClass(prev => !prev);
+      setNavClass(prev => !prev);
+    }
   };
 
   return (
@@ -83,7 +84,7 @@ const Header = ({ pageReducers }) => {
                 <li
                   key={item.id}
                   className={`header-nav-item ${isActive ? 'active-item' : ''}`}
-                  onClick={() => !isActive && dispatch({ type: SET_QUERY, payload: `${item.type}` })}
+                  onClick={() => handleListItemClicked({ isActive, type: item?.type })}
                 >
                   <span className="header-list-name">
                     <i className={item.iconClass} />
