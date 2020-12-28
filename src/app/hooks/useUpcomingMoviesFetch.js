@@ -30,6 +30,8 @@ export const useUpcomingMoviesFetch = () => {
           url: `${IMAGE_URL}${movie.backdrop_path}`,
         });
       });
+      const currentPage = response?.data?.page;
+      const totalPages = response?.data?.total_pages;
       // Get 5 random images for the slide show
       const randomMovies = movieResults
         .sort(() => Math.random() - Math.random())
@@ -40,6 +42,8 @@ export const useUpcomingMoviesFetch = () => {
         ...prev,
         movies: [...movieResults],
         heroImages: prev.heroImages || [...randomMovies],
+        currentPage,
+        totalPages,
       }));
     } catch (error) {
       setError(true);

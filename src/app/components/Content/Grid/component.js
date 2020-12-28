@@ -7,7 +7,7 @@ import './styles.scss';
 const Grid = ({ gridMovies }) => {
   return (
     <div className="grid">
-      {gridMovies.map((movie, index) => (
+      {gridMovies?.map((movie, index) => (
         <div key={index}>
           <div
             className="grid-cell"
