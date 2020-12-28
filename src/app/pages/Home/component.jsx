@@ -15,11 +15,12 @@ const HomePage = ({ hardwareReducers }) => {
 
   const { data: queryData, loading: queryLoading, error } = useQuery(NUMBER_OF_USERS_QUERY);
   if (loading || queryLoading) return (<div>Loading..</div>);
-  if (error){
+  if (error) {
     console.log(error);
-    return(<div>Error....</div>);
+    return (<div>Error....</div>);
   };
   console.log('queryData', queryData);
+
   return (
     <>
       <Header />
