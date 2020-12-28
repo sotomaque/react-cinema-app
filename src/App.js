@@ -7,15 +7,22 @@ import {
 } from 'react-router-dom';
 
 import HomePage from './app/pages/Home';
+import AuthProvider from './auth';
 
 const App = () => {
   return (
-    <Router>
-      <Switch>
-        <Route exact path="/" render={() => <HomePage />} />
-        <Redirect to="/" />
-      </Switch>
-    </Router>
+    <AuthProvider>
+      <Router>
+        <Switch>
+          <Route
+            exact
+            path="/"
+            render={() => <HomePage />}
+          />
+          <Redirect to="/" />
+        </Switch>
+      </Router>
+    </AuthProvider>
   );
 };
 
