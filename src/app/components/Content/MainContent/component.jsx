@@ -9,14 +9,11 @@ import './styles.scss';
 
 const MainContent = ({ movieReducers, pageReducers }) => {
   const { query = 'popular' } = pageReducers;
-  let title = '';
 
   const [gridMovies, setGridMovies] = React.useState(movieReducers?.popularMovies?.list);
   const [slideShowImages, setSlideShowImages] = React.useState(movieReducers?.popularMovies?.heroImages);
 
   React.useEffect(() => {
-    title = query;
-    console.log('query', query);
     if (query === 'now_playing') {
       setGridMovies(movieReducers?.nowPlayingMovies?.list);
       setSlideShowImages(movieReducers?.nowPlayingMovies?.heroImages);
@@ -47,6 +44,13 @@ const MainContent = ({ movieReducers, pageReducers }) => {
         : setCurrentPage(1);
     }
   };
+  // Capital first letter
+  // lowercase everything else
+  const formatTitle = (string) => {
+    // replace '_' with ' ';
+    const stringArray = string.replace('_', ' ');
+    return stringArray.charAt(0).toUpperCase() + stringArray.slice(1);
+  };
 
   return (
     <div className="main-content">
@@ -59,7 +63,7 @@ const MainContent = ({ movieReducers, pageReducers }) => {
         />
       )}
       <div className="grid-movie-title">
-        <div className="movieType">{title}</div>
+        <div className="movieType">{formatTitle(query)}</div>
         <div className="paginate">
           <Paginated
             currentPage={currentPage}

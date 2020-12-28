@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import {
   SET_ERROR,
+  SET_LOADING,
   SET_NOW_PLAYING_MOVIE_LIST,
   SET_NOW_PLAYING_SLIDESHOW_PICTURES,
   SET_POPULAR_MOVIE_LIST,
@@ -35,6 +36,9 @@ import {
 const useRefreshMovies = () => {
   const dispatch = useDispatch();
   // GET REDUX STATE VALUES
+  const loadingState = useSelector(
+    (state) => state.hardwareReducers.loading,
+  );
   // POPULAR MOVIES
   const popularMoviesState = useSelector(
     (state) => state.movieReducers.popularMovies,
@@ -119,18 +123,33 @@ const useRefreshMovies = () => {
   // POPULAR MOVIES
   useEffect(() => {
     // Loading
-    if (popularLoading) {
-      // TODO: SET SPINNER STATE
-      console.log('popularLoading', popularLoading);
+    if (
+      popularLoading ||
+      topRatedLoading ||
+      nowPlayingLoading ||
+      upcomingLoading
+    ) {
+      if (!loadingState) {
+        dispatch({ type: SET_LOADING, payload: true });
+      }
+    } else {
+      if (loadingState) {
+        dispatch({ type: SET_LOADING, payload: false });
+      }
     }
     // Errors
-    if (popularError) {
+    if (
+      popularError ||
+      topRatedError ||
+      nowPlayingError ||
+      upcomingError
+    ) {
       dispatch({
         type: SET_ERROR,
-        payload: 'Error Fetching Popular Movies',
+        payload: `Error`,
       });
     }
-    // Movie Lists
+    // popularMovies
     if (popularMovies) {
       if (popularMoviesList?.length) {
         console.log('already have popular movies in state');
@@ -145,7 +164,6 @@ const useRefreshMovies = () => {
         });
       }
     }
-    // Slideshows
     if (popularHeroImages) {
       if (popularHeroImagesState?.length) {
         console.log(
@@ -162,26 +180,8 @@ const useRefreshMovies = () => {
         });
       }
     }
-  }, [
-    popularMovies,
-    popularHeroImages,
-    popularLoading,
-    popularError,
-  ]);
-  // TOP RATED MOVIES
-  useEffect(() => {
-    // Loading
-    if (topRatedLoading) {
-      console.log('topRatedLoading', topRatedLoading);
-    }
-    // Errors
-    if (topRatedError) {
-      dispatch({
-        type: SET_ERROR,
-        payload: 'Error Fetching Popular Movies',
-      });
-    }
-    // Movie Lists
+
+    // topRatedMovies
     if (topRatedMovies) {
       if (topRatedMoviesList?.length) {
         console.log(
@@ -198,8 +198,6 @@ const useRefreshMovies = () => {
         });
       }
     }
-    // Pagination
-    // Slideshows
     if (topRatedHeroImages) {
       if (topRatedHeroImagesState?.length) {
         console.log(
@@ -216,26 +214,8 @@ const useRefreshMovies = () => {
         });
       }
     }
-  }, [
-    topRatedMovies,
-    topRatedHeroImages,
-    topRatedLoading,
-    topRatedError,
-  ]);
-  // NOW PLAYING MOVIES
-  useEffect(() => {
-    // Loading
-    if (nowPlayingLoading) {
-      console.log('nowPlayingLoading', nowPlayingLoading);
-    }
-    // Errors
-    if (nowPlayingError) {
-      dispatch({
-        type: SET_ERROR,
-        payload: 'Error Fetching Now Playing Movies',
-      });
-    }
-    // Movie Lists
+
+    // nowPlayingMovies
     if (nowPlayingMovies) {
       if (nowPlayingMoviesList?.length) {
         console.log(
@@ -252,8 +232,6 @@ const useRefreshMovies = () => {
         });
       }
     }
-    // Pagination
-    // Slideshows
     if (nowPlayingHeroImages) {
       if (nowPlayingHeroImagesState?.length) {
         console.log(
@@ -270,26 +248,8 @@ const useRefreshMovies = () => {
         });
       }
     }
-  }, [
-    nowPlayingMovies,
-    nowPlayingHeroImages,
-    nowPlayingLoading,
-    nowPlayingError,
-  ]);
-  // UPCOMING MOVIES
-  useEffect(() => {
-    // Loading
-    if (upcomingLoading) {
-      console.log('upcomingLoading', upcomingLoading);
-    }
-    // Errors
-    if (upcomingError) {
-      dispatch({
-        type: SET_ERROR,
-        payload: 'Error Fetching Upcoming Movies',
-      });
-    }
-    // Movie Lists
+
+    // upcomingMovies Lists
     if (upcomingMovies) {
       if (upcomingMoviesList?.length) {
         console.log(
@@ -306,8 +266,6 @@ const useRefreshMovies = () => {
         });
       }
     }
-    // Pagination
-    // Slideshows
     if (upcomingHeroImages) {
       if (upcomingHeroImagesState?.length) {
         console.log(
@@ -325,6 +283,18 @@ const useRefreshMovies = () => {
       }
     }
   }, [
+    popularMovies,
+    popularHeroImages,
+    popularLoading,
+    popularError,
+    topRatedMovies,
+    topRatedHeroImages,
+    topRatedLoading,
+    topRatedError,
+    nowPlayingMovies,
+    nowPlayingHeroImages,
+    nowPlayingLoading,
+    nowPlayingError,
     upcomingMovies,
     upcomingHeroImages,
     upcomingLoading,
