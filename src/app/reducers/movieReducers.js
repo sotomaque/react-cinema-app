@@ -9,6 +9,7 @@ import {
   SET_TOP_RATED_PAGE,
   SET_TOP_RATED_SLIDESHOW_PICTURES,
   SET_UPCOMING_MOVIE_LIST,
+  SET_UPCOMING_PAGE,
   SET_UPCOMING_SLIDESHOW_PICTURES,
 } from '../actions/types';
 
@@ -58,7 +59,7 @@ export default (state = initialState, action) => {
         popularMovies: {
           ...state.popularMovies,
           list: action.payload,
-          fetchedAt: new Date().toISOString(),
+          fetchedAt: new Date(),
         },
       };
 
@@ -75,7 +76,7 @@ export default (state = initialState, action) => {
         nowPlayingMovies: {
           ...state.nowPlayingMovies,
           list: action.payload,
-          fetchedAt: new Date().toISOString(),
+          fetchedAt: new Date(),
         },
       };
 
@@ -92,7 +93,7 @@ export default (state = initialState, action) => {
         topRatedMovies: {
           ...state.topRatedMovies,
           list: action.payload,
-          fetchedAt: new Date().toISOString(),
+          fetchedAt: new Date(),
         },
       };
 
@@ -109,7 +110,7 @@ export default (state = initialState, action) => {
         upcomingMovies: {
           ...state.upcomingMovies,
           list: action.payload,
-          fetchedAt: new Date().toISOString(),
+          fetchedAt: new Date(),
         },
       };
 
@@ -126,7 +127,7 @@ export default (state = initialState, action) => {
         upcomingMovies: {
           ...state.upcomingMovies,
           heroImages: action.payload,
-          fetchedAt: new Date().toISOString(),
+          fetchedAt: new Date(),
         },
       };
 
@@ -143,7 +144,7 @@ export default (state = initialState, action) => {
         popularMovies: {
           ...state.popularMovies,
           heroImages: action.payload,
-          fetchedAt: new Date().toISOString(),
+          fetchedAt: new Date(),
         },
       };
 
@@ -160,7 +161,7 @@ export default (state = initialState, action) => {
         nowPlayingMovies: {
           ...state.nowPlayingMovies,
           heroImages: action.payload,
-          fetchedAt: new Date().toISOString(),
+          fetchedAt: new Date(),
         },
       };
 
@@ -177,7 +178,7 @@ export default (state = initialState, action) => {
         topRatedMovies: {
           ...state.topRatedMovies,
           heroImages: action.payload,
-          fetchedAt: new Date().toISOString(),
+          fetchedAt: new Date(),
         },
       };
 
@@ -186,6 +187,16 @@ export default (state = initialState, action) => {
         ...state,
         popularMovies: {
           ...state.popularMovies,
+          page: action.payload.page,
+          totalPages: action.payload.totalPages,
+        },
+      };
+
+    case SET_UPCOMING_PAGE:
+      return {
+        ...state,
+        upcomingMovies: {
+          ...state.upcomingMovies,
           page: action.payload.page,
           totalPages: action.payload.totalPages,
         },

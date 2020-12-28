@@ -4,6 +4,7 @@ import Header from '../../components/Header';
 import Main from '../../components/Main';
 import { useRefreshMovies } from '../../services/movies';
 
+// TODO: ADD LOADING SPINNER COMPONENT
 const HomePage = ({ hardwareReducers }) => {
   const { loading } = hardwareReducers;
   useRefreshMovies();
