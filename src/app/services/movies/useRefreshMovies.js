@@ -10,11 +10,14 @@ import {
   SET_POPULAR_SLIDESHOW_PICTURES,
   SET_TOP_RATED_MOVIE_LIST,
   SET_TOP_RATED_SLIDESHOW_PICTURES,
+  SET_UPCOMING_MOVIE_LIST,
+  SET_UPCOMING_SLIDESHOW_PICTURES,
 } from '../../actions/types';
 import {
   usePopularMoviesFetch,
   useTopRatedMoviesFetch,
   useNowPlayingMoviesFetch,
+  useUpcomingMoviesFetch,
 } from '../../hooks';
 
 /**
@@ -59,6 +62,15 @@ const useRefreshMovies = () => {
     fetchedAt: nowPlayingMoviesFetchedAt,
     heroImages: nowPlayingHeroImagesState,
   } = nowPlayingMoviesState;
+  // UPCOMING
+  const upcomingMoviesState = useSelector(
+    (state) => state.movieReducers.upcomingMovies,
+  );
+  const {
+    list: upcomingMoviesList,
+    fetchedAt: upcomingMoviesFetchedAt,
+    heroImages: upcomingHeroImagesState,
+  } = upcomingMoviesState;
   // GET API VALUES
   const [
     {
@@ -92,6 +104,16 @@ const useRefreshMovies = () => {
       error: nowPlayingError,
     },
   ] = useNowPlayingMoviesFetch();
+  const [
+    {
+      state: {
+        movies: upcomingMovies,
+        heroImages: upcomingHeroImages,
+      },
+      loading: upcomingLoading,
+      error: upcomingError,
+    },
+  ] = useUpcomingMoviesFetch();
   // COMPARE REDUX TO API VALUES
   // CONDITIONALLY UPDATE REDUX IF STALE
   // POPULAR MOVIES
@@ -253,6 +275,60 @@ const useRefreshMovies = () => {
     nowPlayingHeroImages,
     nowPlayingLoading,
     nowPlayingError,
+  ]);
+  // UPCOMING MOVIES
+  useEffect(() => {
+    // Loading
+    if (upcomingLoading) {
+      console.log('upcomingLoading', upcomingLoading);
+    }
+    // Errors
+    if (upcomingError) {
+      dispatch({
+        type: SET_ERROR,
+        payload: 'Error Fetching Upcoming Movies',
+      });
+    }
+    // Movie Lists
+    if (upcomingMovies) {
+      if (upcomingMoviesList?.length) {
+        console.log(
+          'already have upcoming movies in state',
+        );
+      } else if (upcomingMoviesFetchedAt) {
+        console.log(
+          'already have fetched at for upcoming movies',
+        );
+      } else {
+        dispatch({
+          type: SET_UPCOMING_MOVIE_LIST,
+          payload: upcomingMovies,
+        });
+      }
+    }
+    // Pagination
+    // Slideshows
+    if (upcomingHeroImages) {
+      if (upcomingHeroImagesState?.length) {
+        console.log(
+          'already have upcomingHeroImages in state',
+        );
+      } else if (upcomingHeroImagesState?.fetchedAt) {
+        console.log(
+          'already have fetched at for upcomingHeroImages movies',
+        );
+      } else {
+        dispatch({
+          type: SET_UPCOMING_SLIDESHOW_PICTURES,
+          payload: upcomingHeroImages,
+        });
+      }
+    }
+  }, [
+    upcomingMovies,
+    upcomingHeroImages,
+    upcomingLoading,
+    upcomingError,
   ]);
 };
 

@@ -8,6 +8,8 @@ import {
   SET_TOP_RATED_MOVIE_LIST,
   SET_TOP_RATED_PAGE,
   SET_TOP_RATED_SLIDESHOW_PICTURES,
+  SET_UPCOMING_MOVIE_LIST,
+  SET_UPCOMING_SLIDESHOW_PICTURES,
 } from '../actions/types';
 
 const initialState = {
@@ -26,6 +28,13 @@ const initialState = {
     fetchedAt: '',
   },
   nowPlayingMovies: {
+    page: 1,
+    totalPages: 0,
+    list: [],
+    heroImages: [],
+    fetchedAt: '',
+  },
+  upcomingMovies: {
     page: 1,
     totalPages: 0,
     list: [],
@@ -83,6 +92,40 @@ export default (state = initialState, action) => {
         topRatedMovies: {
           ...state.topRatedMovies,
           list: action.payload,
+          fetchedAt: new Date().toISOString(),
+        },
+      };
+
+    case SET_UPCOMING_MOVIE_LIST:
+      if (
+        !action.payload ||
+        !action.payload?.length ||
+        action.payload?.length === 0
+      ) {
+        return state;
+      }
+      return {
+        ...state,
+        upcomingMovies: {
+          ...state.upcomingMovies,
+          list: action.payload,
+          fetchedAt: new Date().toISOString(),
+        },
+      };
+
+    case SET_UPCOMING_SLIDESHOW_PICTURES:
+      if (
+        !action.payload ||
+        !action.payload?.length ||
+        action.payload?.length === 0
+      ) {
+        return state;
+      }
+      return {
+        ...state,
+        upcomingMovies: {
+          ...state.upcomingMovies,
+          heroImages: action.payload,
           fetchedAt: new Date().toISOString(),
         },
       };

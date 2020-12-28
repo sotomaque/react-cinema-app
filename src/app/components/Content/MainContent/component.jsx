@@ -1,8 +1,6 @@
-/* eslint-disable */
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { IMAGE_URL } from '../../../const';
 import SlideShow from '../SlideShow';
 import Paginated from '../../Paginated';
 import Grid from '../Grid';
@@ -13,8 +11,8 @@ const MainContent = ({ movieReducers, pageReducers }) => {
   const { query = 'popular' } = pageReducers;
   let title = '';
 
-  const [gridMovies, setGridMovies] = React.useState(movieReducers?.popularMovies?.list)
-  const [slideShowImages, setSlideShowImages] = React.useState(movieReducers?.popularMovies?.heroImages)
+  const [gridMovies, setGridMovies] = React.useState(movieReducers?.popularMovies?.list);
+  const [slideShowImages, setSlideShowImages] = React.useState(movieReducers?.popularMovies?.heroImages);
 
   React.useEffect(() => {
     title = query;
@@ -34,7 +32,6 @@ const MainContent = ({ movieReducers, pageReducers }) => {
         setSlideShowImages(movieReducers?.popularMovies?.heroImages);
       }
     }
-
   }, [query, gridMovies, slideShowImages]);
 
   const [currentPage, setCurrentPage] = React.useState(1);
