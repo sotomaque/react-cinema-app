@@ -4,12 +4,12 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import {
   SET_ERROR,
+  SET_NOW_PLAYING_MOVIE_LIST,
+  SET_NOW_PLAYING_SLIDESHOW_PICTURES,
   SET_POPULAR_MOVIE_LIST,
   SET_POPULAR_SLIDESHOW_PICTURES,
   SET_TOP_RATED_MOVIE_LIST,
   SET_TOP_RATED_SLIDESHOW_PICTURES,
-  SET_NOW_PLAYING_MOVIE_LIST,
-  SET_NOW_PLAYING_SLIDESHOW_PICTURES,
 } from '../../actions/types';
 import {
   usePopularMoviesFetch,
@@ -25,6 +25,7 @@ const useRefreshMovies = () => {
   const {
     list: popularMoviesList,
     fetchedAt: popularMoviesFetchedAt,
+    heroImages: popularHeroImagesState,
   } = popularMoviesState;
 
   const topRatedMoviesState = useSelector(
@@ -33,6 +34,7 @@ const useRefreshMovies = () => {
   const {
     list: topRatedMoviesList,
     fetchedAt: topRatedMoviesFetchedAt,
+    heroImages: topRatedHeroImagesState,
   } = topRatedMoviesState;
 
   const nowPlayingMoviesState = useSelector(
@@ -41,6 +43,7 @@ const useRefreshMovies = () => {
   const {
     list: nowPlayingMoviesList,
     fetchedAt: nowPlayingMoviesFetchedAt,
+    heroImages: nowPlayingHeroImagesState,
   } = nowPlayingMoviesState;
 
   const [
@@ -89,7 +92,7 @@ const useRefreshMovies = () => {
         payload: 'Error Fetching Popular Movies',
       });
     }
-    // Movie Listss
+    // Movie Lists
     if (popularMovies) {
       if (popularMoviesList?.length) {
         console.log('already have popular movies in state');
@@ -104,13 +107,22 @@ const useRefreshMovies = () => {
         });
       }
     }
-
     // Slideshows
     if (popularHeroImages) {
-      dispatch({
-        type: SET_POPULAR_SLIDESHOW_PICTURES,
-        payload: popularHeroImages,
-      });
+      if (popularHeroImagesState?.length) {
+        console.log(
+          'already have popularHeroImages in state',
+        );
+      } else if (popularHeroImagesState?.fetchedAt) {
+        console.log(
+          'already have fetched at for popularHeroImages movies',
+        );
+      } else {
+        dispatch({
+          type: SET_POPULAR_SLIDESHOW_PICTURES,
+          payload: popularHeroImages,
+        });
+      }
     }
   }, [
     popularMovies,
@@ -131,7 +143,7 @@ const useRefreshMovies = () => {
         payload: 'Error Fetching Popular Movies',
       });
     }
-    // Movie Listss
+    // Movie Lists
     if (topRatedMovies) {
       if (topRatedMoviesList?.length) {
         console.log(
@@ -149,13 +161,22 @@ const useRefreshMovies = () => {
       }
     }
     // Pagination
-
     // Slideshows
     if (topRatedHeroImages) {
-      dispatch({
-        type: SET_TOP_RATED_SLIDESHOW_PICTURES,
-        payload: topRatedHeroImages,
-      });
+      if (topRatedHeroImagesState?.length) {
+        console.log(
+          'already have topRatedHeroImages in state',
+        );
+      } else if (topRatedHeroImagesState?.fetchedAt) {
+        console.log(
+          'already have fetched at for topRatedHeroImages movies',
+        );
+      } else {
+        dispatch({
+          type: SET_TOP_RATED_SLIDESHOW_PICTURES,
+          payload: topRatedHeroImages,
+        });
+      }
     }
   }, [
     topRatedMovies,
@@ -176,7 +197,7 @@ const useRefreshMovies = () => {
         payload: 'Error Fetching Now Playing Movies',
       });
     }
-    // Movie Listss
+    // Movie Lists
     if (nowPlayingMovies) {
       if (nowPlayingMoviesList?.length) {
         console.log(
@@ -194,13 +215,22 @@ const useRefreshMovies = () => {
       }
     }
     // Pagination
-
     // Slideshows
     if (nowPlayingHeroImages) {
-      dispatch({
-        type: SET_NOW_PLAYING_SLIDESHOW_PICTURES,
-        payload: nowPlayingHeroImages,
-      });
+      if (nowPlayingHeroImagesState?.length) {
+        console.log(
+          'already have nowPlayingHeroImages in state',
+        );
+      } else if (nowPlayingHeroImagesState?.fetchedAt) {
+        console.log(
+          'already have fetched at for nowPlayingHeroImages movies',
+        );
+      } else {
+        dispatch({
+          type: SET_NOW_PLAYING_SLIDESHOW_PICTURES,
+          payload: nowPlayingHeroImages,
+        });
+      }
     }
   }, [
     nowPlayingMovies,

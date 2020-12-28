@@ -1,12 +1,12 @@
 import {
-  SET_POPULAR_MOVIE_LIST,
   SET_NOW_PLAYING_MOVIE_LIST,
-  SET_TOP_RATED_MOVIE_LIST,
-  SET_POPULAR_PAGE,
-  SET_TOP_RATED_PAGE,
   SET_NOW_PLAYING_PAGE,
-  SET_POPULAR_SLIDESHOW_PICTURES,
   SET_NOW_PLAYING_SLIDESHOW_PICTURES,
+  SET_POPULAR_MOVIE_LIST,
+  SET_POPULAR_PAGE,
+  SET_POPULAR_SLIDESHOW_PICTURES,
+  SET_TOP_RATED_MOVIE_LIST,
+  SET_TOP_RATED_PAGE,
   SET_TOP_RATED_SLIDESHOW_PICTURES,
 } from '../actions/types';
 
@@ -88,29 +88,53 @@ export default (state = initialState, action) => {
       };
 
     case SET_POPULAR_SLIDESHOW_PICTURES:
+      if (
+        !action.payload ||
+        !action.payload?.length ||
+        action.payload?.length === 0
+      ) {
+        return state;
+      }
       return {
         ...state,
         popularMovies: {
           ...state.popularMovies,
           heroImages: action.payload,
+          fetchedAt: new Date().toISOString(),
         },
       };
 
     case SET_NOW_PLAYING_SLIDESHOW_PICTURES:
+      if (
+        !action.payload ||
+        !action.payload?.length ||
+        action.payload?.length === 0
+      ) {
+        return state;
+      }
       return {
         ...state,
         nowPlayingMovies: {
           ...state.nowPlayingMovies,
           heroImages: action.payload,
+          fetchedAt: new Date().toISOString(),
         },
       };
 
     case SET_TOP_RATED_SLIDESHOW_PICTURES:
+      if (
+        !action.payload ||
+        !action.payload?.length ||
+        action.payload?.length === 0
+      ) {
+        return state;
+      }
       return {
         ...state,
         topRatedMovies: {
           ...state.topRatedMovies,
           heroImages: action.payload,
+          fetchedAt: new Date().toISOString(),
         },
       };
 
