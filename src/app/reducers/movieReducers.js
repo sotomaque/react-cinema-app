@@ -16,47 +16,74 @@ const initialState = {
     totalPages: 0,
     list: [],
     heroImages: [],
+    fetchedAt: '',
   },
   topRatedMovies: {
     page: 1,
     totalPages: 0,
     list: [],
     heroImages: [],
+    fetchedAt: '',
   },
   nowPlayingMovies: {
     page: 1,
     totalPages: 0,
     list: [],
     heroImages: [],
+    fetchedAt: '',
   },
 };
 
 export default (state = initialState, action) => {
   switch (action.type) {
     case SET_POPULAR_MOVIE_LIST:
+      if (
+        !action.payload ||
+        !action.payload?.length ||
+        action.payload?.length === 0
+      ) {
+        return state;
+      }
       return {
         ...state,
         popularMovies: {
           ...state.popularMovies,
           list: action.payload,
+          fetchedAt: new Date().toISOString(),
         },
       };
 
     case SET_NOW_PLAYING_MOVIE_LIST:
+      if (
+        !action.payload ||
+        !action.payload?.length ||
+        action.payload?.length === 0
+      ) {
+        return state;
+      }
       return {
         ...state,
         nowPlayingMovies: {
           ...state.nowPlayingMovies,
           list: action.payload,
+          fetchedAt: new Date().toISOString(),
         },
       };
 
     case SET_TOP_RATED_MOVIE_LIST:
+      if (
+        !action.payload ||
+        !action.payload?.length ||
+        action.payload?.length === 0
+      ) {
+        return state;
+      }
       return {
         ...state,
         topRatedMovies: {
           ...state.topRatedMovies,
           list: action.payload,
+          fetchedAt: new Date().toISOString(),
         },
       };
 

@@ -20,15 +20,29 @@ import {
 const useRefreshMovies = () => {
   const dispatch = useDispatch();
   const popularMoviesState = useSelector(
-    (moviesReducer) => moviesReducer?.popularMovies?.list,
+    (state) => state.movieReducers.popularMovies,
   );
+  const {
+    list: popularMoviesList,
+    fetchedAt: popularMoviesFetchedAt,
+  } = popularMoviesState;
+
   const topRatedMoviesState = useSelector(
-    (moviesReducer) => moviesReducer?.topRatedMovies?.list,
+    (state) => state.movieReducers.topRatedMovies,
   );
+  const {
+    list: topRatedMoviesList,
+    fetchedAt: topRatedMoviesFetchedAt,
+  } = topRatedMoviesState;
+
   const nowPlayingMoviesState = useSelector(
-    (moviesReducer) =>
-      moviesReducer?.nowPlayingMoviews?.list,
+    (state) => state.movieReducers.nowPlayingMovies,
   );
+  const {
+    list: nowPlayingMoviesList,
+    fetchedAt: nowPlayingMoviesFetchedAt,
+  } = nowPlayingMoviesState;
+
   const [
     {
       state: {
@@ -76,14 +90,19 @@ const useRefreshMovies = () => {
       });
     }
     // Movie Listss
-    if (
-      popularMovies &&
-      popularMovies !== popularMoviesState
-    ) {
-      dispatch({
-        type: SET_POPULAR_MOVIE_LIST,
-        payload: popularMovies,
-      });
+    if (popularMovies) {
+      if (popularMoviesList?.length) {
+        console.log('already have popular movies in state');
+      } else if (popularMoviesFetchedAt) {
+        console.log(
+          'already have fetched at for popular movies',
+        );
+      } else {
+        dispatch({
+          type: SET_POPULAR_MOVIE_LIST,
+          payload: popularMovies,
+        });
+      }
     }
 
     // Slideshows
@@ -113,14 +132,21 @@ const useRefreshMovies = () => {
       });
     }
     // Movie Listss
-    if (
-      topRatedMovies &&
-      topRatedMovies !== topRatedMoviesState
-    ) {
-      dispatch({
-        type: SET_TOP_RATED_MOVIE_LIST,
-        payload: topRatedMovies,
-      });
+    if (topRatedMovies) {
+      if (topRatedMoviesList?.length) {
+        console.log(
+          'already have top rated movies in state',
+        );
+      } else if (topRatedMoviesFetchedAt) {
+        console.log(
+          'already have fetched at for top rated movies',
+        );
+      } else {
+        dispatch({
+          type: SET_TOP_RATED_MOVIE_LIST,
+          payload: topRatedMovies,
+        });
+      }
     }
     // Pagination
 
@@ -151,14 +177,21 @@ const useRefreshMovies = () => {
       });
     }
     // Movie Listss
-    if (
-      nowPlayingMovies &&
-      nowPlayingMovies !== nowPlayingMoviesState
-    ) {
-      dispatch({
-        type: SET_NOW_PLAYING_MOVIE_LIST,
-        payload: nowPlayingMovies,
-      });
+    if (nowPlayingMovies) {
+      if (nowPlayingMoviesList?.length) {
+        console.log(
+          'already have now playing movies in state',
+        );
+      } else if (nowPlayingMoviesFetchedAt) {
+        console.log(
+          'already have fetched at for now playing movies',
+        );
+      } else {
+        dispatch({
+          type: SET_NOW_PLAYING_MOVIE_LIST,
+          payload: nowPlayingMovies,
+        });
+      }
     }
     // Pagination
 

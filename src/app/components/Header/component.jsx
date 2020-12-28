@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import useRefreshMovies from '../../services/movies/useRefreshMovies';
+import { useRefreshMovies } from '../../services/movies';
 import { logo } from '../../assets';
 import './styles.scss';
 
