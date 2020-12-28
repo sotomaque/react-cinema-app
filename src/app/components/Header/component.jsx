@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
+import useRefreshMovies from '../../services/movies/useRefreshMovies';
 import { logo } from '../../assets';
 import './styles.scss';
 
@@ -40,10 +41,11 @@ const Header = () => {
   const [navClass, setNavClass] = React.useState(false);
   const [menuClass, setMenuClass] = React.useState(false);
 
+  useRefreshMovies();
+
   const handleClick = () => {
     setMenuClass(prev => !prev);
     setNavClass(prev => !prev);
-
     navClass
       ? document.body.classList.add('header-nav-open')
       : document.body.classList.remove('header-nav-open');
