@@ -5,47 +5,46 @@ import PropTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
 import clsx from 'clsx';
 import {
-  makeStyles,
   createMuiTheme,
+  makeStyles,
   ThemeProvider,
 } from '@material-ui/core/styles';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import Switch from '@material-ui/core/Switch';
-import Drawer from '@material-ui/core/Drawer';
 import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import List from '@material-ui/core/List';
-import Typography from '@material-ui/core/Typography';
-import Divider from '@material-ui/core/Divider';
-import IconButton from '@material-ui/core/IconButton';
 import Badge from '@material-ui/core/Badge';
-import MenuIcon from '@material-ui/icons/Menu';
-import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import NotificationsIcon from '@material-ui/icons/Notifications';
-import {
-  orange,
-  lightBlue,
-  deepPurple,
-  deepOrange,
-} from '@material-ui/core/colors';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import Divider from '@material-ui/core/Divider';
+import Drawer from '@material-ui/core/Drawer';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import HelpIcon from '@material-ui/icons/Help';
+import IconButton from '@material-ui/core/IconButton';
 import ImportContactsIcon from '@material-ui/icons/ImportContacts';
+import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
+import MenuIcon from '@material-ui/icons/Menu';
 import MovieIcon from '@material-ui/icons/Movie';
+import NotificationsIcon from '@material-ui/icons/Notifications';
+import PersonAddIcon from '@material-ui/icons/PersonAdd';
 import PersonIcon from '@material-ui/icons/Person';
 import SchoolIcon from '@material-ui/icons/School';
 import SettingsIcon from '@material-ui/icons/Settings';
 import SlideshowIcon from '@material-ui/icons/Slideshow';
+import Switch from '@material-ui/core/Switch';
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
+import {
+  deepOrange,
+  deepPurple,
+  lightBlue,
+  orange,
+} from '@material-ui/core/colors';
 
 import LoadingSpinner from '../../components/LoadingSpinner';
 import { useRefreshMovies } from '../../services/movies';
-// import Header from '../../components/Header';
-// import Main from '../../components/Main';
-import { AuthContext } from '../../../auth';
 import MainContent from '../../components/Content/MainContent';
+import { AuthContext } from '../../../auth';
 
 const drawerWidth = 240;
 
@@ -187,41 +186,49 @@ const HomePage = ({ hardwareReducers, getMovies }) => {
   //   };
   //   fetchData();
   // }, []);
+  
+  if (loading || LOCAL_LOADING_STATE) {
+    return (
+      <LoadingSpinner />
+    );
+  }
 
   const handleLogoutClicked = () => {
     setLoading(true);
     setTimeout(() => {
       signOut();
-      setLoading(false)
+      setLoading(false);
       history.push('/login');
     }, 1000);
   };
 
   const mainListItems = (
     <div>
-      { LOGGED_IN ? (
-        <ListItem button>
-          <ListItemIcon>
-            <PersonIcon />
-          </ListItemIcon>
-          <ListItemText primary="Profile" />
-        </ListItem>
-        ) : (
-          <>
+      { LOGGED_IN
+        ? (
             <ListItem button>
               <ListItemIcon>
                 <PersonIcon />
               </ListItemIcon>
-              <ListItemText primary="Login" />
+              <ListItemText primary="Profile" />
             </ListItem>
-            <ListItem button>
-              <ListItemIcon>
-                <PersonIcon />
-              </ListItemIcon>
-              <ListItemText primary="Sign Up" />
-            </ListItem>
-          </>
-        )
+          )
+        : (
+            <>
+              <ListItem button onClick={() => history.push('/login')}>
+                <ListItemIcon>
+                  <PersonIcon />
+                </ListItemIcon>
+                <ListItemText primary="Login" />
+              </ListItem>
+              <ListItem button onClick={() => history.push('/register')}>
+                <ListItemIcon>
+                  <PersonAddIcon />
+                </ListItemIcon>
+                <ListItemText primary="Sign Up" />
+              </ListItem>
+            </>
+          )
       }
       <hr />
       <ListItem button>
@@ -250,7 +257,7 @@ const HomePage = ({ hardwareReducers, getMovies }) => {
       </ListItem>
     </div>
   );
-  
+
   const secondaryListItems = (
     <div>
       <ListItem button>
@@ -273,20 +280,6 @@ const HomePage = ({ hardwareReducers, getMovies }) => {
       </ListItem>
     </div>
   );
-  
-  if (loading || LOCAL_LOADING_STATE) {
-    return (
-      <LoadingSpinner />
-    );
-  }
-
-  const RenderMainContent = () => {
-    return (
-      <main className={classes.content}>
-        <MainContent />
-      </main>
-    );
-  };
 
   return (
     <ThemeProvider theme={darkTheme}>
@@ -352,7 +345,9 @@ const HomePage = ({ hardwareReducers, getMovies }) => {
             }
           </div>
         </Drawer>
-        <RenderMainContent />
+        <main className={classes.content}>
+          <MainContent />
+        </main>
       </div>
     </ThemeProvider>
   );
