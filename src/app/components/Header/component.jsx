@@ -100,18 +100,18 @@ const Header = ({ pageReducers }) => {
           {/* Links */}
           {
             showMainLinks && HEADER_LIST.map(item => {
-              const isActive = item.type === query;
+              const isActive = item?.type === query;
               return (
                 <li
-                  key={item.id}
+                  key={item?.id}
                   className={`header-nav-item ${isActive ? 'active-item' : ''}`}
                   onClick={() => handleListItemClicked({ isActive, type: item?.type })}
                 >
                   <span className="header-list-name">
-                    <i className={item.iconClass} />
+                    <i className={item?.iconClass} />
                   </span>
                   &nbsp;
-                  <span className="header-list-name">{item.name}</span>
+                  <span className="header-list-name">{item?.name}</span>
                 </li>
               );
             })
@@ -120,13 +120,13 @@ const Header = ({ pageReducers }) => {
           {
             showAuthList && AUTH_LIST.map(item => {
               return (
-                <Link key={item.id} to={`/${item?.type}`}>
+                <Link key={item?.id} to={`/${item?.type}`}>
                 <li className='header-nav-item'>
                   <span className="header-list-name">
-                    <i className={item.iconClass} />
+                    <i className={item?.iconClass} />
                   </span>
                   &nbsp;
-                  <span className="header-list-name">{item.name}</span>
+                  <span className="header-list-name">{item?.name}</span>
                 </li>
                 </Link>
               );

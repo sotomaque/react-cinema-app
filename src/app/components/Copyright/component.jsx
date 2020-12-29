@@ -10,6 +10,6 @@ const Copyright = () => {
       {'.'}
     </Typography>
   );
-}
+};
 
 export default Copyright;
