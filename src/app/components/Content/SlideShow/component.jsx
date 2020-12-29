@@ -13,7 +13,6 @@ import './styles.scss';
  * @param {boolean} arrows - default = false - if true -> show arrows to manually change image index
  */
 const SlideShow = ({ images, auto = false, arrows = false }) => {
-  console.log('images', images);
   const [state, setState] = React.useState({
     slideShow: images[0],
     slideIndex: 0,

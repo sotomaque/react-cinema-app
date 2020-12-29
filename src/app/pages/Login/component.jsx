@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link, useHistory } from 'react-router-dom';
-
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -12,6 +11,7 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 
+import Error from '../../components/Error';
 import Copyright from '../../components/Copyright';
 import { AuthContext } from '../../../auth';
 
@@ -53,10 +53,27 @@ const LoginPage = () => {
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
   const [isButtonDisabled, setIsButtonDisabled] = React.useState(true);
+  const [error, setError] = React.useState('');
+
+  const handleError = (error) => {
+    if (error?.message?.includes('users_username_key')) {
+      setError('Username already taken');
+    } else if (error?.code?.includes('auth')) {
+      setError(error?.message);
+    } else {
+      setError(`Unknown Error, ${error}`);
+    }
+  };
 
   const handleSubmit = async ({ email, password }) => {
-    await loginWithEmailAndPassword(email, password);
-    history.push('/');
+    try {
+      setError('');
+      await loginWithEmailAndPassword(email, password);
+      history.push('/');
+    } catch (err) {
+      handleError(err);
+      console.error(err);
+    };
   };
 
   React.useEffect(() => {
@@ -110,6 +127,9 @@ const LoginPage = () => {
               value={password}
               variant="outlined"
             />
+            {
+              error && <Error error={error} />
+            }
             <Button
               className={classes.submit}
               color="primary"
@@ -135,9 +155,6 @@ const LoginPage = () => {
             <Box mt={5}>
               <Copyright />
             </Box>
-            {/* {
-              mutationError && <Error error={mutationError} />
-            } */}
           </form>
         </div>
       </Grid>

@@ -40,10 +40,9 @@ const HomePage = ({ hardwareReducers }) => {
   }
 
   if (error) {
-    console.log(error);
     return (<div>Error....</div>);
   };
-  console.log('queryData', queryData);
+  if (queryData) console.log('queryData', queryData);
 
   return (
     <>
