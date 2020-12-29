@@ -23,10 +23,7 @@ const useStyles = makeStyles((theme) => ({
 
 // TODO: ADD LOADING SPINNER COMPONENT
 const HomePage = ({ hardwareReducers }) => {
-  const { authState } = React.useContext(AuthContext);
   const classes = useStyles();
-
-  console.log('authState,', authState);
   const { loading } = hardwareReducers;
   useRefreshMovies();
 

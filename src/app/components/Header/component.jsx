@@ -1,7 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 
+import { AuthContext } from '../../../auth';
 import { SET_QUERY } from '../../actions/types';
 import { logo } from '../../assets';
 import './styles.scss';
@@ -33,7 +35,23 @@ const HEADER_LIST = [
   },
 ];
 
+const AUTH_LIST = [
+  {
+    id: 5,
+    iconClass: 'fas fa-plus-square',
+    name: 'Login',
+    type: 'login',
+  },
+  {
+    id: 6,
+    iconClass: 'fas fa-plus-square',
+    name: 'Sign Up',
+    type: 'register',
+  }
+];
+
 const Header = ({ pageReducers }) => {
+  const { authState } = React.useContext(AuthContext);
   const dispatch = useDispatch();
   const { query = 'popular' } = pageReducers;
   const [navClass, setNavClass] = React.useState(false);
@@ -54,6 +72,9 @@ const Header = ({ pageReducers }) => {
       setNavClass(prev => !prev);
     }
   };
+
+  const showAuthList = authState?.status === 'out';
+  const showMainLinks = !showAuthList;
 
   return (
     <div className="header-nav-wrapper">
@@ -78,7 +99,7 @@ const Header = ({ pageReducers }) => {
         <ul className={`header-nav ${navClass ? 'header-mobile-nav' : ''}`}>
           {/* Links */}
           {
-            HEADER_LIST.map(item => {
+            showMainLinks && HEADER_LIST.map(item => {
               const isActive = item.type === query;
               return (
                 <li
@@ -92,6 +113,22 @@ const Header = ({ pageReducers }) => {
                   &nbsp;
                   <span className="header-list-name">{item.name}</span>
                 </li>
+              );
+            })
+          }
+          {/* Auth Links */}
+          {
+            showAuthList && AUTH_LIST.map(item => {
+              return (
+                <Link key={item.id} to={`/${item?.type}`}>
+                <li className='header-nav-item'>
+                  <span className="header-list-name">
+                    <i className={item.iconClass} />
+                  </span>
+                  &nbsp;
+                  <span className="header-list-name">{item.name}</span>
+                </li>
+                </Link>
               );
             })
           }
