@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 
-import RegisterPage from './component';
+import HomePage from './component';
 
 const mapStateToProps = ({
   pageReducers,
@@ -12,6 +12,6 @@ const mapStateToProps = ({
   };
 };
 
-const Connected = connect(mapStateToProps)(RegisterPage);
+const Connected = connect(mapStateToProps)(HomePage);
 
 export { Connected };

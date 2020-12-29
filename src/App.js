@@ -6,8 +6,11 @@ import {
   Redirect,
 } from 'react-router-dom';
 
-import HomePage from './app/pages/Home';
 import AuthProvider from './auth';
+
+import HomePage from './app/pages/Home';
+import LoginPage from './app/pages/Login';
+import RegisterPage from './app/pages/Register';
 
 const App = () => {
   return (
@@ -18,6 +21,14 @@ const App = () => {
             exact
             path="/"
             render={() => <HomePage />}
+          />
+          <Route
+            path="/login"
+            render={() => <LoginPage />}
+          />
+          <Route
+            path="/register"
+            render={() => <RegisterPage />}
           />
           <Redirect to="/" />
         </Switch>
