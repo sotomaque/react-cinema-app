@@ -2,10 +2,9 @@ import React from 'react';
 import firebase from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/database';
+import { useMutation } from '@apollo/react-hooks';
 
 import { defaultUserImage } from './app/assets';
-
-import { useMutation } from '@apollo/react-hooks';
 import { CREATE_USER } from './app/gql/mutations';
 
 const provider = new firebase.auth.GoogleAuthProvider();

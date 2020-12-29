@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { useDispatch } from 'react-redux';
 
+import { SET_QUERY } from '../../actions/types';
 import { logo } from '../../assets';
 import './styles.scss';
-import { useDispatch } from 'react-redux';
-import { SET_QUERY } from '../../actions/types';
 
 const HEADER_LIST = [
   {

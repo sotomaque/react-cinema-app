@@ -4,6 +4,7 @@ import { WebSocketLink } from 'apollo-link-ws';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import { getMainDefinition } from 'apollo-utilities';
 import { HttpLink } from '@apollo/react-hooks';
+
 import {
   HASURA_SECRET,
   HTTPS_URL,

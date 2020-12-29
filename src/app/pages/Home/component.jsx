@@ -2,11 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { useQuery } from '@apollo/react-hooks';
 
-import Header from '../../components/Header';
-import Main from '../../components/Main';
+import { AuthContext } from '../../../auth';
 import { useRefreshMovies } from '../../services/movies';
 import { NUMBER_OF_USERS_QUERY } from '../../gql/queries';
-import { AuthContext } from '../../../auth';
+import Header from '../../components/Header';
+import Main from '../../components/Main';
 
 // TODO: ADD LOADING SPINNER COMPONENT
 const HomePage = ({ hardwareReducers }) => {
