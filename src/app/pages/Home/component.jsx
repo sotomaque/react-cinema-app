@@ -3,7 +3,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
-import CircularProgress from '@material-ui/core/CircularProgress';
 import clsx from 'clsx';
 import {
   makeStyles,
@@ -40,15 +39,13 @@ import PersonIcon from '@material-ui/icons/Person';
 import SchoolIcon from '@material-ui/icons/School';
 import SettingsIcon from '@material-ui/icons/Settings';
 import SlideshowIcon from '@material-ui/icons/Slideshow';
-import { useQuery } from '@apollo/react-hooks';
 
+import LoadingSpinner from '../../components/LoadingSpinner';
 import { useRefreshMovies } from '../../services/movies';
-import { NUMBER_OF_USERS_QUERY } from '../../gql/queries';
 // import Header from '../../components/Header';
 // import Main from '../../components/Main';
 import { AuthContext } from '../../../auth';
 import MainContent from '../../components/Content/MainContent';
-// import { getMovies } from '../../actions/movies';
 
 const drawerWidth = 240;
 
@@ -145,12 +142,14 @@ const useStyles = makeStyles((theme) => ({
 // TODO: ADD LOADING SPINNER COMPONENT
 const HomePage = ({ hardwareReducers, getMovies }) => {
   const classes = useStyles();
+  const history = useHistory();
   const { authState, signOut } = React.useContext(AuthContext);
   const LOGGED_IN = authState?.status === 'in';
   // console.log('authState', authState);
   const { loading } = hardwareReducers;
   const [LOCAL_LOADING_STATE, setLoading] = React.useState()
   useRefreshMovies();
+  // Drawer / Theme state
   const [open, setOpen] = useState(true);
   const [darkState, setDarkState] = useState(false);
   const palletType = darkState ? 'dark' : 'light';
@@ -174,14 +173,12 @@ const HomePage = ({ hardwareReducers, getMovies }) => {
   const handleThemeChange = () => {
     setDarkState(!darkState);
   };
-
   const handleDrawerOpen = () => {
     setOpen(true);
   };
   const handleDrawerClose = () => {
     setOpen(false);
   };
-  const history = useHistory();
 
   // React.useEffect(() => {
   //   const fetchData = async () => {
@@ -277,21 +274,11 @@ const HomePage = ({ hardwareReducers, getMovies }) => {
     </div>
   );
   
-
-  const { data: queryData, loading: queryLoading, error } = useQuery(NUMBER_OF_USERS_QUERY);
-
-  if (loading || queryLoading || LOCAL_LOADING_STATE) {
+  if (loading || LOCAL_LOADING_STATE) {
     return (
-      <div className={classes.spinner}>
-        <CircularProgress />
-      </div>
+      <LoadingSpinner />
     );
   }
-
-  if (error) {
-    return (<div>Error....</div>);
-  };
-  if (queryData) console.log('queryData', queryData);
 
   const RenderMainContent = () => {
     return (
@@ -373,7 +360,7 @@ const HomePage = ({ hardwareReducers, getMovies }) => {
 
 HomePage.propTypes = {
   hardwareReducers: PropTypes.object.isRequired,
-  getMovies: PropTypes.func,
+  getMovies: PropTypes.func.isRequired,
 };
 
 export default HomePage;

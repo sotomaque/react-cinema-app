@@ -10,11 +10,13 @@ export const getMovies = (type, pageNumber) => async (
   dispatch,
 ) => {
   try {
-    const movies = await fetchMovies(type, pageNumber);
-    const { results, page, total_pages } = movies.data;
+    const { data } = await fetchMovies(type, pageNumber);
+    const { results, page, total_pages } = data;
+    console.log('page', page);
+    console.log('total_pages', total_pages);
     dispatch({
       type: SET_POPULAR_PAGE,
-      payload: { page, total_pages },
+      payload: { page, totalPages: total_pages },
     });
     dispatch({
       type: SET_POPULAR_MOVIE_LIST,
