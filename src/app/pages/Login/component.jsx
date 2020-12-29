@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
@@ -13,6 +13,7 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 
 import Copyright from '../../components/Copyright';
+import { AuthContext } from '../../../auth';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -47,21 +48,24 @@ const useStyles = makeStyles((theme) => ({
 
 const LoginPage = () => {
   const classes = useStyles();
-  const [username, setUsername] = React.useState('');
+  const history = useHistory();
+  const { loginWithEmailAndPassword } = React.useContext(AuthContext);
+  const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
   const [isButtonDisabled, setIsButtonDisabled] = React.useState(true);
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
+  const handleSubmit = async ({ email, password }) => {
+    await loginWithEmailAndPassword(email, password);
+    history.push('/');
   };
 
   React.useEffect(() => {
-    if (username.trim() !== '' && password.trim() !== '') {
+    if (email.trim() !== '' && password.trim() !== '') {
       setIsButtonDisabled(false);
     } else {
       setIsButtonDisabled(true);
     }
-  }, [username, password]);
+  }, [email, password]);
 
   return (
     <Grid container component="main" className={classes.root}>
@@ -75,40 +79,44 @@ const LoginPage = () => {
           <Typography component="h1" variant="h5">
             Sign in
           </Typography>
-          <form className={classes.form} noValidate onSubmit={(event) => handleSubmit(event)}>
+          <form className={classes.form} noValidate onSubmit={(event) => {
+            event.preventDefault();
+            handleSubmit({ email, password });
+          }}>
             <TextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              id="username"
-              label="Username"
-              name="username"
               autoComplete='off'
-              value={username}
-              onChange={(event) => setUsername(event.target.value)}
               autoFocus
+              fullWidth
+              id="email"
+              label="Email"
+              margin="normal"
+              name="email"
+              onChange={(event) => setEmail(event.target.value)}
+              required
+              type="email"
+              value={email}
+              variant="outlined"
             />
             <TextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              name="password"
-              label="Password"
-              type="password"
-              id="password"
-              value={password}
-              onChange={(event) => setPassword(event.target.value)}
               autoComplete="current-password"
+              fullWidth
+              id="password"
+              label="Password"
+              margin="normal"
+              name="password"
+              onChange={(event) => setPassword(event.target.value)}
+              required
+              type="password"
+              value={password}
+              variant="outlined"
             />
             <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              color="primary"
               className={classes.submit}
+              color="primary"
               disabled={isButtonDisabled}
+              fullWidth
+              type="submit"
+              variant="contained"
             >
               Sign In
             </Button>
