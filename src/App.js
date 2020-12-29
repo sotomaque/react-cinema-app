@@ -6,15 +6,17 @@ import {
   Switch,
 } from 'react-router-dom';
 
-import AuthProvider from './auth';
-
 import HomePage from './app/pages/Home';
 import LoginPage from './app/pages/Login';
 import RegisterPage from './app/pages/Register';
+import { AuthContext } from './auth';
 
 const App = () => {
-  return (
-    <AuthProvider>
+  const { authState } = React.useContext(AuthContext);
+  const isAuth = authState?.status === 'in';
+  if (!isAuth) {
+    // use un auth routes
+    return (
       <Router>
         <Switch>
           <Route
@@ -30,10 +32,21 @@ const App = () => {
             path="/register"
             render={() => <RegisterPage />}
           />
-          <Redirect to="/" />
+
+          <Redirect to="/login" />
         </Switch>
       </Router>
-    </AuthProvider>
+    );
+  }
+
+  return (
+    <Router>
+      <Switch>
+        <Route exact path="/" render={() => <HomePage />} />
+
+        <Redirect to="/" />
+      </Switch>
+    </Router>
   );
 };
 

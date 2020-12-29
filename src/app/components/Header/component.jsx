@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 
 import { AuthContext } from '../../../auth';
@@ -51,11 +51,13 @@ const AUTH_LIST = [
 ];
 
 const Header = ({ pageReducers }) => {
-  const { authState } = React.useContext(AuthContext);
+  const { authState, signOut } = React.useContext(AuthContext);
+  const history = useHistory();
   const dispatch = useDispatch();
   const { query = 'popular' } = pageReducers;
   const [navClass, setNavClass] = React.useState(false);
   const [menuClass, setMenuClass] = React.useState(false);
+  const [, setLogoutMessage] = React.useState(false);
 
   const handleClick = () => {
     setMenuClass(prev => !prev);
@@ -73,8 +75,17 @@ const Header = ({ pageReducers }) => {
     }
   };
 
+  const handleLogoutClicked = () => {
+    setLogoutMessage(true);
+    setTimeout(() => {
+      signOut();
+      history.push('/login');
+    }, 2000);
+  };
+
   const showAuthList = authState?.status === 'out';
   const showMainLinks = !showAuthList;
+  const showSignOut = !showAuthList;
 
   return (
     <div className="header-nav-wrapper">
@@ -138,6 +149,18 @@ const Header = ({ pageReducers }) => {
             type="text"
             className="search-input"
           />
+          {/* Log Off Button */}
+          {
+            showSignOut && (
+              <li className='header-nav-item' style={{ paddingLeft: 5 }} onClick={() => handleLogoutClicked()}>
+                <span className="header-list-name">
+                  <i className='fas fa-minus-square' />
+                </span>
+                &nbsp;
+                <span className="header-list-name">Logout</span>
+              </li>
+            )
+          }
         </ul>
       </div>
     </div>
