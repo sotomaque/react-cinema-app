@@ -46,6 +46,23 @@ const createApolloClient = () => {
   return new ApolloClient({
     cache: new InMemoryCache(),
     link,
+    request: (operation) => {
+      const token = localStorage.getItem('token');
+      operation.setContext({
+        headers: {
+          authorization: token,
+        },
+      });
+    },
+    onError: ({ networkError }) => {
+      if (networkError) {
+        console.log('Network Error', networkError);
+
+        if (networkError.statusCode === 401) {
+          localStorage.removeItem('token');
+        }
+      }
+    },
   });
 };
 
