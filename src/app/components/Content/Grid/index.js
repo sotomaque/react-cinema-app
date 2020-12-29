@@ -1,3 +1,3 @@
-import { Connected as Grid } from './connected';
+import Grid from './component';
 
 export default Grid;

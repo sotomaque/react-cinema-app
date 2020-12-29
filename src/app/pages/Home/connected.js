@@ -1,14 +1,17 @@
 import { connect } from 'react-redux';
 
-import HomePage from './component';
+import RegisterPage from './component';
 
-const mapStateToProps = ({ errors, movieReducers }) => {
+const mapStateToProps = ({
+  pageReducers,
+  hardwareReducers,
+}) => {
   return {
-    errors,
-    movieReducers,
+    pageReducers,
+    hardwareReducers,
   };
 };
 
-const Connected = connect(mapStateToProps)(HomePage);
+const Connected = connect(mapStateToProps)(RegisterPage);
 
 export { Connected };

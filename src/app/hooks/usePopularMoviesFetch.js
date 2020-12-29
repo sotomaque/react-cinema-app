@@ -1,8 +1,7 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useHistory } from 'react-router-dom';
 
-import { API_URL, API_KEY } from '../const';
+import { API_URL, API_KEY, IMAGE_URL } from '../const';
 
 /**
  * hook used to make a request to
@@ -11,8 +10,6 @@ import { API_URL, API_KEY } from '../const';
  * @returns [{ state, loading, error}, fetchPopularMovies]
  */
 export const usePopularMoviesFetch = () => {
-  const history = useHistory();
-  console.log('history', history);
   const [state, setState] = useState({ movies: [] });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
@@ -27,7 +24,14 @@ export const usePopularMoviesFetch = () => {
       const response = await axios.get(
         `${API_URL}movie/popular?api_key=${API_KEY}`,
       );
-      const movieResults = response?.data?.results;
+      const tempMovieResults = response?.data?.results;
+      const movieResults = [];
+      tempMovieResults.forEach((movie) => {
+        movieResults.push({
+          ...movie,
+          url: `${IMAGE_URL}${movie.backdrop_path}`,
+        });
+      });
       const currentPage = response?.data?.page;
       const totalPages = response?.data?.total_pages;
       // Get 5 random images for the slide show

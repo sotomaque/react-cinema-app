@@ -1,54 +1,79 @@
+/* eslint-disable no-unused-vars */
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { IMAGE_URL } from '../../../const';
 import SlideShow from '../SlideShow';
 import Paginated from '../../Paginated';
 import Grid from '../Grid';
 
+import { API_URL, API_KEY } from '../../../const';
 import './styles.scss';
+// import { usePopularMoviesFetch, useUpcomingMoviesFetch, useNowPlayingMoviesFetch, useTopRatedMoviesFetch } from '../../../hooks';
+// import { UPDATE_POPULAR_LIST, UPDATE_UPCOMING_LIST, UPDATE_TOP_RATED_LIST, UPDATE_NOW_PLAYING_LIST } from '../../../actions/types';
+// import { useDispatch } from 'react-redux';
 
-const MainContent = ({ movieReducers = {} }) => {
-  const { heroImages = '', list = [] } = movieReducers;
-  const [slideShowImages, setSlideShowImages] = React.useState([]);
-  const [gridMovies, setGridMovies] = React.useState([]);
-  React.useEffect(() => {
-    if (heroImages) {
-      const temp = [];
-      heroImages.forEach(movie => {
-        const tempObj = { ...movie, url: `${IMAGE_URL}${movie.backdrop_path}` };
-        temp.push(tempObj);
-      });
-      setSlideShowImages(temp);
-    }
-    if (list) {
-      const tempGrid = [];
-      list.forEach(movie => {
-        const tempObj = { ...movie, url: `${IMAGE_URL}${movie.poster_path}` };
-        tempGrid.push(tempObj);
-      });
-      setGridMovies(tempGrid);
-    }
-  }, [heroImages, list]);
-
+const MainContent = ({ movieReducers, pageReducers }) => {
+  const { query = 'popular' } = pageReducers;
+  const [gridMovies, setGridMovies] = React.useState(movieReducers?.popularMovies?.list);
+  const [slideShowImages, setSlideShowImages] = React.useState(movieReducers?.popularMovies?.heroImages);
   const [currentPage, setCurrentPage] = React.useState(1);
+
+  React.useEffect(() => {
+    if (query === 'now_playing') {
+      setGridMovies(movieReducers?.nowPlayingMovies?.list);
+      setSlideShowImages(movieReducers?.nowPlayingMovies?.heroImages);
+    } else if (query === 'top_rated') {
+      setGridMovies(movieReducers?.topRatedMovies?.list);
+      setSlideShowImages(movieReducers?.topRatedMovies?.heroImages);
+    } else if (query === 'upcoming') {
+      setGridMovies(movieReducers?.upcomingMovies?.list);
+      setSlideShowImages(movieReducers?.upcomingMovies?.heroImages);
+    } else {
+      if (movieReducers?.popularMovies?.list !== gridMovies) {
+        setGridMovies(movieReducers?.popularMovies?.list);
+        setSlideShowImages(movieReducers?.popularMovies?.heroImages);
+      }
+    }
+  }, [query, gridMovies, slideShowImages, currentPage]);
 
   const paginate = (type) => {
     if (type === 'prev') {
-      currentPage > 1
-        ? setCurrentPage(prev => prev - 1)
-        : setCurrentPage(10);
+      if (currentPage > 1) {
+        setCurrentPage(prev => prev - 1);
+        // make api call
+        const endpoint = `${API_URL}movie/${query}?api_key=${API_KEY}&page=${
+          currentPage - 1
+        }`;
+        console.log('endpoint', endpoint);
+        // fetchPopularMovies(endpoint);
+      } else {
+        setCurrentPage(10);
+      }
     } else {
-      currentPage < 10
-        ? setCurrentPage(prev => prev + 1)
-        : setCurrentPage(1);
+      if (currentPage < 10) {
+        setCurrentPage(prev => prev + 1);
+        // make api call
+        // const endpoint = `${API_URL}movie/${query}?api_key=${API_KEY}&page=${
+        //   currentPage + 1
+        // }`;
+        // fetchPopularMovies(endpoint);
+      } else {
+        setCurrentPage(1);
+      }
     }
+  };
+  // Capital first letter
+  // lowercase everything else
+  const formatTitle = (string) => {
+    // replace '_' with ' ';
+    const stringArray = string?.replace('_', ' ');
+    return stringArray?.charAt(0)?.toUpperCase() + stringArray?.slice(1);
   };
 
   return (
     <div className="main-content">
       {/* Slideshow Components */}
-      {slideShowImages.length > 0 && (
+      {slideShowImages?.length > 0 && (
         <SlideShow
           images={slideShowImages}
           auto={false}
@@ -56,7 +81,7 @@ const MainContent = ({ movieReducers = {} }) => {
         />
       )}
       <div className="grid-movie-title">
-        <div className="movieType">Now Playing</div>
+        <div className="movieType">{formatTitle(query)}</div>
         <div className="paginate">
           <Paginated
             currentPage={currentPage}
@@ -66,13 +91,18 @@ const MainContent = ({ movieReducers = {} }) => {
         </div>
       </div>
       {/* Grid Components */}
-      <Grid gridMovies={gridMovies} />
+      {
+        gridMovies && gridMovies?.length && gridMovies?.length !== 0 && (
+          <Grid gridMovies={gridMovies} />
+        )
+      }
     </div>
   );
 };
 
 MainContent.propTypes = {
-  movieReducers: PropTypes.object,
+  movieReducers: PropTypes.object.isRequired,
+  pageReducers: PropTypes.object.isRequired,
 };
 
 export default MainContent;

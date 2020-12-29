@@ -2,6 +2,15 @@
 export const __prod__ =
   process.env.NODE_ENV === 'production';
 
+// GQL DOCKER LINKS
+export const HTTP_URL = 'http://localhost:8080/v1/graphql';
+export const WS_URL = 'ws://localhost:8080/v1/graphql';
+// GQL HASURA CLOUD + AWS LINKS
+export const HTTPS_URL = process.env.REACT_APP_HTTPS_URL;
+export const WSS_URL = process.env.REACT_APP_WSS_URL;
+export const HASURA_SECRET =
+  process.env.REACT_APP_HASURA_ADMIN_SECRET;
+
 // TMDB VARIABLES
 export const API_URL = 'https://api.themoviedb.org/3/';
 export const IMAGE_URL =
