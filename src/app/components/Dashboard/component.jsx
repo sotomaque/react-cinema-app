@@ -1,9 +1,4 @@
-
-/* eslint-disable */
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
-import { useHistory } from 'react-router-dom';
-import CircularProgress from '@material-ui/core/CircularProgress';
 import clsx from 'clsx';
 import {
   makeStyles,
@@ -21,45 +16,26 @@ import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
 import Badge from '@material-ui/core/Badge';
 import MenuIcon from '@material-ui/icons/Menu';
-import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import NotificationsIcon from '@material-ui/icons/Notifications';
+import {
+  mainListItems,
+  secondaryListItems,
+} from './listItems';
 import {
   orange,
   lightBlue,
   deepPurple,
   deepOrange,
 } from '@material-ui/core/colors';
-import HelpIcon from '@material-ui/icons/Help';
-import ImportContactsIcon from '@material-ui/icons/ImportContacts';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import MovieIcon from '@material-ui/icons/Movie';
-import PersonIcon from '@material-ui/icons/Person';
-import SchoolIcon from '@material-ui/icons/School';
-import SettingsIcon from '@material-ui/icons/Settings';
-import SlideshowIcon from '@material-ui/icons/Slideshow';
-import { useQuery } from '@apollo/react-hooks';
 
-import { useRefreshMovies } from '../../services/movies';
-import { NUMBER_OF_USERS_QUERY } from '../../gql/queries';
-// import Header from '../../components/Header';
-// import Main from '../../components/Main';
-import { AuthContext } from '../../../auth';
-import MainContent from '../../components/Content/MainContent';
-// import { getMovies } from '../../actions/movies';
+import MainContent from '../Content/MainContent';
 
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
-  },
-  spinner: {
-    display: 'flex',
-    justifyContent: 'center',
-    marginTop: '15em',
   },
   toolbar: {
     paddingRight: 24, // keep right padding when drawer closed
@@ -142,15 +118,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-// TODO: ADD LOADING SPINNER COMPONENT
-const HomePage = ({ hardwareReducers, getMovies }) => {
-  const classes = useStyles();
-  const { authState, signOut } = React.useContext(AuthContext);
-  const LOGGED_IN = authState?.status === 'in';
-  // console.log('authState', authState);
-  const { loading } = hardwareReducers;
-  const [LOCAL_LOADING_STATE, setLoading] = React.useState()
-  useRefreshMovies();
+export default function Dashboard() {
   const [open, setOpen] = useState(true);
   const [darkState, setDarkState] = useState(false);
   const palletType = darkState ? 'dark' : 'light';
@@ -171,6 +139,7 @@ const HomePage = ({ hardwareReducers, getMovies }) => {
       },
     },
   });
+  const classes = useStyles();
   const handleThemeChange = () => {
     setDarkState(!darkState);
   };
@@ -181,117 +150,10 @@ const HomePage = ({ hardwareReducers, getMovies }) => {
   const handleDrawerClose = () => {
     setOpen(false);
   };
-  const history = useHistory();
-
-  // React.useEffect(() => {
-  //   const fetchData = async () => {
-  //     const res = await getMovies('popular');
-  //     console.log('res', res);
-  //   };
-  //   fetchData();
-  // }, []);
-
-  const handleLogoutClicked = () => {
-    setLoading(true);
-    setTimeout(() => {
-      signOut();
-      setLoading(false)
-      history.push('/login');
-    }, 1000);
-  };
-
-  const mainListItems = (
-    <div>
-      { LOGGED_IN ? (
-        <ListItem button>
-          <ListItemIcon>
-            <PersonIcon />
-          </ListItemIcon>
-          <ListItemText primary="Profile" />
-        </ListItem>
-        ) : (
-          <>
-            <ListItem button>
-              <ListItemIcon>
-                <PersonIcon />
-              </ListItemIcon>
-              <ListItemText primary="Login" />
-            </ListItem>
-            <ListItem button>
-              <ListItemIcon>
-                <PersonIcon />
-              </ListItemIcon>
-              <ListItemText primary="Sign Up" />
-            </ListItem>
-          </>
-        )
-      }
-      <hr />
-      <ListItem button>
-        <ListItemIcon>
-          <MovieIcon />
-        </ListItemIcon>
-        <ListItemText primary="Movies" />
-      </ListItem>
-      <ListItem button>
-        <ListItemIcon>
-          <SlideshowIcon />
-        </ListItemIcon>
-        <ListItemText primary="Shows" />
-      </ListItem>
-      <ListItem button>
-        <ListItemIcon>
-          <ImportContactsIcon />
-        </ListItemIcon>
-        <ListItemText primary="Books" />
-      </ListItem>
-      <ListItem button>
-        <ListItemIcon>
-          <SchoolIcon />
-        </ListItemIcon>
-        <ListItemText primary="MOOCs" />
-      </ListItem>
-    </div>
+  const fixedHeightPaper = clsx(
+    classes.paper,
+    classes.fixedHeight,
   );
-  
-  const secondaryListItems = (
-    <div>
-      <ListItem button>
-        <ListItemIcon>
-          <SettingsIcon />
-        </ListItemIcon>
-        <ListItemText primary="Settings and Privacy" />
-      </ListItem>
-      <ListItem button>
-        <ListItemIcon>
-          <HelpIcon />
-        </ListItemIcon>
-        <ListItemText primary="Help Center" />
-      </ListItem>
-      <ListItem button onClick={() => handleLogoutClicked()}>
-        <ListItemIcon>
-          <ExitToAppIcon />
-        </ListItemIcon>
-        <ListItemText primary="Logout" />
-      </ListItem>
-    </div>
-  );
-  
-
-  const { data: queryData, loading: queryLoading, error } = useQuery(NUMBER_OF_USERS_QUERY);
-
-  if (loading || queryLoading || LOCAL_LOADING_STATE) {
-    return (
-      <div className={classes.spinner}>
-        <CircularProgress />
-      </div>
-    );
-  }
-
-  if (error) {
-    return (<div>Error....</div>);
-  };
-  if (queryData) console.log('queryData', queryData);
 
   const RenderMainContent = () => {
     return (
@@ -360,20 +222,11 @@ const HomePage = ({ hardwareReducers, getMovies }) => {
           <List>{mainListItems}</List>
           <div style={{ position: 'absolute', bottom: 0 }}>
             <Divider />
-            {
-              LOGGED_IN && (<List>{secondaryListItems}</List>)
-            }
+            <List>{secondaryListItems}</List>
           </div>
         </Drawer>
         <RenderMainContent />
       </div>
     </ThemeProvider>
   );
-};
-
-HomePage.propTypes = {
-  hardwareReducers: PropTypes.object.isRequired,
-  getMovies: PropTypes.func,
-};
-
-export default HomePage;
+}

@@ -1,3 +1,4 @@
 import useRefreshMovies from './useRefreshMovies';
+import fetchMovies from './fetchMovies';
 
-export { useRefreshMovies };
+export { fetchMovies, useRefreshMovies };

@@ -1,5 +1,6 @@
 import { connect } from 'react-redux';
 
+import { getMovies } from '../../actions/movies';
 import RegisterPage from './component';
 
 const mapStateToProps = ({
@@ -12,6 +13,8 @@ const mapStateToProps = ({
   };
 };
 
-const Connected = connect(mapStateToProps)(RegisterPage);
+const Connected = connect(mapStateToProps, { getMovies })(
+  RegisterPage,
+);
 
 export { Connected };
