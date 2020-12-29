@@ -2,8 +2,8 @@ import { combineReducers } from 'redux';
 
 import errorReducers from './errorReducers';
 import hardwareReducers from './hardwareReducers';
-import pageReducers from './pageReducers';
 import movieReducers from './movieReducers';
+import pageReducers from './pageReducers';
 
 const rootReducer = combineReducers({
   pageReducers,

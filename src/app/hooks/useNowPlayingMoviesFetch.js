@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 
-import { API_URL, API_KEY, IMAGE_URL } from '../const';
+import { API_KEY, API_URL, IMAGE_URL } from '../const';
 
 /**
  * hook used to make a request to

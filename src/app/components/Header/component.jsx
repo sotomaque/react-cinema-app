@@ -1,10 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link, useHistory } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 
+import { AuthContext } from '../../../auth';
+import { SET_QUERY } from '../../actions/types';
 import { logo } from '../../assets';
 import './styles.scss';
-import { useDispatch } from 'react-redux';
-import { SET_QUERY } from '../../actions/types';
 
 const HEADER_LIST = [
   {
@@ -33,11 +35,29 @@ const HEADER_LIST = [
   },
 ];
 
+const AUTH_LIST = [
+  {
+    id: 5,
+    iconClass: 'fas fa-plus-square',
+    name: 'Login',
+    type: 'login',
+  },
+  {
+    id: 6,
+    iconClass: 'fas fa-plus-square',
+    name: 'Sign Up',
+    type: 'register',
+  }
+];
+
 const Header = ({ pageReducers }) => {
+  const { authState, signOut } = React.useContext(AuthContext);
+  const history = useHistory();
   const dispatch = useDispatch();
   const { query = 'popular' } = pageReducers;
   const [navClass, setNavClass] = React.useState(false);
   const [menuClass, setMenuClass] = React.useState(false);
+  const [, setLogoutMessage] = React.useState(false);
 
   const handleClick = () => {
     setMenuClass(prev => !prev);
@@ -54,6 +74,18 @@ const Header = ({ pageReducers }) => {
       setNavClass(prev => !prev);
     }
   };
+
+  const handleLogoutClicked = () => {
+    setLogoutMessage(true);
+    setTimeout(() => {
+      signOut();
+      history.push('/login');
+    }, 2000);
+  };
+
+  const showAuthList = authState?.status === 'out';
+  const showMainLinks = !showAuthList;
+  const showSignOut = !showAuthList;
 
   return (
     <div className="header-nav-wrapper">
@@ -78,20 +110,36 @@ const Header = ({ pageReducers }) => {
         <ul className={`header-nav ${navClass ? 'header-mobile-nav' : ''}`}>
           {/* Links */}
           {
-            HEADER_LIST.map(item => {
-              const isActive = item.type === query;
+            showMainLinks && HEADER_LIST.map(item => {
+              const isActive = item?.type === query;
               return (
                 <li
-                  key={item.id}
+                  key={item?.id}
                   className={`header-nav-item ${isActive ? 'active-item' : ''}`}
                   onClick={() => handleListItemClicked({ isActive, type: item?.type })}
                 >
                   <span className="header-list-name">
-                    <i className={item.iconClass} />
+                    <i className={item?.iconClass} />
                   </span>
                   &nbsp;
-                  <span className="header-list-name">{item.name}</span>
+                  <span className="header-list-name">{item?.name}</span>
                 </li>
+              );
+            })
+          }
+          {/* Auth Links */}
+          {
+            showAuthList && AUTH_LIST.map(item => {
+              return (
+                <Link key={item?.id} to={`/${item?.type}`}>
+                <li className='header-nav-item'>
+                  <span className="header-list-name">
+                    <i className={item?.iconClass} />
+                  </span>
+                  &nbsp;
+                  <span className="header-list-name">{item?.name}</span>
+                </li>
+                </Link>
               );
             })
           }
@@ -101,6 +149,18 @@ const Header = ({ pageReducers }) => {
             type="text"
             className="search-input"
           />
+          {/* Log Off Button */}
+          {
+            showSignOut && (
+              <li className='header-nav-item' style={{ paddingLeft: 5 }} onClick={() => handleLogoutClicked()}>
+                <span className="header-list-name">
+                  <i className='fas fa-minus-square' />
+                </span>
+                &nbsp;
+                <span className="header-list-name">Logout</span>
+              </li>
+            )
+          }
         </ul>
       </div>
     </div>

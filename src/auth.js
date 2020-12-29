@@ -2,26 +2,21 @@ import React from 'react';
 import firebase from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/database';
-
-import { defaultUserImage } from './app/assets';
-
 import { useMutation } from '@apollo/react-hooks';
+
 import { CREATE_USER } from './app/gql/mutations';
 
 const provider = new firebase.auth.GoogleAuthProvider();
 
 // Find these options in your Firebase console
 firebase.initializeApp({
-  apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
-  authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
-  projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
-  storageBucket:
-    process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
-  messagingSenderId:
-    process.env.REACT_APP_FIREBASE_MESSEGING_SENDER_ID,
-  appId: process.env.REACT_APP_FIREBASE_APP_ID,
-  measurementId:
-    process.env.REACT_APP_FIREBASE_MEASUREMENT_ID,
+  apiKey: 'AIzaSyAUM0akyGWC2uRer3gsjxVecrjf-Z9jPjw',
+  authDomain: 'cinema-d7621.firebaseapp.com',
+  projectId: 'cinema-d7621',
+  storageBucket: 'cinema-d7621.appspot.com',
+  messagingSenderId: '1061999019763',
+  appId: '1:1061999019763:web:f8dcb1a99930adc3819986',
+  measurementId: 'G-3B566P7LET',
 });
 
 export const AuthContext = React.createContext();
@@ -68,25 +63,16 @@ function AuthProvider({ children }) {
       .auth()
       .signInWithPopup(provider);
     if (data.additionalUserInfo.isNewUser) {
-      const {
-        uid,
-        displayName,
-        photoURL,
-        email,
-      } = data.user;
+      const { email, displayName, uid } = data.user;
       const username = `${displayName.replace(
         /\s/g,
         '',
       )}${uid.slice(-5)}`;
       const variables = {
-        userId: uid,
-        name: displayName,
-        username: username,
         email: email,
-        bio: '',
-        website: '',
-        profileImage: photoURL,
-        phoneNumber: '',
+        name: displayName,
+        userId: uid,
+        username: username,
       };
       await createUser({ variables });
     }
@@ -102,14 +88,10 @@ function AuthProvider({ children }) {
 
     if (data.additionalUserInfo.isNewUser) {
       const variables = {
-        userId: data.user.uid,
-        name: formData.name,
-        username: formData.username,
         email: data.user.email,
-        bio: '',
-        website: '',
-        profileImage: defaultUserImage,
-        phoneNumber: '',
+        name: formData.name,
+        userId: data.user.uid,
+        username: formData.username,
       };
       await createUser({ variables });
     }
