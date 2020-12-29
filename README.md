@@ -13,6 +13,7 @@
 - AWS
   - S3 (storage)
   - Cloudfront (static / dynamic Content delivery)
+  - RBS (hosting postgres table)
 - CircleCI
   - Build Pipeline(s)
   - Multiple env
@@ -20,6 +21,8 @@
     - [Staging](https://d25n348mtdlevv.cloudfront.net/)
     - [Prod](https://d33ny7kfd0joai.cloudfront.net/)
   - Slack Notification Integration
+- Hasura
+  - GraphQL Engine
 - React
 - Redux
 - Redux-Thunk
@@ -27,10 +30,10 @@
 - Scss
 - Axios
 - Datefns
+- MaterialUI
 
 Coming Soon:
 
-- MaterialUI
 - I18n
 - Semantic
 
