@@ -13,7 +13,7 @@
 - AWS
   - S3 (storage)
   - Cloudfront (static / dynamic Content delivery)
-  - RBS (hosting postgres table)
+  - RDS (hosting postgres table)
 - CircleCI
   - Build Pipeline(s)
   - Multiple env
