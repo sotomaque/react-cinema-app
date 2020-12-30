@@ -174,7 +174,7 @@ const HomePage = ({ hardwareReducers, getMovies }) => {
     },
   });
   const handleThemeChange = () => {
-    const payload = !darkState ? 'light' : 'dark';
+    const payload = darkState ? 'light' : 'dark';
     dispatch({ type: SET_THEME, payload });
     setDarkState(!darkState);
   };

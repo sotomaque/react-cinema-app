@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
@@ -7,13 +6,9 @@ import { Typography } from '@material-ui/core';
 import SlideShow from '../SlideShow';
 import Paginated from '../../Paginated';
 import Grid from '../Grid';
-
+import { SET_QUERY } from '../../../actions/types';
 import { API_URL, API_KEY } from '../../../const';
 import './styles.scss';
-import { SET_QUERY } from '../../../actions/types';
-// import { usePopularMoviesFetch, useUpcomingMoviesFetch, useNowPlayingMoviesFetch, useTopRatedMoviesFetch } from '../../../hooks';
-// import { UPDATE_POPULAR_LIST, UPDATE_UPCOMING_LIST, UPDATE_TOP_RATED_LIST, UPDATE_NOW_PLAYING_LIST } from '../../../actions/types';
-// import { useDispatch } from 'react-redux';
 
 const MainContent = ({ movieReducers, pageReducers }) => {
   const { query = 'popular' } = pageReducers;
