@@ -36,13 +36,12 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import {
   grey,
-  deepPurple,
   lightBlue,
 } from '@material-ui/core/colors';
 
+import MainContent from '../../components/Content/MainContent';
 import LoadingSpinner from '../../components/LoadingSpinner';
 import { useRefreshMovies } from '../../services/movies';
-import MainContent from '../../components/Content/MainContent';
 import { AuthContext } from '../../../auth';
 import { SET_THEME } from '../../actions/types';
 import { useDispatch } from 'react-redux';
@@ -51,7 +50,7 @@ const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    display: 'flex',
+    display: 'flex'
   },
   spinner: {
     display: 'flex',
@@ -121,6 +120,7 @@ const useStyles = makeStyles((theme) => ({
   appBarSpacer: theme.mixins.toolbar,
   content: {
     flexGrow: 1,
+    textAlign: 'center',
     height: '100vh',
     overflow: 'auto',
   },
@@ -331,7 +331,6 @@ const HomePage = ({ hardwareReducers, getMovies }) => {
           </Toolbar>
         </AppBar>
         <Drawer
-          variant="permanent"
           classes={{
             paper: clsx(
               classes.drawerPaper,

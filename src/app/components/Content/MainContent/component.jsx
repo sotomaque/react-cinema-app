@@ -91,15 +91,15 @@ const MainContent = ({ movieReducers, pageReducers }) => {
     };
 
     return (
-      <div style={{ display: 'flex', flexDirection: 'row' }}>
+      <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
         {
           QueryTypes.map(item => {
             const isActive = item?.type === query;
             return (
               <Typography
                   key={item.id}
-                  component={isActive ? 'h1' : ''}
-                  variant={isActive ? 'h5' : 'body1'}
+                  component={isActive ? 'h2' : ''}
+                  variant={isActive ? 'body1' : 'body2'}
                   color={'secondary'}
                   noWrap
                   style={{ alignSelf: 'center', padding: 10, opacity: isActive ? 1 : 0.5, cursor: isActive ? '' : 'pointer' }}
@@ -125,17 +125,13 @@ const MainContent = ({ movieReducers, pageReducers }) => {
         />
       )}
       <div className="grid-movie-title">
-        {/* Query */}
-        <div className="movieType">
-         <Queries />
-        </div>
-        <div className="paginate">
-          <Paginated
-            currentPage={currentPage}
-            paginate={paginate}
-            totalPages={10}
-          />
-        </div>
+        <Queries className="grid-movie-title movieType" />
+        <Paginated
+          currentPage={currentPage}
+          paginate={paginate}
+          totalPages={10}
+          className="grid-movie-title movieType"
+        />
       </div>
       {/* Grid Components */}
       {
