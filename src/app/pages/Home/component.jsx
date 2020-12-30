@@ -153,7 +153,7 @@ const HomePage = ({ hardwareReducers, getMovies }) => {
   // TODO: REPLACE WITH GETMOVIES ACTION
   useRefreshMovies();
   // Drawer / Theme state
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
   const [darkState, setDarkState] = useState(false);
   const palletType = darkState ? 'dark' : 'light';
   const mainPrimaryColor = darkState
