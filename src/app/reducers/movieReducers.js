@@ -11,7 +11,6 @@ import {
   SET_UPCOMING_MOVIE_LIST,
   SET_UPCOMING_PAGE,
   SET_UPCOMING_SLIDESHOW_PICTURES,
-  UPDATE_POPULAR_LIST,
 } from '../actions/types';
 
 const initialState = {
@@ -220,15 +219,6 @@ export default (state = initialState, action) => {
           ...state.nowPlayingMovies,
           page: action.payload.page,
           totalPages: action.payload.totalPages,
-        },
-      };
-
-    case UPDATE_POPULAR_LIST:
-      return {
-        ...state,
-        popularMovies: {
-          ...state.popularMovies,
-          list: action.payload,
         },
       };
 

@@ -58,6 +58,7 @@ const useRefreshMovies = () => {
     fetchedAt: popularMoviesFetchedAt,
     heroImages: popularHeroImagesState,
     page: popularMoviesCurrentPageState,
+    totalPages: popularMoviesTotalPagesState,
   } = popularMoviesState;
   // TOP RATED MOVIES
   const topRatedMoviesState = useSelector(
@@ -200,14 +201,17 @@ const useRefreshMovies = () => {
     // pagination
     if (
       popularMoviesCurrentPage &&
-      popularMoviesCurrentPage !==
-        popularMoviesCurrentPageState
+      popularMoviesTotalPages &&
+      (popularMoviesCurrentPage !==
+        popularMoviesCurrentPageState ||
+        popularMoviesTotalPages !==
+          popularMoviesTotalPagesState)
     ) {
       dispatch({
         type: SET_POPULAR_PAGE,
         payload: {
-          page: popularMoviesCurrentPage,
-          totalPages: popularMoviesTotalPages,
+          page: +popularMoviesCurrentPage,
+          totalPages: +popularMoviesTotalPages,
         },
       });
     }

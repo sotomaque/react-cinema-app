@@ -41,9 +41,9 @@ import {
 
 import MainContent from '../../components/Content/MainContent';
 import LoadingSpinner from '../../components/LoadingSpinner';
-import { useRefreshMovies } from '../../services/movies';
+// import { useRefreshMovies } from '../../services/movies';
 import { AuthContext } from '../../../auth';
-import { SET_THEME } from '../../actions/types';
+import { SET_LOADING, SET_THEME } from '../../actions/types';
 import { useDispatch } from 'react-redux';
 
 const drawerWidth = 240;
@@ -151,7 +151,7 @@ const HomePage = ({ hardwareReducers, getMovies }) => {
   const [LOCAL_LOADING_STATE, setLoading] = React.useState();
   // API HOOK CALL 
   // TODO: REPLACE WITH GETMOVIES ACTION
-  useRefreshMovies();
+  // useRefreshMovies();
   // Drawer / Theme state
   const [open, setOpen] = useState(false);
   const [darkState, setDarkState] = useState(false);
@@ -185,13 +185,17 @@ const HomePage = ({ hardwareReducers, getMovies }) => {
     setOpen(false);
   };
 
-  // React.useEffect(() => {
-  //   const fetchData = async () => {
-  //     const res = await getMovies('popular');
-  //     console.log('res', res);
-  //   };
-  //   fetchData();
-  // }, []);
+  React.useEffect(() => {
+    const fetchData = async () => {
+      dispatch({ type: SET_LOADING, payload: true });
+      await getMovies('popular');
+      dispatch({ type: SET_LOADING, payload: false });
+      getMovies('now_playing');
+      getMovies('upcoming');
+      getMovies('top_rated');
+    };
+    fetchData();
+  }, []);
 
   const handleLogoutClicked = () => {
     setLoading(true);
