@@ -1,5 +1,6 @@
 export const SET_ERROR = 'SET_ERROR';
 export const SET_LOADING = 'SET_LOADING';
+export const SET_THEME = 'SET_THEME';
 export const SET_NOW_PLAYING_MOVIE_LIST =
   'SET_NOW_PLAYING_MOVIE_LIST';
 export const SET_NOW_PLAYING_PAGE = 'SET_NOW_PLAYING_PAGE';

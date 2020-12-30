@@ -35,16 +35,17 @@ import Switch from '@material-ui/core/Switch';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import {
-  deepOrange,
+  grey,
   deepPurple,
   lightBlue,
-  orange,
 } from '@material-ui/core/colors';
 
 import LoadingSpinner from '../../components/LoadingSpinner';
 import { useRefreshMovies } from '../../services/movies';
 import MainContent from '../../components/Content/MainContent';
 import { AuthContext } from '../../../auth';
+import { SET_THEME } from '../../actions/types';
+import { useDispatch } from 'react-redux';
 
 const drawerWidth = 240;
 
@@ -142,22 +143,25 @@ const useStyles = makeStyles((theme) => ({
 const HomePage = ({ hardwareReducers, getMovies }) => {
   const classes = useStyles();
   const history = useHistory();
+  const dispatch = useDispatch();
   const { authState, signOut } = React.useContext(AuthContext);
   const LOGGED_IN = authState?.status === 'in';
   // console.log('authState', authState);
   const { loading } = hardwareReducers;
-  const [LOCAL_LOADING_STATE, setLoading] = React.useState()
+  const [LOCAL_LOADING_STATE, setLoading] = React.useState();
+  // API HOOK CALL 
+  // TODO: REPLACE WITH GETMOVIES ACTION
   useRefreshMovies();
   // Drawer / Theme state
   const [open, setOpen] = useState(true);
   const [darkState, setDarkState] = useState(false);
   const palletType = darkState ? 'dark' : 'light';
   const mainPrimaryColor = darkState
-    ? orange[500]
+    ? grey[900]
     : lightBlue[500];
   const mainSecondaryColor = darkState
-    ? deepOrange[900]
-    : deepPurple[500];
+    ? grey[200]
+    : grey[900];
   const darkTheme = createMuiTheme({
     palette: {
       type: palletType,
@@ -170,6 +174,8 @@ const HomePage = ({ hardwareReducers, getMovies }) => {
     },
   });
   const handleThemeChange = () => {
+    const payload = !darkState ? 'light' : 'dark';
+    dispatch({ type: SET_THEME, payload });
     setDarkState(!darkState);
   };
   const handleDrawerOpen = () => {
@@ -186,12 +192,6 @@ const HomePage = ({ hardwareReducers, getMovies }) => {
   //   };
   //   fetchData();
   // }, []);
-  
-  if (loading || LOCAL_LOADING_STATE) {
-    return (
-      <LoadingSpinner />
-    );
-  }
 
   const handleLogoutClicked = () => {
     setLoading(true);
@@ -202,6 +202,7 @@ const HomePage = ({ hardwareReducers, getMovies }) => {
     }, 1000);
   };
 
+  // DRAWER PRIMARY LIST ITEMS
   const mainListItems = (
     <div>
       { LOGGED_IN
@@ -231,7 +232,7 @@ const HomePage = ({ hardwareReducers, getMovies }) => {
           )
       }
       <hr />
-      <ListItem button>
+      <ListItem button selected>
         <ListItemIcon>
           <MovieIcon />
         </ListItemIcon>
@@ -258,6 +259,7 @@ const HomePage = ({ hardwareReducers, getMovies }) => {
     </div>
   );
 
+  // DRAWER SECONDARY LIST ITEMS
   const secondaryListItems = (
     <div>
       <ListItem button>
@@ -280,6 +282,12 @@ const HomePage = ({ hardwareReducers, getMovies }) => {
       </ListItem>
     </div>
   );
+
+  if (loading || LOCAL_LOADING_STATE) {
+    return (
+      <LoadingSpinner />
+    );
+  }
 
   return (
     <ThemeProvider theme={darkTheme}>
