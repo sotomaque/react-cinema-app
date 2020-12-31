@@ -17,7 +17,7 @@ import {
   LOAD_MORE_TOP_RATED_MOVIES,
   LOAD_MORE_UPCOMING_MOVIES,
 } from './types';
-import { fetchMovies } from '../services/movies';
+import { fetchMovies } from '../services';
 import { IMAGE_URL } from '../const';
 
 export const getMovies = (type, pageNumber) => async (

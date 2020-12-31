@@ -3,6 +3,11 @@ import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import clsx from 'clsx';
+
+import {
+  grey,
+  lightBlue,
+} from '@material-ui/core/colors';
 import {
   createMuiTheme,
   fade,
@@ -18,8 +23,8 @@ import Drawer from '@material-ui/core/Drawer';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import HelpIcon from '@material-ui/icons/Help';
 import IconButton from '@material-ui/core/IconButton';
-import InputBase from '@material-ui/core/InputBase';
 import ImportContactsIcon from '@material-ui/icons/ImportContacts';
+import InputBase from '@material-ui/core/InputBase';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
@@ -29,17 +34,13 @@ import MovieIcon from '@material-ui/icons/Movie';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
 import PersonIcon from '@material-ui/icons/Person';
-import SearchIcon from '@material-ui/icons/Search';
 import SchoolIcon from '@material-ui/icons/School';
+import SearchIcon from '@material-ui/icons/Search';
 import SettingsIcon from '@material-ui/icons/Settings';
 import SlideshowIcon from '@material-ui/icons/Slideshow';
 import Switch from '@material-ui/core/Switch';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import {
-  grey,
-  lightBlue,
-} from '@material-ui/core/colors';
 
 import { AuthContext } from '../../../auth';
 import { SET_LOADING, SET_THEME } from '../../actions/types';
@@ -219,7 +220,7 @@ const AppWrapper = ({ children }) => {
 
   // DRAWER PRIMARY LIST ITEMS
   const mainListItems = (
-    <div>
+    <>
       { LOGGED_IN
         ? (
             <ListItem button>
@@ -271,12 +272,12 @@ const AppWrapper = ({ children }) => {
         </ListItemIcon>
         <ListItemText primary="MOOCs" />
       </ListItem>
-    </div>
+    </>
   );
 
   // DRAWER SECONDARY LIST ITEMS
   const secondaryListItems = (
-    <div>
+    <>
       <ListItem button>
         <ListItemIcon>
           <SettingsIcon />
@@ -295,7 +296,7 @@ const AppWrapper = ({ children }) => {
         </ListItemIcon>
         <ListItemText primary="Logout" />
       </ListItem>
-    </div>
+    </>
   );
 
   const handleLogoutClicked = () => {

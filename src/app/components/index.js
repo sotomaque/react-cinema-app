@@ -1,6 +1,6 @@
 import AppWrapper from './AppWrapper';
+import LoadingSpinner from './LoadingSpinner';
 import Main from './Content/Main';
 import MainContent from './Content/MainContent';
-import LoadingSpinner from './LoadingSpinner';
 
-export { AppWrapper, Main, MainContent, LoadingSpinner };
+export { AppWrapper, LoadingSpinner, Main, MainContent };

@@ -9,6 +9,7 @@ import persistedReducer from '../reducers';
 const initialState = {};
 const middleware = [thunk];
 
+// Create Store with Persisted Reducer
 const store = createStore(
   persistedReducer,
   initialState,
@@ -17,5 +18,7 @@ const store = createStore(
     : applyMiddleware(...middleware),
 );
 
+// Export Persistor
 export const persistor = persistStore(store);
+// Export Store
 export default store;

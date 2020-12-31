@@ -1,3 +1,3 @@
-import { Connected as LazyImage } from './connected';
+import LazyImage from './component';
 
 export default LazyImage;

@@ -8,23 +8,31 @@ import movieReducers from './movieReducers';
 import pageReducers from './pageReducers';
 import searchReducers from './searchReducers';
 
+// Create Root Reducer
 const rootReducer = combineReducers({
-  pageReducers,
-  movieReducers,
-  searchReducers,
-  hardwareReducers,
   errorReducers,
+  hardwareReducers,
+  movieReducers,
+  pageReducers,
+  searchReducers,
 });
 
+// Create Persisted Config
+// Whitelisted Reducer State
+// Will Be Store in Local Storage
+// Under key: 'root'
 const persistConfig = {
   key: 'root',
   storage,
   whitelist: ['movieReducers'],
 };
 
+// Create Persisted Reducer out of
+// Root Reducer and Persisted Config
 const persistedReducer = persistReducer(
   persistConfig,
   rootReducer,
 );
 
+// Export Persisted Reducer
 export default persistedReducer;

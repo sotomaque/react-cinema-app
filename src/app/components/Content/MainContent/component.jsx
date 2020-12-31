@@ -3,17 +3,17 @@ import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 import { Typography } from '@material-ui/core';
 
-import SlideShow from '../SlideShow';
-import Paginated from '../../Paginated';
-import Grid from '../Grid';
-import { SET_QUERY } from '../../../actions/types';
 import { API_URL, API_KEY } from '../../../const';
+import { SET_QUERY } from '../../../actions/types';
+import Grid from '../Grid';
+import Paginated from '../../Paginated';
+import SlideShow from '../SlideShow';
 
 import './styles.scss';
 
 const MainContent = ({ movieReducers, pageReducers, loadMoreMovies, setResponsePageNumber }) => {
-  const { query = 'popular' } = pageReducers;
   const dispatch = useDispatch();
+  const { query = 'popular' } = pageReducers;
   let { page, totalPages } = movieReducers?.popularMovies;
   const [gridMovies, setGridMovies] = React.useState(movieReducers?.popularMovies?.list);
   const [slideShowImages, setSlideShowImages] = React.useState(movieReducers?.popularMovies?.heroImages);

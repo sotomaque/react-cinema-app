@@ -11,6 +11,7 @@ import {
   WSS_URL,
 } from '../../const';
 
+// DEFINE HTTPS LINK
 const httpsLink = new HttpLink({
   uri: HTTPS_URL,
   headers: {
@@ -18,6 +19,7 @@ const httpsLink = new HttpLink({
   },
 });
 
+// DEFINE WSS LINK
 const wssLink = new WebSocketLink({
   uri: WSS_URL,
   options: {
@@ -30,6 +32,7 @@ const wssLink = new WebSocketLink({
   },
 });
 
+// SPLIT
 const link = split(
   ({ query }) => {
     const definition = getMainDefinition(query);
@@ -65,6 +68,8 @@ const createApolloClient = () => {
   });
 };
 
+// Create Apollo Client
 const client = createApolloClient();
 
+// Export Apollo Client
 export default client;

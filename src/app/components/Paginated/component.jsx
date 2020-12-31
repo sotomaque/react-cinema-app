@@ -2,8 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Button, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-
 import { lightBlue } from '@material-ui/core/colors';
+
 const useStyles = makeStyles((theme) => ({
   margin: {
     margin: theme.spacing(1),
