@@ -13,7 +13,7 @@ import './styles.scss';
 const MainContent = ({ movieReducers, pageReducers, loadMoreMovies, setResponsePageNumber }) => {
   const { query = 'popular' } = pageReducers;
   const dispatch = useDispatch();
-  const { page, totalPages } = movieReducers?.popularMovies;
+  let { page, totalPages } = movieReducers?.popularMovies;
   const [gridMovies, setGridMovies] = React.useState(movieReducers?.popularMovies?.list);
   const [slideShowImages, setSlideShowImages] = React.useState(movieReducers?.popularMovies?.heroImages);
   const [currentPage, setCurrentPage] = React.useState(+page || 1);
@@ -24,19 +24,31 @@ const MainContent = ({ movieReducers, pageReducers, loadMoreMovies, setResponseP
     if (query === 'now_playing') {
       setGridMovies(movieReducers?.nowPlayingMovies?.list);
       setSlideShowImages(movieReducers?.nowPlayingMovies?.heroImages);
+      page = movieReducers?.nowPlayingMovies?.page;
+      totalPages = movieReducers?.nowPlayingMovies?.totalPages;
+      page !== currentPage && setCurrentPage(page);
     } else if (query === 'top_rated') {
       setGridMovies(movieReducers?.topRatedMovies?.list);
       setSlideShowImages(movieReducers?.topRatedMovies?.heroImages);
+      page = movieReducers?.topRatedMovies?.page;
+      totalPages = movieReducers?.topRatedMovies?.totalPages;
+      page !== currentPage && setCurrentPage(page);
     } else if (query === 'upcoming') {
       setGridMovies(movieReducers?.upcomingMovies?.list);
       setSlideShowImages(movieReducers?.upcomingMovies?.heroImages);
+      page = movieReducers?.upcomingMovies?.page;
+      totalPages = movieReducers?.upcomingMovies?.totalPages;
+      page !== currentPage && setCurrentPage(page);
     } else {
       if (movieReducers?.popularMovies?.list !== gridMovies) {
         setGridMovies(movieReducers?.popularMovies?.list);
         setSlideShowImages(movieReducers?.popularMovies?.heroImages);
+        page = movieReducers?.popularMovies?.page;
+        totalPages = movieReducers?.popularMovies?.totalPages;
+        page !== currentPage && setCurrentPage(page);
       }
     }
-  }, [query, gridMovies, slideShowImages, currentPage]);
+  }, [query, gridMovies, slideShowImages, movieReducers]);
 
   React.useEffect(() => {
     setResponsePageNumber(`${query}`, currentPage, totalPages);

@@ -108,7 +108,7 @@ export const loadMoreMovies = (type, pageNumber) => async (
       type,
       pageNumber,
     );
-    const { movieResults, payload } = response;
+    const { movieResults } = response;
     switch (type) {
       case 'popular':
         dispatch({
@@ -116,34 +116,25 @@ export const loadMoreMovies = (type, pageNumber) => async (
           payload: movieResults,
         });
         break;
+
       case 'top_rated':
         dispatch({
           type: LOAD_MORE_TOP_RATED_MOVIES,
           payload: movieResults,
         });
-        dispatch({
-          type: SET_TOP_RATED_PAGE,
-          payload,
-        });
         break;
+
       case 'upcoming':
         dispatch({
           type: LOAD_MORE_UPCOMING_MOVIES,
           payload: movieResults,
         });
-        dispatch({
-          type: SET_UPCOMING_PAGE,
-          payload,
-        });
         break;
+
       case 'now_playing':
         dispatch({
           type: LOAD_MORE_NOW_PLAYING_MOVIES,
           payload: movieResults,
-        });
-        dispatch({
-          type: SET_NOW_PLAYING_PAGE,
-          payload,
         });
         break;
 
