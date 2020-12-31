@@ -1,4 +1,5 @@
 export const SET_ERROR = 'SET_ERROR';
+export const SET_FILTER_TEXT = 'SET_FILTER_TEXT';
 export const SET_LOADING = 'SET_LOADING';
 export const SET_THEME = 'SET_THEME';
 export const LOAD_MORE_POPULAR_MOVIES =
