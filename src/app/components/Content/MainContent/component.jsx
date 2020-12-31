@@ -71,11 +71,6 @@ const MainContent = ({ movieReducers, pageReducers, loadMoreMovies, setResponseP
     } else {
       if (currentPage < 10) {
         setCurrentPage(prev => prev + 1);
-        // make api call
-        // const endpoint = `${API_URL}movie/${query}?api_key=${API_KEY}&page=${
-        //   currentPage + 1
-        // }`;
-        // fetchPopularMovies(endpoint);
       } else {
         setCurrentPage(1);
       }
