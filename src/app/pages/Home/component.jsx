@@ -3,11 +3,16 @@ import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 
 import { AppWrapper, MainContent, LoadingSpinner } from '../../components';
-import { SET_LOADING } from '../../actions/types';
+import { SET_LOADING, SET_PAGE } from '../../actions/types';
 
-const HomePage = ({ hardwareReducers, getMovies }) => {
+const HomePage = ({ hardwareReducers, pageReducers, getMovies }) => {
   const dispatch = useDispatch();
   const { loading } = hardwareReducers;
+  const { page } = pageReducers;
+
+  React.useEffect(() => {
+    page !== 'home' && dispatch({ type: SET_PAGE, payload: 'home' });
+  }, []);
 
   React.useEffect(() => {
     const fetchData = async () => {
@@ -36,6 +41,7 @@ const HomePage = ({ hardwareReducers, getMovies }) => {
 
 HomePage.propTypes = {
   hardwareReducers: PropTypes.object.isRequired,
+  pageReducers: PropTypes.object.isRequired,
   getMovies: PropTypes.func.isRequired,
 };
 

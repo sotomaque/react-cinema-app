@@ -2,13 +2,9 @@ import { connect } from 'react-redux';
 
 import HomePage from './component';
 
-const mapStateToProps = ({
-  pageReducers,
-  hardwareReducers,
-}) => {
+const mapStateToProps = ({ pageReducers }) => {
   return {
     pageReducers,
-    hardwareReducers,
   };
 };
 
