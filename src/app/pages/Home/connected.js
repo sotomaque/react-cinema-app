@@ -4,12 +4,14 @@ import { getMovies } from '../../actions/movies';
 import RegisterPage from './component';
 
 const mapStateToProps = ({
-  pageReducers,
   hardwareReducers,
+  movieReducers,
+  pageReducers,
 }) => {
   return {
-    pageReducers,
     hardwareReducers,
+    movieReducers,
+    pageReducers,
   };
 };
 
