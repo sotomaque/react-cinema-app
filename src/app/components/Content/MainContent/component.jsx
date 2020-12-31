@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 import { Typography } from '@material-ui/core';
@@ -8,6 +8,7 @@ import Paginated from '../../Paginated';
 import Grid from '../Grid';
 import { SET_QUERY } from '../../../actions/types';
 import { API_URL, API_KEY } from '../../../const';
+
 import './styles.scss';
 
 const MainContent = ({ movieReducers, pageReducers, loadMoreMovies, setResponsePageNumber }) => {
@@ -17,8 +18,8 @@ const MainContent = ({ movieReducers, pageReducers, loadMoreMovies, setResponseP
   const [gridMovies, setGridMovies] = React.useState(movieReducers?.popularMovies?.list);
   const [slideShowImages, setSlideShowImages] = React.useState(movieReducers?.popularMovies?.heroImages);
   const [currentPage, setCurrentPage] = React.useState(+page || 1);
-  const mainRef = useRef();
-  const bottomLineRef = useRef();
+  const mainRef = React.useRef();
+  const bottomLineRef = React.useRef();
 
   React.useEffect(() => {
     if (query === 'now_playing') {
@@ -132,8 +133,6 @@ const MainContent = ({ movieReducers, pageReducers, loadMoreMovies, setResponseP
   const handleScroll = () => {
     const containerHeight = mainRef.current.getBoundingClientRect().height;
     const { top: bottomLineTop } = bottomLineRef.current.getBoundingClientRect();
-    console.log('containerHeight', containerHeight);
-    console.log('bottomLineTop', bottomLineTop);
     if (bottomLineTop <= containerHeight) {
       // fetch data
       fetchData();

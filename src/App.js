@@ -43,7 +43,6 @@ const App = () => {
     <Router>
       <Switch>
         <Route exact path="/" render={() => <HomePage />} />
-
         <Redirect to="/" />
       </Switch>
     </Router>
