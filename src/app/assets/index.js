@@ -1,4 +1,4 @@
-import logo from './icons/cinema-logo.svg';
-import stock from './images/stock.png';
+import defaultUserImage from './images/default-user-image.jpg';
+import lazyLoader from './images/lazy_loader.gif';
 
-export { logo, stock };
+export { defaultUserImage, lazyLoader };

@@ -12,7 +12,7 @@ import './styles.scss';
  * @param {boolean} auto - default = false - if true -> auto incrememnt image index every 5 seconds
  * @param {boolean} arrows - default = false - if true -> show arrows to manually change image index
  */
-const SlideShow = ({ images, auto = false, arrows = false }) => {
+const SlideShow = ({ arrows = false, auto = false, images }) => {
   const [state, setState] = React.useState({
     slideShow: images[0],
     slideIndex: 0,
@@ -149,10 +149,10 @@ const SlideShow = ({ images, auto = false, arrows = false }) => {
 };
 
 SlideShow.propTypes = {
-  images: PropTypes.array.isRequired,
-  auto: PropTypes.bool,
   arrows: PropTypes.bool,
-  currentSlide: PropTypes.number
+  auto: PropTypes.bool,
+  currentSlide: PropTypes.number,
+  images: PropTypes.array.isRequired,
 };
 
 export default SlideShow;

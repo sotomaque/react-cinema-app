@@ -1,19 +1,20 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import Rating from '../Rating';
+import { LazyImage, Rating } from 'app/components';
 import './styles.scss';
 
-const Grid = ({ gridMovies }) => {
+const Grid = ({ gridMovies = [] }) => {
   return (
     <div className="grid">
-      {gridMovies.map((movie, index) => (
-        <div key={index}>
-          <div
+      {gridMovies.map((movie, index) => {
+        const { url: backgroundImageUrl = '' } = movie;
+        return (
+          <LazyImage
+            key={index}
             className="grid-cell"
-            style={{
-              backgroundImage: `url(${movie.url})`,
-            }}>
+            src={`${backgroundImageUrl}`}
+            alt="placeholder">
             {/* See More Button */}
             <div className="grid-read-more">
               <button className="grid-cell-button">
@@ -44,9 +45,9 @@ const Grid = ({ gridMovies }) => {
                 </div>
               </div>
             </div>
-          </div>
-        </div>
-      ))}
+          </LazyImage>
+        );
+      })}
     </div>
   );
 };

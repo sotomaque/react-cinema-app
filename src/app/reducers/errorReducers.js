@@ -1,4 +1,4 @@
-import { SET_ERROR } from '../actions/types';
+import { SET_ERROR } from 'app/actions/types';
 
 const initialState = {
   errorMessage: '',

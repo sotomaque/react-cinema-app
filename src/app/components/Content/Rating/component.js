@@ -1,14 +1,14 @@
 import React, {
   Fragment,
-  useState,
   useEffect,
   useRef,
+  useState,
 } from 'react';
 import PropTypes from 'prop-types';
 
 import './styles.scss';
 
-const Rating = ({ rating, totalStars, className = '' }) => {
+const Rating = ({ className = '', rating, totalStars }) => {
   const [numberOfStars, setNumberOfStars] = useState();
   const ratingRef = useRef();
 
@@ -56,9 +56,9 @@ const Rating = ({ rating, totalStars, className = '' }) => {
 };
 
 Rating.propTypes = {
+  className: PropTypes.string,
   rating: PropTypes.number.isRequired,
   totalStars: PropTypes.number.isRequired,
-  className: PropTypes.string,
 };
 
 export default Rating;
