@@ -24,7 +24,6 @@ const rootReducer = combineReducers({
 const persistConfig = {
   key: 'root',
   storage,
-  whitelist: ['movieReducers'],
 };
 
 // Create Persisted Reducer out of

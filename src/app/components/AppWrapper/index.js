@@ -1,3 +1,3 @@
-import AppWrapper from './component';
+import { Connected as AppWrapper } from './connected';
 
 export default AppWrapper;

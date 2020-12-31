@@ -178,16 +178,17 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const AppWrapper = ({ children }) => {
+const AppWrapper = ({ children, hardwareReducers }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const history = useHistory();
   const { authState, signOut } = React.useContext(AuthContext);
   const LOGGED_IN = authState?.status === 'in';
+  const { theme } = hardwareReducers;
 
   // Drawer / Theme state
   const [open, setOpen] = useState(false);
-  const [darkState, setDarkState] = useState(false);
+  const [darkState, setDarkState] = useState(theme === 'dark');
   const palletType = darkState ? 'dark' : 'light';
   const mainPrimaryColor = darkState
     ? grey[900]
@@ -398,6 +399,7 @@ const AppWrapper = ({ children }) => {
 
 AppWrapper.propTypes = {
   children: PropTypes.any.isRequired,
+  hardwareReducers: PropTypes.object.isRequired,
 };
 
 export default AppWrapper;
