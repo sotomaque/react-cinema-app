@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 
-import { getMovies } from '../../actions/movies';
+import { getMovies } from 'app/actions/movies';
 import RegisterPage from './component';
 
 const mapStateToProps = ({

@@ -9,7 +9,7 @@ import {
   HASURA_SECRET,
   HTTPS_URL,
   WSS_URL,
-} from '../../const';
+} from 'app/const';
 
 // DEFINE HTTPS LINK
 const httpsLink = new HttpLink({

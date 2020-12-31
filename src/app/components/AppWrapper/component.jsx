@@ -42,8 +42,8 @@ import Switch from '@material-ui/core/Switch';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 
-import { AuthContext } from '../../../auth';
-import { SET_LOADING, SET_THEME } from '../../actions/types';
+import { AuthContext } from 'auth';
+import { SET_LOADING, SET_THEME } from 'app/actions/types';
 
 const drawerWidth = 240;
 

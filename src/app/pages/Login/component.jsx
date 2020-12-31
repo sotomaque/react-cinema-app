@@ -14,10 +14,10 @@ import Paper from '@material-ui/core/Paper';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 
-import { AuthContext } from '../../../auth';
-import { SET_PAGE } from '../../actions/types';
-import Error from '../../components/Error';
-import Copyright from '../../components/Copyright';
+import { AuthContext } from 'auth';
+import { SET_PAGE } from 'app/actions/types';
+import { PAGES } from 'app/const';
+import { Copyright, Error } from 'app/components';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -83,7 +83,7 @@ const LoginPage = ({ pageReducers }) => {
   };
 
   React.useEffect(() => {
-    page !== 'login' && dispatch({ type: SET_PAGE, payload: 'login' });
+    page !== PAGES.LOGIN && dispatch({ type: SET_PAGE, payload: PAGES.LOGIN });
   }, []);
 
   React.useEffect(() => {

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { lazyLoader } from '../../assets';
+import { lazyLoader } from 'app/assets';
 
 const LazyImage = ({ src, alt, children, className }) => {
   const [imageSrc, setImageSrc] = React.useState(lazyLoader);

@@ -15,7 +15,7 @@ import {
   SET_UPCOMING_MOVIE_LIST,
   SET_UPCOMING_PAGE,
   SET_UPCOMING_SLIDESHOW_PICTURES,
-} from '../actions/types';
+} from 'app/actions/types';
 
 const initialState = {
   popularMovies: {

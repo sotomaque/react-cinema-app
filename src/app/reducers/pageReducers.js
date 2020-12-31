@@ -1,4 +1,4 @@
-import { SET_PAGE, SET_QUERY } from '../actions/types';
+import { SET_PAGE, SET_QUERY } from 'app/actions/types';
 
 const initialState = {
   currentPage: 'home',

@@ -1,4 +1,4 @@
-import { SET_FILTER_TEXT } from '../actions/types';
+import { SET_FILTER_TEXT } from 'app/actions/types';
 
 const initialState = {
   filterText: '',

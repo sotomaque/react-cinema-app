@@ -14,9 +14,10 @@ import Paper from '@material-ui/core/Paper';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 
-import { AuthContext } from '../../../auth';
-import { SET_PAGE } from '../../actions/types';
-import Copyright from '../../components/Copyright';
+import { AuthContext } from 'auth';
+import { SET_PAGE } from 'app/actions/types';
+import { PAGES } from 'app/const';
+import { Copyright } from 'app/components';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -73,7 +74,7 @@ const RegistrationPage = ({ pageReducers }) => {
   };
 
   React.useEffect(() => {
-    page !== 'register' && dispatch({ type: SET_PAGE, payload: 'register' });
+    page !== PAGES.REGISTER && dispatch({ type: SET_PAGE, payload: PAGES.REGISTER });
   }, []);
 
   React.useEffect(() => {
