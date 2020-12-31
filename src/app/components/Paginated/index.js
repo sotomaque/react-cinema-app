@@ -1,3 +1,3 @@
-import { Connected as Paginated } from './connected';
+import Paginated from './component';
 
 export default Paginated;

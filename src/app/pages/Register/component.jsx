@@ -1,18 +1,21 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import { useDispatch } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
+
+import { makeStyles } from '@material-ui/core/styles';
 import Avatar from '@material-ui/core/Avatar';
+import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import TextField from '@material-ui/core/TextField';
-import Paper from '@material-ui/core/Paper';
-import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+import Paper from '@material-ui/core/Paper';
+import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
 
 import { AuthContext } from '../../../auth';
-
+import { SET_PAGE } from '../../actions/types';
 import Copyright from '../../components/Copyright';
 
 const useStyles = makeStyles((theme) => ({
@@ -46,10 +49,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const RegistrationPage = () => {
-  const { signUpWithEmailAndPassword } = React.useContext(AuthContext);
+const RegistrationPage = ({ pageReducers }) => {
   const history = useHistory();
   const classes = useStyles();
+  const dispatch = useDispatch();
+  const { signUpWithEmailAndPassword } = React.useContext(AuthContext);
+  const { page } = pageReducers;
   const [username, setUsername] = React.useState('');
   const [name, setName] = React.useState('');
   const [email, setEmail] = React.useState('');
@@ -66,6 +71,10 @@ const RegistrationPage = () => {
     });
     history.push('/');
   };
+
+  React.useEffect(() => {
+    page !== 'register' && dispatch({ type: SET_PAGE, payload: 'register' });
+  }, []);
 
   React.useEffect(() => {
     if (username.trim() !== '' && email.trim() !== '' && password.trim() !== '' && name.trim() !== '') {
@@ -165,6 +174,10 @@ const RegistrationPage = () => {
       </Grid>
     </Grid>
   );
+};
+
+RegistrationPage.propTypes = {
+  pageReducers: PropTypes.object.isRequired,
 };
 
 export default RegistrationPage;

@@ -1,3 +1,3 @@
-import { Connected as SlideShow } from './connected';
+import SlideShow from './component';
 
 export default SlideShow;

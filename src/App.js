@@ -14,8 +14,9 @@ import { AuthContext } from './auth';
 const App = () => {
   const { authState } = React.useContext(AuthContext);
   const isAuth = authState?.status === 'in';
+
+  // UNPROTECTED ROUTES
   if (!isAuth) {
-    // use un auth routes
     return (
       <Router>
         <Switch>
@@ -39,11 +40,11 @@ const App = () => {
     );
   }
 
+  // PROTECTED ROUTES
   return (
     <Router>
       <Switch>
         <Route exact path="/" render={() => <HomePage />} />
-
         <Redirect to="/" />
       </Switch>
     </Router>

@@ -8,7 +8,7 @@ import { CREATE_USER } from './app/gql/mutations';
 
 const provider = new firebase.auth.GoogleAuthProvider();
 
-// Find these options in your Firebase console
+// Connect to Firebase
 firebase.initializeApp({
   apiKey: 'AIzaSyAUM0akyGWC2uRer3gsjxVecrjf-Z9jPjw',
   authDomain: 'cinema-d7621.firebaseapp.com',
@@ -19,6 +19,7 @@ firebase.initializeApp({
   measurementId: 'G-3B566P7LET',
 });
 
+// Create React Context
 export const AuthContext = React.createContext();
 
 function AuthProvider({ children }) {

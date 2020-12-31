@@ -1,19 +1,23 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import { useDispatch } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
+
+import { makeStyles } from '@material-ui/core/styles';
 import Avatar from '@material-ui/core/Avatar';
+import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import TextField from '@material-ui/core/TextField';
-import Paper from '@material-ui/core/Paper';
-import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+import Paper from '@material-ui/core/Paper';
+import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
 
+import { AuthContext } from '../../../auth';
+import { SET_PAGE } from '../../actions/types';
 import Error from '../../components/Error';
 import Copyright from '../../components/Copyright';
-import { AuthContext } from '../../../auth';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -46,9 +50,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const LoginPage = () => {
+const LoginPage = ({ pageReducers }) => {
   const classes = useStyles();
+  const dispatch = useDispatch();
   const history = useHistory();
+  const { page } = pageReducers;
   const { loginWithEmailAndPassword } = React.useContext(AuthContext);
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
@@ -75,6 +81,10 @@ const LoginPage = () => {
       console.error(err);
     };
   };
+
+  React.useEffect(() => {
+    page !== 'login' && dispatch({ type: SET_PAGE, payload: 'login' });
+  }, []);
 
   React.useEffect(() => {
     if (email.trim() !== '' && password.trim() !== '') {
@@ -160,6 +170,10 @@ const LoginPage = () => {
       </Grid>
     </Grid>
   );
+};
+
+LoginPage.propTypes = {
+  pageReducers: PropTypes.object.isRequired,
 };
 
 export default LoginPage;

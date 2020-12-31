@@ -2,13 +2,9 @@ import { connect } from 'react-redux';
 
 import LoginPage from './component';
 
-const mapStateToProps = ({
-  pageReducers,
-  hardwareReducers,
-}) => {
+const mapStateToProps = ({ pageReducers }) => {
   return {
     pageReducers,
-    hardwareReducers,
   };
 };
 
