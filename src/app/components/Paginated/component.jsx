@@ -4,6 +4,8 @@ import { Button, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { lightBlue } from '@material-ui/core/colors';
 
+import { PAGINATION_TYPES } from '../../const';
+
 const useStyles = makeStyles((theme) => ({
   margin: {
     margin: theme.spacing(1),
@@ -23,7 +25,7 @@ const Paginated = ({ currentPage, paginate, totalPages }) => {
   return (
     <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
       <Button
-        onClick={() => paginate('prev')} size="medium"
+        onClick={() => paginate(PAGINATION_TYPES.PREV)} size="medium"
         style={{ backgroundColor: lightBlue[500], borderRadius: 20, paddingLeft: 10, paddingRight: 10 }}
         className={classes.margin}
         disabled={page === 1}
@@ -42,7 +44,7 @@ const Paginated = ({ currentPage, paginate, totalPages }) => {
         {page} - {totalPageNumber}
       </Typography>
       <Button
-        onClick={() => paginate('next')}
+        onClick={() => paginate(PAGINATION_TYPES.NEXT)}
         size="medium"
         style={{ backgroundColor: lightBlue[500], borderRadius: 20, paddingLeft: 10, paddingRight: 10 }}
         className={classes.margin}

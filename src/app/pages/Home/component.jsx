@@ -5,6 +5,7 @@ import { differenceInMinutes, parseISO } from 'date-fns';
 
 import { AppWrapper, MainContent, LoadingSpinner } from '../../components';
 import { SET_LOADING, SET_PAGE } from '../../actions/types';
+import { PAGES, QUERY_TYPES } from '../../const';
 
 const HomePage = ({
   getMovies,
@@ -43,7 +44,7 @@ const HomePage = ({
   const { page } = pageReducers;
 
   React.useEffect(() => {
-    page !== 'home' && dispatch({ type: SET_PAGE, payload: 'home' });
+    page !== PAGES.HOME && dispatch({ type: SET_PAGE, payload: PAGES.HOME });
   }, []);
 
   // return true if timestamp passed in
@@ -85,12 +86,14 @@ const HomePage = ({
   React.useEffect(() => {
     const fetchData = async () => {
       if (SHOULD_UPDATE_CACHE) {
+        // ONLY AWAIT POPULAR API CALL
         dispatch({ type: SET_LOADING, payload: true });
-        await getMovies('popular');
+        await getMovies(QUERY_TYPES.POPULAR);
         dispatch({ type: SET_LOADING, payload: false });
-        getMovies('now_playing');
-        getMovies('upcoming');
-        getMovies('top_rated');
+        // REST CAN OCCUR IN THE BACKGROUND
+        getMovies(QUERY_TYPES.NOW_PLAYING);
+        getMovies(QUERY_TYPES.UPCOMING);
+        getMovies(QUERY_TYPES.TOP_RATED);
       }
     };
     fetchData();

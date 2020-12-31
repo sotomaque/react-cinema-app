@@ -17,3 +17,24 @@ export const API_KEY =
 export const API_URL = 'https://api.themoviedb.org/3/';
 export const IMAGE_URL =
   'https://image.tmdb.org/t/p/original';
+
+// QUERY TYPES
+export const QUERY_TYPES = Object.freeze({
+  POPULAR: 'popular',
+  TOP_RATED: 'top_rated',
+  UPCOMING: 'upcoming',
+  NOW_PLAYING: 'now_playing',
+});
+
+// PAGINGATION TYPES
+export const PAGINATION_TYPES = Object.freeze({
+  PREV: 'prev',
+  NEXT: 'next',
+});
+
+// PAGE NAMES
+export const PAGES = Object.freeze({
+  HOME: 'Home Page',
+  LOGIN: 'Login Page',
+  REGISTER: 'Register Page',
+});

@@ -18,6 +18,7 @@ import { AuthContext } from '../../../auth';
 import { SET_PAGE } from '../../actions/types';
 import Error from '../../components/Error';
 import Copyright from '../../components/Copyright';
+import { PAGES } from '../../const';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -83,7 +84,7 @@ const LoginPage = ({ pageReducers }) => {
   };
 
   React.useEffect(() => {
-    page !== 'login' && dispatch({ type: SET_PAGE, payload: 'login' });
+    page !== PAGES.LOGIN && dispatch({ type: SET_PAGE, payload: PAGES.LOGIN });
   }, []);
 
   React.useEffect(() => {

@@ -17,6 +17,7 @@ import Typography from '@material-ui/core/Typography';
 import { AuthContext } from '../../../auth';
 import { SET_PAGE } from '../../actions/types';
 import Copyright from '../../components/Copyright';
+import { PAGES } from '../../const';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -73,7 +74,7 @@ const RegistrationPage = ({ pageReducers }) => {
   };
 
   React.useEffect(() => {
-    page !== 'register' && dispatch({ type: SET_PAGE, payload: 'register' });
+    page !== PAGES.REGISTER && dispatch({ type: SET_PAGE, payload: PAGES.REGISTER });
   }, []);
 
   React.useEffect(() => {
