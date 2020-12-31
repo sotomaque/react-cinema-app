@@ -116,6 +116,7 @@ const useStyles = makeStyles((theme) => ({
   content: {
     flexGrow: 1,
     textAlign: 'center',
+    marginTop: 50,
     height: '100vh',
     overflow: 'auto',
   },
