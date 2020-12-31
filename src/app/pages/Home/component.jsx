@@ -41,7 +41,6 @@ import {
 
 import MainContent from '../../components/Content/MainContent';
 import LoadingSpinner from '../../components/LoadingSpinner';
-// import { useRefreshMovies } from '../../services/movies';
 import { AuthContext } from '../../../auth';
 import { SET_LOADING, SET_THEME } from '../../actions/types';
 import { useDispatch } from 'react-redux';
@@ -139,19 +138,16 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-// TODO: ADD LOADING SPINNER COMPONENT
+// TODO: EXTRACT DRAWER AND APP BAR LOGIC TO HOC
 const HomePage = ({ hardwareReducers, getMovies }) => {
   const classes = useStyles();
   const history = useHistory();
   const dispatch = useDispatch();
   const { authState, signOut } = React.useContext(AuthContext);
   const LOGGED_IN = authState?.status === 'in';
-  // console.log('authState', authState);
   const { loading } = hardwareReducers;
   const [LOCAL_LOADING_STATE, setLoading] = React.useState();
-  // API HOOK CALL 
-  // TODO: REPLACE WITH GETMOVIES ACTION
-  // useRefreshMovies();
+
   // Drawer / Theme state
   const [open, setOpen] = useState(false);
   const [darkState, setDarkState] = useState(false);

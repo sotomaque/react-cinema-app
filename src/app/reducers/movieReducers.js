@@ -1,4 +1,8 @@
 import {
+  LOAD_MORE_POPULAR_MOVIES,
+  LOAD_MORE_UPCOMING_MOVIES,
+  LOAD_MORE_TOP_RATED_MOVIES,
+  LOAD_MORE_NOW_PLAYING_MOVIES,
   SET_NOW_PLAYING_MOVIE_LIST,
   SET_NOW_PLAYING_PAGE,
   SET_NOW_PLAYING_SLIDESHOW_PICTURES,
@@ -219,6 +223,86 @@ export default (state = initialState, action) => {
           ...state.nowPlayingMovies,
           page: action.payload.page,
           totalPages: action.payload.totalPages,
+        },
+      };
+
+    case LOAD_MORE_POPULAR_MOVIES:
+      if (
+        !action.payload ||
+        !action.payload?.length ||
+        action.payload?.length === 0
+      ) {
+        return state;
+      }
+      return {
+        ...state,
+        popularMovies: {
+          ...state.popularMovies,
+          list: [
+            ...state.popularMovies.list,
+            ...action.payload,
+          ],
+          fetchedAt: new Date(),
+        },
+      };
+
+    case LOAD_MORE_UPCOMING_MOVIES:
+      if (
+        !action.payload ||
+        !action.payload?.length ||
+        action.payload?.length === 0
+      ) {
+        return state;
+      }
+      return {
+        ...state,
+        upcomingMovies: {
+          ...state.upcomingMovies,
+          list: [
+            ...state.upcomingMovies.list,
+            ...action.payload,
+          ],
+          fetchedAt: new Date(),
+        },
+      };
+
+    case LOAD_MORE_TOP_RATED_MOVIES:
+      if (
+        !action.payload ||
+        !action.payload?.length ||
+        action.payload?.length === 0
+      ) {
+        return state;
+      }
+      return {
+        ...state,
+        topRatedMovies: {
+          ...state.topRatedMovies,
+          list: [
+            ...state.topRatedMovies.list,
+            ...action.payload,
+          ],
+          fetchedAt: new Date(),
+        },
+      };
+
+    case LOAD_MORE_NOW_PLAYING_MOVIES:
+      if (
+        !action.payload ||
+        !action.payload?.length ||
+        action.payload?.length === 0
+      ) {
+        return state;
+      }
+      return {
+        ...state,
+        nowPlayingMovies: {
+          ...state.nowPlayingMovies,
+          list: [
+            ...state.nowPlayingMovies.list,
+            ...action.payload,
+          ],
+          fetchedAt: new Date(),
         },
       };
 

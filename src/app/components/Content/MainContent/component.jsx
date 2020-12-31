@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 import { Typography } from '@material-ui/core';
@@ -10,12 +10,15 @@ import { SET_QUERY } from '../../../actions/types';
 import { API_URL, API_KEY } from '../../../const';
 import './styles.scss';
 
-const MainContent = ({ movieReducers, pageReducers }) => {
+const MainContent = ({ movieReducers, pageReducers, loadMoreMovies, setResponsePageNumber }) => {
   const { query = 'popular' } = pageReducers;
   const dispatch = useDispatch();
+  const { page, totalPages } = movieReducers?.popularMovies;
   const [gridMovies, setGridMovies] = React.useState(movieReducers?.popularMovies?.list);
   const [slideShowImages, setSlideShowImages] = React.useState(movieReducers?.popularMovies?.heroImages);
-  const [currentPage, setCurrentPage] = React.useState(1);
+  const [currentPage, setCurrentPage] = React.useState(+page || 1);
+  const mainRef = useRef();
+  const bottomLineRef = useRef();
 
   React.useEffect(() => {
     if (query === 'now_playing') {
@@ -34,6 +37,11 @@ const MainContent = ({ movieReducers, pageReducers }) => {
       }
     }
   }, [query, gridMovies, slideShowImages, currentPage]);
+
+  React.useEffect(() => {
+    setResponsePageNumber(`${query}`, currentPage, totalPages);
+    loadMoreMovies(`${query}`, currentPage);
+  }, [currentPage]);
 
   const paginate = (type) => {
     if (type === 'prev') {
@@ -114,8 +122,31 @@ const MainContent = ({ movieReducers, pageReducers }) => {
     );
   };
 
+  const handleScroll = () => {
+    const containerHeight = mainRef.current.getBoundingClientRect().height;
+    const { top: bottomLineTop } = bottomLineRef.current.getBoundingClientRect();
+    console.log('containerHeight', containerHeight);
+    console.log('bottomLineTop', bottomLineTop);
+    if (bottomLineTop <= containerHeight) {
+      // fetch data
+      fetchData();
+      console.log('FETCH DATA!');
+    };
+  };
+
+  const fetchData = () => {
+    if (page < totalPages) {
+      //  update current page
+      setCurrentPage(prev => prev + 1);
+    };
+  };
+
   return (
-    <div className="main-content">
+    <div
+      className="main-content"
+      ref={mainRef}
+      onScroll={() => handleScroll()}
+    >
       {/* Slideshow Components */}
       {slideShowImages?.length > 0 && (
         <SlideShow
@@ -139,6 +170,7 @@ const MainContent = ({ movieReducers, pageReducers }) => {
           <Grid gridMovies={gridMovies} />
         )
       }
+      <div ref={bottomLineRef} />
     </div>
   );
 };
@@ -146,6 +178,8 @@ const MainContent = ({ movieReducers, pageReducers }) => {
 MainContent.propTypes = {
   movieReducers: PropTypes.object.isRequired,
   pageReducers: PropTypes.object.isRequired,
+  loadMoreMovies: PropTypes.func.isRequired,
+  setResponsePageNumber: PropTypes.func.isRequired,
 };
 
 export default MainContent;

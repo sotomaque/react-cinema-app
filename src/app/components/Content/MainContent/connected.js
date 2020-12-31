@@ -1,5 +1,9 @@
 import { connect } from 'react-redux';
 
+import {
+  loadMoreMovies,
+  setResponsePageNumber,
+} from '../../../actions/movies';
 import MainContent from './component';
 
 const mapStateToProps = ({
@@ -12,6 +16,9 @@ const mapStateToProps = ({
   };
 };
 
-const Connected = connect(mapStateToProps)(MainContent);
+const Connected = connect(mapStateToProps, {
+  loadMoreMovies,
+  setResponsePageNumber,
+})(MainContent);
 
 export { Connected };
