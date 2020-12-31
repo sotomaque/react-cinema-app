@@ -3,8 +3,8 @@ import { persistStore } from 'redux-persist';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import thunk from 'redux-thunk';
 
-import { __prod__ } from '../const';
-import persistedReducer from '../reducers';
+import { __prod__ } from 'app/const';
+import persistedReducer from 'app/reducers';
 
 const initialState = {};
 const middleware = [thunk];

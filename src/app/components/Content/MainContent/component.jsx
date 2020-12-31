@@ -3,11 +3,9 @@ import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 import { Typography } from '@material-ui/core';
 
-import { QUERY_TYPES, PAGINATION_TYPES } from '../../../const';
-import { SET_QUERY } from '../../../actions/types';
-import Grid from '../Grid';
-import Paginated from '../../Paginated';
-import SlideShow from '../SlideShow';
+import { QUERY_TYPES, PAGINATION_TYPES } from 'app/const';
+import { SET_QUERY } from 'app/actions/types';
+import { Grid, Paginated, SlideShow } from 'app/components';
 
 import './styles.scss';
 
@@ -52,8 +50,10 @@ const MainContent = ({ movieReducers, pageReducers, loadMoreMovies, setResponseP
   }, [query, gridMovies, slideShowImages, movieReducers]);
 
   React.useEffect(() => {
-    setResponsePageNumber(`${query}`, currentPage, totalPages);
+    // QUERY FOR ANOTHER PAGE WORTH OF DATA (& UPDATE LIST IN STATE)
     loadMoreMovies(`${query}`, currentPage);
+    // UPDATE PAGE NUMEBR IN STATE
+    setResponsePageNumber(`${query}`, currentPage, totalPages);
   }, [currentPage]);
 
   const paginate = (type) => {

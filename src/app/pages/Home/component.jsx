@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 import { differenceInMinutes, parseISO } from 'date-fns';
 
-import { AppWrapper, MainContent, LoadingSpinner } from '../../components';
-import { SET_LOADING, SET_PAGE } from '../../actions/types';
-import { PAGES, QUERY_TYPES } from '../../const';
+import { AppWrapper, MainContent, LoadingSpinner } from 'app/components';
+import { SET_LOADING, SET_PAGE } from 'app/actions/types';
+import { PAGES, QUERY_TYPES } from 'app/const';
 
 const HomePage = ({
   getMovies,

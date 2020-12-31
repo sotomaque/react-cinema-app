@@ -1,8 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import Rating from '../Rating';
-import LazyImage from '../../LazyImage/component';
+import { LazyImage, Rating } from 'app/components';
 import './styles.scss';
 
 const Grid = ({ gridMovies = [] }) => {

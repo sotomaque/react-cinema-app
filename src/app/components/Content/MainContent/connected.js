@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import {
   loadMoreMovies,
   setResponsePageNumber,
-} from '../../../actions/movies';
+} from 'app/actions/movies';
 import MainContent from './component';
 
 const mapStateToProps = ({

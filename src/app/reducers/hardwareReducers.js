@@ -1,4 +1,4 @@
-import { SET_LOADING, SET_THEME } from '../actions/types';
+import { SET_LOADING, SET_THEME } from 'app/actions/types';
 
 const initialState = {
   loading: false,

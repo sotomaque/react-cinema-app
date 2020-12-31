@@ -14,11 +14,10 @@ import Paper from '@material-ui/core/Paper';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 
-import { AuthContext } from '../../../auth';
-import { SET_PAGE } from '../../actions/types';
-import Error from '../../components/Error';
-import Copyright from '../../components/Copyright';
-import { PAGES } from '../../const';
+import { AuthContext } from 'auth';
+import { SET_PAGE } from 'app/actions/types';
+import { PAGES } from 'app/const';
+import { Copyright, Error } from 'app/components';
 
 const useStyles = makeStyles((theme) => ({
   root: {

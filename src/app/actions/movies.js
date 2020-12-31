@@ -16,9 +16,9 @@ import {
   LOAD_MORE_NOW_PLAYING_MOVIES,
   LOAD_MORE_TOP_RATED_MOVIES,
   LOAD_MORE_UPCOMING_MOVIES,
-} from './types';
-import { fetchMovies } from '../services';
-import { IMAGE_URL, QUERY_TYPES } from '../const';
+} from 'app/actions/types';
+import { fetchMovies } from 'app/services';
+import { IMAGE_URL, QUERY_TYPES } from 'app/const';
 
 /**
  * GET MOVIES ACTION

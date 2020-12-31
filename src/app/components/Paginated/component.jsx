@@ -4,7 +4,7 @@ import { Button, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { lightBlue } from '@material-ui/core/colors';
 
-import { PAGINATION_TYPES } from '../../const';
+import { PAGINATION_TYPES } from 'app/const';
 
 const useStyles = makeStyles((theme) => ({
   margin: {
