@@ -100,6 +100,24 @@ const MainContent = ({ languageReducers, movieReducers, pageReducers, loadMoreMo
     const handleListItemClicked = ({ isActive, type }) => {
       !isActive && dispatch({ type: SET_QUERY, payload: `${type}` });
     };
+    const translateItemName = (type) => {
+      switch (type) {
+        case QUERY_TYPES.NOW_PLAYING:
+          return I18n.translate('NOW_PLAYING');
+
+        case QUERY_TYPES.POPULAR:
+          return I18n.translate('POPULAR');
+
+        case QUERY_TYPES.UPCOMING:
+          return I18n.translate('UPCOMING');
+
+        case QUERY_TYPES.TOP_RATED:
+          return I18n.translate('TOP_RATED');
+
+        default:
+          return type;
+      }
+    };
 
     return (
       <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
@@ -116,7 +134,7 @@ const MainContent = ({ languageReducers, movieReducers, pageReducers, loadMoreMo
                   style={{ alignSelf: 'center', padding: 10, opacity: isActive ? 1 : 0.5, cursor: isActive ? '' : 'pointer' }}
                   onClick={() => handleListItemClicked({ isActive, type: item?.type })}
                 >
-                  {item.name}
+                  {translateItemName(item.type)}
               </Typography>
             );
           })
