@@ -1,8 +1,12 @@
 export default {
+  CANCEL: 'Cancel',
+  ENGLISH: 'English',
   HELLO: 'Hello',
-  WORLD: 'World',
+  NOW_PLAYING: 'Now Playing',
   POPULAR: 'Popular',
+  SET_PRIMARY_LANGUAGE: 'Set Primary Language',
+  SPANISH: 'Spanish',
   TOP_RATED: 'Top Rated',
   UPCOMING: 'Upcoming',
-  NOW_PLAYING: 'Now Playing',
+  WORLD: 'World',
 };

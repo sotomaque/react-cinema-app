@@ -1,8 +1,12 @@
 export default {
+  CANCEL: 'Cancelar',
+  ENGLISH: 'Ingles',
   HELLO: 'Hola',
-  WORLD: 'Mundo',
+  NOW_PLAYING: 'Jugando ahora',
   POPULAR: 'Popular',
+  SET_PRIMARY_LANGUAGE: 'Establecer idioma principal',
+  SPANISH: 'Espanol',
   TOP_RATED: 'Los más valorados',
   UPCOMING: 'Próxima',
-  NOW_PLAYING: 'Jugando ahora',
+  WORLD: 'Mundo',
 };
