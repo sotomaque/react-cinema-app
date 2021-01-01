@@ -8,6 +8,7 @@ import { SET_QUERY } from 'app/actions/types';
 import { Grid, Paginated, SlideShow } from 'app/components';
 
 import './styles.scss';
+import I18n from 'app/locales';
 
 const MainContent = ({ movieReducers, pageReducers, loadMoreMovies, setResponsePageNumber }) => {
   const dispatch = useDispatch();
@@ -99,6 +100,24 @@ const MainContent = ({ movieReducers, pageReducers, loadMoreMovies, setResponseP
     const handleListItemClicked = ({ isActive, type }) => {
       !isActive && dispatch({ type: SET_QUERY, payload: `${type}` });
     };
+    const translateItemName = (type) => {
+      switch (type) {
+        case QUERY_TYPES.NOW_PLAYING:
+          return I18n.translate('NOW_PLAYING');
+
+        case QUERY_TYPES.POPULAR:
+          return I18n.translate('POPULAR');
+
+        case QUERY_TYPES.UPCOMING:
+          return I18n.translate('UPCOMING');
+
+        case QUERY_TYPES.TOP_RATED:
+          return I18n.translate('TOP_RATED');
+
+        default:
+          return type;
+      }
+    };
 
     return (
       <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
@@ -115,7 +134,7 @@ const MainContent = ({ movieReducers, pageReducers, loadMoreMovies, setResponseP
                   style={{ alignSelf: 'center', padding: 10, opacity: isActive ? 1 : 0.5, cursor: isActive ? '' : 'pointer' }}
                   onClick={() => handleListItemClicked({ isActive, type: item?.type })}
                 >
-                  {item.name}
+                  {translateItemName(item.type)}
               </Typography>
             );
           })

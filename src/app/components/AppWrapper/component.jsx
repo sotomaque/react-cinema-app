@@ -14,8 +14,9 @@ import {
   makeStyles,
   ThemeProvider,
 } from '@material-ui/core/styles';
+import AccountCircle from '@material-ui/icons/AccountCircle';
 import AppBar from '@material-ui/core/AppBar';
-import Badge from '@material-ui/core/Badge';
+// import Badge from '@material-ui/core/Badge';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Divider from '@material-ui/core/Divider';
@@ -29,9 +30,11 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
 import MenuIcon from '@material-ui/icons/Menu';
 import MovieIcon from '@material-ui/icons/Movie';
-import NotificationsIcon from '@material-ui/icons/Notifications';
+// import NotificationsIcon from '@material-ui/icons/Notifications';
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
 import PersonIcon from '@material-ui/icons/Person';
 import SchoolIcon from '@material-ui/icons/School';
@@ -42,8 +45,10 @@ import Switch from '@material-ui/core/Switch';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 
+import I18n from 'app/locales';
 import { AuthContext } from 'auth';
 import { SET_LOADING, SET_THEME } from 'app/actions/types';
+import SimpleDialogDemo from '../Dialog';
 
 const drawerWidth = 240;
 
@@ -308,7 +313,18 @@ const AppWrapper = ({ children, hardwareReducers }) => {
       history.push('/login');
     }, 1000);
   };
-
+  const SHOW_MORE_MENU = true;
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const moreMenuOpen = Boolean(anchorEl);
+  const handleMenu = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+  const handleSetLanguage = () => {
+    handleClose();
+  };
   return (
     <ThemeProvider theme={darkTheme}>
       <div className={classes.root}>
@@ -320,6 +336,7 @@ const AppWrapper = ({ children, hardwareReducers }) => {
             open && classes.appBarShift,
           )}>
           <Toolbar className={classes.toolbar}>
+            {/* TOGGLE DRAWER ICON BUTTON */}
             <IconButton
               edge="start"
               color="inherit"
@@ -346,7 +363,7 @@ const AppWrapper = ({ children, hardwareReducers }) => {
                 <SearchIcon />
               </div>
               <InputBase
-                placeholder="Search…"
+                placeholder={`${I18n.translate('SEARCH')}...`}
                 classes={{
                   root: classes.inputRoot,
                   input: classes.inputInput,
@@ -360,11 +377,43 @@ const AppWrapper = ({ children, hardwareReducers }) => {
               onChange={handleThemeChange}
             />
             {/* Notifications */}
-            <IconButton color="inherit">
+            {/* <IconButton color="inherit">
               <Badge badgeContent={4} color="secondary">
                 <NotificationsIcon />
               </Badge>
-            </IconButton>
+            </IconButton> */}
+            {SHOW_MORE_MENU && (
+            <div>
+              <IconButton
+                aria-label="account of current user"
+                aria-controls="menu-appbar"
+                aria-haspopup="true"
+                onClick={handleMenu}
+                color="inherit"
+              >
+                <AccountCircle />
+              </IconButton>
+              <Menu
+                id="menu-appbar"
+                anchorEl={anchorEl}
+                anchorOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                open={moreMenuOpen}
+                onClose={handleClose}
+              >
+                <MenuItem onClick={handleSetLanguage}>
+                  <SimpleDialogDemo />
+                </MenuItem>
+              </Menu>
+            </div>
+            )}
           </Toolbar>
         </AppBar>
         <Drawer
