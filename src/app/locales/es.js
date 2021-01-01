@@ -4,6 +4,7 @@ export default {
   HELLO: 'Hola',
   NOW_PLAYING: 'Jugando ahora',
   POPULAR: 'Popular',
+  SEARCH: 'Buscar',
   SET_PRIMARY_LANGUAGE: 'Establecer idioma principal',
   SPANISH: 'Espanol',
   TOP_RATED: 'Los más valorados',

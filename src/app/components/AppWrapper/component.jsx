@@ -45,6 +45,7 @@ import Switch from '@material-ui/core/Switch';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 
+import I18n from 'app/locales';
 import { AuthContext } from 'auth';
 import { SET_LOADING, SET_THEME } from 'app/actions/types';
 import SimpleDialogDemo from '../Dialog';
@@ -362,7 +363,7 @@ const AppWrapper = ({ children, hardwareReducers }) => {
                 <SearchIcon />
               </div>
               <InputBase
-                placeholder="Search…"
+                placeholder={`${I18n.translate('SEARCH')}...`}
                 classes={{
                   root: classes.inputRoot,
                   input: classes.inputInput,
