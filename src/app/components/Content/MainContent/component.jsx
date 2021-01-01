@@ -8,8 +8,9 @@ import { SET_QUERY } from 'app/actions/types';
 import { Grid, Paginated, SlideShow } from 'app/components';
 
 import './styles.scss';
+import I18n from 'app/locales';
 
-const MainContent = ({ movieReducers, pageReducers, loadMoreMovies, setResponsePageNumber }) => {
+const MainContent = ({ languageReducers, movieReducers, pageReducers, loadMoreMovies, setResponsePageNumber }) => {
   const dispatch = useDispatch();
   const { query = 'popular' } = pageReducers;
   let { page, totalPages } = movieReducers?.popularMovies;
@@ -163,6 +164,10 @@ const MainContent = ({ movieReducers, pageReducers, loadMoreMovies, setResponseP
           className="grid-movie-title movieType"
         />
       </div>
+      {/* TEMP */}
+      <div>{I18n.translate('HELLO')}</div>
+      <div>{I18n.translate('WORLD')}</div>
+      {/* /TEMP */}
       {/* Grid Components */}
       {
         gridMovies && gridMovies?.length && gridMovies?.length !== 0 && (
@@ -175,6 +180,7 @@ const MainContent = ({ movieReducers, pageReducers, loadMoreMovies, setResponseP
 };
 
 MainContent.propTypes = {
+  languageReducers: PropTypes.object.isRequired,
   movieReducers: PropTypes.object.isRequired,
   pageReducers: PropTypes.object.isRequired,
   loadMoreMovies: PropTypes.func.isRequired,

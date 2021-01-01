@@ -4,6 +4,7 @@ import storage from 'redux-persist/lib/storage'; // defaults to localStorage for
 
 import errorReducers from './errorReducers';
 import hardwareReducers from './hardwareReducers';
+import languageReducers from './languageReducers';
 import movieReducers from './movieReducers';
 import pageReducers from './pageReducers';
 import searchReducers from './searchReducers';
@@ -12,6 +13,7 @@ import searchReducers from './searchReducers';
 const rootReducer = combineReducers({
   errorReducers,
   hardwareReducers,
+  languageReducers,
   movieReducers,
   pageReducers,
   searchReducers,

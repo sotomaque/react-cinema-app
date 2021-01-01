@@ -10,11 +10,14 @@ import { PAGES, QUERY_TYPES } from 'app/const';
 const HomePage = ({
   getMovies,
   hardwareReducers,
+  languageReducers,
   movieReducers,
   pageReducers,
+  setLanguage
 }) => {
   const dispatch = useDispatch();
   const { loading } = hardwareReducers;
+  const { language } = languageReducers;
   const {
     popularMovies: popularMoviesState,
     topRatedMovies: topRatedMoviesState,
@@ -99,6 +102,12 @@ const HomePage = ({
     fetchData();
   }, []);
 
+  React.useEffect(() => {
+    if (language) {
+      setLanguage(language);
+    };
+  }, [language]);
+
   if (loading) {
     return (
       <LoadingSpinner />
@@ -115,8 +124,10 @@ const HomePage = ({
 HomePage.propTypes = {
   getMovies: PropTypes.func.isRequired,
   hardwareReducers: PropTypes.object.isRequired,
+  languageReducers: PropTypes.object.isRequired,
   movieReducers: PropTypes.object.isRequired,
   pageReducers: PropTypes.object.isRequired,
+  setLanguage: PropTypes.func.isRequired,
 };
 
 export default HomePage;

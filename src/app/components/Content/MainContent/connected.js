@@ -7,10 +7,12 @@ import {
 import MainContent from './component';
 
 const mapStateToProps = ({
+  languageReducers,
   movieReducers,
   pageReducers,
 }) => {
   return {
+    languageReducers,
     movieReducers,
     pageReducers,
   };
