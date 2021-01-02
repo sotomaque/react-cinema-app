@@ -186,6 +186,7 @@ const AppWrapper = ({ children, hardwareReducers }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const history = useHistory();
+  const path = history.location.pathname;
   const { authState, signOut } = React.useContext(AuthContext);
   const LOGGED_IN = authState?.status === 'in';
   const { theme } = hardwareReducers;
@@ -228,7 +229,7 @@ const AppWrapper = ({ children, hardwareReducers }) => {
     <>
       { LOGGED_IN
         ? (
-            <ListItem button>
+            <ListItem selected={path.includes('/profile')} button onClick={() => history.push('/profile')}>
               <ListItemIcon>
                 <PersonIcon />
               </ListItemIcon>
@@ -237,13 +238,13 @@ const AppWrapper = ({ children, hardwareReducers }) => {
           )
         : (
             <>
-              <ListItem button onClick={() => history.push('/login')}>
+              <ListItem selected={path.includes('/login')} button onClick={() => history.push('/login')}>
                 <ListItemIcon>
                   <PersonIcon />
                 </ListItemIcon>
                 <ListItemText primary={I18n.translate(LOCALES.LOGIN)} />
               </ListItem>
-              <ListItem button onClick={() => history.push('/register')}>
+              <ListItem selected={path.includes('/register')} button onClick={() => history.push('/register')}>
                 <ListItemIcon>
                   <PersonAddIcon />
                 </ListItemIcon>
@@ -253,7 +254,7 @@ const AppWrapper = ({ children, hardwareReducers }) => {
           )
       }
       <hr />
-      <ListItem button selected>
+      <ListItem selected={path === '/'} button onClick={() => history.push('/')}>
         <ListItemIcon>
           <MovieIcon />
         </ListItemIcon>
