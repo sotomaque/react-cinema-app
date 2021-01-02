@@ -1,13 +1,16 @@
 export default {
   CANCEL: 'Cancelar',
   ENGLISH: 'Ingles',
-  HELLO: 'Hola',
+  LOGIN: 'Iniciar sesión',
+  MOVIES: 'Películas',
+  NEXT: 'Próxima',
   NOW_PLAYING: 'Jugando ahora',
   POPULAR: 'Popular',
+  PREV: 'Previa',
   SEARCH: 'Buscar',
   SET_PRIMARY_LANGUAGE: 'Establecer idioma principal',
+  SIGN_UP: 'Regístrate',
   SPANISH: 'Espanol',
   TOP_RATED: 'Los más valorados',
   UPCOMING: 'Próxima',
-  WORLD: 'Mundo',
 };

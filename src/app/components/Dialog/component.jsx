@@ -1,21 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
+import AddIcon from '@material-ui/icons/Add';
 import Avatar from '@material-ui/core/Avatar';
+import Dialog from '@material-ui/core/Dialog';
+import DialogTitle from '@material-ui/core/DialogTitle';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import ListItemText from '@material-ui/core/ListItemText';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import Dialog from '@material-ui/core/Dialog';
 import PersonIcon from '@material-ui/icons/Person';
-import AddIcon from '@material-ui/icons/Add';
 import { blue } from '@material-ui/core/colors';
 
 import I18n from 'app/locales';
+import { Typography } from '@material-ui/core';
+import { LOCALES } from 'app/const';
 
-const languages = ['Spanish', 'English'];
 const useStyles = makeStyles({
   avatar: {
     backgroundColor: blue[100],
@@ -25,44 +25,47 @@ const useStyles = makeStyles({
 
 function SimpleDialog(props) {
   const classes = useStyles();
-  const { onClose, selectedValue, open } = props;
+  const { onClose, setLanguage, open } = props;
 
   const handleClose = () => {
-    onClose(selectedValue);
+    onClose();
   };
 
+  // LANGUAGE ITEM CLICK HANDLER
   const handleListItemClick = (value) => {
+    // UPDATE REDUX & I18n
+    setLanguage(`${value}`);
+    // CLOSE MODAL
     onClose(value);
   };
 
   return (
     <Dialog onClose={handleClose} aria-labelledby="simple-dialog-title" open={open}>
-      <DialogTitle id="simple-dialog-title">{I18n.translate('SET_PRIMARY_LANGUAGE')}</DialogTitle>
+      <DialogTitle id="simple-dialog-title">{I18n.translate(LOCALES.SET_PRIMARY_LANGUAGE)}</DialogTitle>
       <List>
-
-        <ListItem button onClick={() => handleListItemClick('spanish')}>
+        <ListItem button onClick={() => handleListItemClick('es')}>
           <ListItemAvatar>
             <Avatar className={classes.avatar}>
               <PersonIcon />
             </Avatar>
           </ListItemAvatar>
-          <ListItemText primary={I18n.translate('SPANISH')} />
+          <ListItemText primary={I18n.translate(LOCALES.SPANISH)} />
         </ListItem>
-        <ListItem button onClick={() => handleListItemClick('english')}>
+        <ListItem button onClick={() => handleListItemClick('en')}>
           <ListItemAvatar>
             <Avatar className={classes.avatar}>
               <PersonIcon />
             </Avatar>
           </ListItemAvatar>
-          <ListItemText primary={I18n.translate('ENGLISH')} />
+          <ListItemText primary={I18n.translate(LOCALES.ENGLISH)} />
         </ListItem>
-        <ListItem autoFocus button onClick={() => handleListItemClick('cancel')}>
+        <ListItem autoFocus button onClick={() => handleClose()}>
           <ListItemAvatar>
             <Avatar>
               <AddIcon />
             </Avatar>
           </ListItemAvatar>
-          <ListItemText primary={I18n.translate('CANCEL')} />
+          <ListItemText primary={I18n.translate(LOCALES.CANCEL)} />
         </ListItem>
       </List>
     </Dialog>
@@ -72,28 +75,29 @@ function SimpleDialog(props) {
 SimpleDialog.propTypes = {
   onClose: PropTypes.func.isRequired,
   open: PropTypes.bool.isRequired,
-  selectedValue: PropTypes.string.isRequired,
+  setLanguage: PropTypes.func.isRequired
 };
 
-export default function SimpleDialogDemo() {
+// DIALOG WRAPPER (Includes Button and State for opening & closing Dialoag)
+function SetLanguageDialog({ setLanguage }) {
   const [open, setOpen] = React.useState(false);
-  const [selectedValue, setSelectedValue] = React.useState(languages[1]);
-
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = (value) => {
-    setOpen(false);
-    setSelectedValue(value);
-  };
 
   return (
     <>
-      <Button variant="outlined" color="primary" onClick={handleClickOpen}>
-        {I18n.translate('SET_PRIMARY_LANGUAGE')}
-      </Button>
-      <SimpleDialog selectedValue={selectedValue} open={open} onClose={handleClose} />
+      <Typography onClick={() => setOpen(true)}>
+        {I18n.translate(LOCALES.SET_PRIMARY_LANGUAGE)}
+      </Typography>
+      <SimpleDialog
+        onClose={() => setOpen(false)}
+        open={open}
+        setLanguage={setLanguage}
+      />
     </>
   );
 };
+
+SetLanguageDialog.propTypes = {
+  setLanguage: PropTypes.func.isRequired
+};
+
+export default SetLanguageDialog;

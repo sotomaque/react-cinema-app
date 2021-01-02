@@ -38,3 +38,21 @@ export const PAGES = Object.freeze({
   LOGIN: 'Login Page',
   REGISTER: 'Register Page',
 });
+
+// LOCALES
+export const LOCALES = Object.freeze({
+  CANCEL: 'CANCEL',
+  ENGLISH: 'ENGLISH',
+  LOGIN: 'LOGIN',
+  MOVIES: 'MOVIES',
+  NEXT: 'NEXT',
+  NOW_PLAYING: 'NOW_PLAYING',
+  POPULAR: 'POPULAR',
+  PREV: 'PREV',
+  SEARCH: 'SEARCH',
+  SET_PRIMARY_LANGUAGE: 'SET_PRIMARY_LANGUAGE',
+  SIGN_UP: 'SIGN_UP',
+  SPANISH: 'SPANISH',
+  TOP_RATED: 'TOP_RATED',
+  UPCOMING: 'UPCOMING',
+});

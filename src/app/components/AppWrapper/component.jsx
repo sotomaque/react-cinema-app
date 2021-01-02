@@ -48,7 +48,8 @@ import Typography from '@material-ui/core/Typography';
 import I18n from 'app/locales';
 import { AuthContext } from 'auth';
 import { SET_LOADING, SET_THEME } from 'app/actions/types';
-import SimpleDialogDemo from '../Dialog';
+import SetLanguageDialog from '../Dialog';
+import { LOCALES } from 'app/const';
 
 const drawerWidth = 240;
 
@@ -242,13 +243,13 @@ const AppWrapper = ({ children, hardwareReducers }) => {
                 <ListItemIcon>
                   <PersonIcon />
                 </ListItemIcon>
-                <ListItemText primary="Login" />
+                <ListItemText primary={I18n.translate(LOCALES.LOGIN)} />
               </ListItem>
               <ListItem button onClick={() => history.push('/register')}>
                 <ListItemIcon>
                   <PersonAddIcon />
                 </ListItemIcon>
-                <ListItemText primary="Sign Up" />
+                <ListItemText primary={I18n.translate(LOCALES.SIGN_UP)} />
               </ListItem>
             </>
           )
@@ -258,7 +259,7 @@ const AppWrapper = ({ children, hardwareReducers }) => {
         <ListItemIcon>
           <MovieIcon />
         </ListItemIcon>
-        <ListItemText primary="Movies" />
+        <ListItemText primary={I18n.translate(LOCALES.MOVIES)} />
       </ListItem>
       <ListItem button>
         <ListItemIcon>
@@ -363,7 +364,7 @@ const AppWrapper = ({ children, hardwareReducers }) => {
                 <SearchIcon />
               </div>
               <InputBase
-                placeholder={`${I18n.translate('SEARCH')}...`}
+                placeholder={`${I18n.translate(LOCALES.SEARCH)}...`}
                 classes={{
                   root: classes.inputRoot,
                   input: classes.inputInput,
@@ -376,12 +377,7 @@ const AppWrapper = ({ children, hardwareReducers }) => {
               checked={darkState}
               onChange={handleThemeChange}
             />
-            {/* Notifications */}
-            {/* <IconButton color="inherit">
-              <Badge badgeContent={4} color="secondary">
-                <NotificationsIcon />
-              </Badge>
-            </IconButton> */}
+            {/* More Menu */}
             {SHOW_MORE_MENU && (
             <div>
               <IconButton
@@ -409,7 +405,7 @@ const AppWrapper = ({ children, hardwareReducers }) => {
                 onClose={handleClose}
               >
                 <MenuItem onClick={handleSetLanguage}>
-                  <SimpleDialogDemo />
+                  <SetLanguageDialog />
                 </MenuItem>
               </Menu>
             </div>

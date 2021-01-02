@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 import { Typography } from '@material-ui/core';
 
-import { QUERY_TYPES, PAGINATION_TYPES } from 'app/const';
+import { QUERY_TYPES, PAGINATION_TYPES, LOCALES } from 'app/const';
 import { SET_QUERY } from 'app/actions/types';
 import { Grid, Paginated, SlideShow } from 'app/components';
 
@@ -103,16 +103,16 @@ const MainContent = ({ movieReducers, pageReducers, loadMoreMovies, setResponseP
     const translateItemName = (type) => {
       switch (type) {
         case QUERY_TYPES.NOW_PLAYING:
-          return I18n.translate('NOW_PLAYING');
+          return I18n.translate(LOCALES.NOW_PLAYING);
 
         case QUERY_TYPES.POPULAR:
-          return I18n.translate('POPULAR');
+          return I18n.translate(LOCALES.POPULAR);
 
         case QUERY_TYPES.UPCOMING:
-          return I18n.translate('UPCOMING');
+          return I18n.translate(LOCALES.UPCOMING);
 
         case QUERY_TYPES.TOP_RATED:
-          return I18n.translate('TOP_RATED');
+          return I18n.translate(LOCALES.TOP_RATED);
 
         default:
           return type;

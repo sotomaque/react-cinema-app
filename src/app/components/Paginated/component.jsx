@@ -4,7 +4,8 @@ import { Button, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { lightBlue } from '@material-ui/core/colors';
 
-import { PAGINATION_TYPES } from 'app/const';
+import I18n from 'app/locales';
+import { LOCALES, PAGINATION_TYPES } from 'app/const';
 
 const useStyles = makeStyles((theme) => ({
   margin: {
@@ -24,6 +25,7 @@ const Paginated = ({ currentPage, paginate, totalPages }) => {
 
   return (
     <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
+      {/* PREV BUTTON */}
       <Button
         onClick={() => paginate(PAGINATION_TYPES.PREV)} size="medium"
         style={{ backgroundColor: lightBlue[500], borderRadius: 20, paddingLeft: 10, paddingRight: 10 }}
@@ -34,15 +36,17 @@ const Paginated = ({ currentPage, paginate, totalPages }) => {
         color="inherit"
         noWrap
         className={classes.title}>
-        Prev
+        {I18n.translate(LOCALES.PREV)}
         </Typography>
       </Button>
+      {/* PAGE COUNT */}
       <Typography
         color={'secondary'}
         noWrap
         style={{ alignSelf: 'center' }}>
         {page} - {totalPageNumber}
       </Typography>
+      {/* NEXT BUTTON */}
       <Button
         onClick={() => paginate(PAGINATION_TYPES.NEXT)}
         size="medium"
@@ -54,7 +58,7 @@ const Paginated = ({ currentPage, paginate, totalPages }) => {
           color="inherit"
           noWrap
           className={classes.title}>
-          Next
+          {I18n.translate(LOCALES.NEXT)}
         </Typography>
       </Button>
     </div>

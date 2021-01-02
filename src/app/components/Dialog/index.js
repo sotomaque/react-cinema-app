@@ -1,3 +1,3 @@
-import SimpleDialogDemo from './component';
+import { Connected as SetLanguageDialog } from './connected';
 
-export default SimpleDialogDemo;
+export default SetLanguageDialog;
