@@ -233,7 +233,7 @@ const AppWrapper = ({ children, hardwareReducers }) => {
               <ListItemIcon>
                 <PersonIcon />
               </ListItemIcon>
-              <ListItemText primary="Profile" />
+              <ListItemText primary={I18n.translate(LOCALES.PROFILE)} />
             </ListItem>
           )
         : (

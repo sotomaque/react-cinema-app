@@ -7,6 +7,7 @@ export default {
   NOW_PLAYING: 'Now Playing',
   POPULAR: 'Popular',
   PREV: 'Prev',
+  PROFILE: 'Profile',
   SEARCH: 'Search',
   SET_PRIMARY_LANGUAGE: 'Set Primary Language',
   SIGN_UP: 'Sign Up',
