@@ -7,8 +7,8 @@ import { QUERY_TYPES, PAGINATION_TYPES, LOCALES } from 'app/const';
 import { SET_QUERY } from 'app/actions/types';
 import { Grid, Paginated, SlideShow } from 'app/components';
 
-import './styles.scss';
 import I18n from 'app/locales';
+import './styles.scss';
 
 const MainContent = ({ movieReducers, pageReducers, loadMoreMovies, setResponsePageNumber }) => {
   const dispatch = useDispatch();

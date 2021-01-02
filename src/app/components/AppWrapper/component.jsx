@@ -34,10 +34,8 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import MenuIcon from '@material-ui/icons/Menu';
 import MovieIcon from '@material-ui/icons/Movie';
-// import NotificationsIcon from '@material-ui/icons/Notifications';
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
 import PersonIcon from '@material-ui/icons/Person';
-import SchoolIcon from '@material-ui/icons/School';
 import SearchIcon from '@material-ui/icons/Search';
 import SettingsIcon from '@material-ui/icons/Settings';
 import SlideshowIcon from '@material-ui/icons/Slideshow';
@@ -265,19 +263,19 @@ const AppWrapper = ({ children, hardwareReducers }) => {
         <ListItemIcon>
           <SlideshowIcon />
         </ListItemIcon>
-        <ListItemText primary="Shows" />
+        <ListItemText primary="Series" />
+      </ListItem>
+      <ListItem button>
+        <ListItemIcon>
+          <PersonIcon />
+        </ListItemIcon>
+        <ListItemText primary="People" />
       </ListItem>
       <ListItem button>
         <ListItemIcon>
           <ImportContactsIcon />
         </ListItemIcon>
         <ListItemText primary="Books" />
-      </ListItem>
-      <ListItem button>
-        <ListItemIcon>
-          <SchoolIcon />
-        </ListItemIcon>
-        <ListItemText primary="MOOCs" />
       </ListItem>
     </>
   );

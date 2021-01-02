@@ -1,19 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
+import { blue } from '@material-ui/core/colors';
 import { makeStyles } from '@material-ui/core/styles';
-import AddIcon from '@material-ui/icons/Add';
+import AndroidIcon from '@material-ui/icons/Android';
+import AppleIcon from '@material-ui/icons/Apple';
 import Avatar from '@material-ui/core/Avatar';
+import CloseIcon from '@material-ui/icons/Close';
 import Dialog from '@material-ui/core/Dialog';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import ListItemText from '@material-ui/core/ListItemText';
-import PersonIcon from '@material-ui/icons/Person';
-import { blue } from '@material-ui/core/colors';
+import Typography from '@material-ui/core/Typography';
 
 import I18n from 'app/locales';
-import { Typography } from '@material-ui/core';
 import { LOCALES } from 'app/const';
 
 const useStyles = makeStyles({
@@ -23,9 +25,9 @@ const useStyles = makeStyles({
   },
 });
 
-function SimpleDialog(props) {
+function SimpleDialog({ languageReducers, onClose, open, setLanguage }) {
   const classes = useStyles();
-  const { onClose, setLanguage, open } = props;
+  const { language } = languageReducers;
 
   const handleClose = () => {
     onClose();
@@ -43,26 +45,39 @@ function SimpleDialog(props) {
     <Dialog onClose={handleClose} aria-labelledby="simple-dialog-title" open={open}>
       <DialogTitle id="simple-dialog-title">{I18n.translate(LOCALES.SET_PRIMARY_LANGUAGE)}</DialogTitle>
       <List>
-        <ListItem button onClick={() => handleListItemClick('es')}>
+        {/* SPANISH */}
+        <ListItem
+          button
+          disabled={language === 'es'}
+          selected={language === 'es'}
+          onClick={() => handleListItemClick('es')}
+        >
           <ListItemAvatar>
             <Avatar className={classes.avatar}>
-              <PersonIcon />
+              <AndroidIcon />
             </Avatar>
           </ListItemAvatar>
           <ListItemText primary={I18n.translate(LOCALES.SPANISH)} />
         </ListItem>
-        <ListItem button onClick={() => handleListItemClick('en')}>
+        {/* ENGLISH */}
+        <ListItem
+          button
+          disabled={language === 'en'}
+          selected={language === 'en'}
+          onClick={() => handleListItemClick('en')}
+        >
           <ListItemAvatar>
             <Avatar className={classes.avatar}>
-              <PersonIcon />
+              <AppleIcon />
             </Avatar>
           </ListItemAvatar>
           <ListItemText primary={I18n.translate(LOCALES.ENGLISH)} />
         </ListItem>
+        {/* CLOSE */}
         <ListItem autoFocus button onClick={() => handleClose()}>
           <ListItemAvatar>
             <Avatar>
-              <AddIcon />
+              <CloseIcon />
             </Avatar>
           </ListItemAvatar>
           <ListItemText primary={I18n.translate(LOCALES.CANCEL)} />
@@ -73,13 +88,14 @@ function SimpleDialog(props) {
 }
 
 SimpleDialog.propTypes = {
+  languageReducers: PropTypes.object.isRequired,
   onClose: PropTypes.func.isRequired,
   open: PropTypes.bool.isRequired,
-  setLanguage: PropTypes.func.isRequired
+  setLanguage: PropTypes.func.isRequired,
 };
 
 // DIALOG WRAPPER (Includes Button and State for opening & closing Dialoag)
-function SetLanguageDialog({ setLanguage }) {
+function SetLanguageDialog({ languageReducers, setLanguage }) {
   const [open, setOpen] = React.useState(false);
 
   return (
@@ -88,6 +104,7 @@ function SetLanguageDialog({ setLanguage }) {
         {I18n.translate(LOCALES.SET_PRIMARY_LANGUAGE)}
       </Typography>
       <SimpleDialog
+        languageReducers={languageReducers}
         onClose={() => setOpen(false)}
         open={open}
         setLanguage={setLanguage}
@@ -97,6 +114,7 @@ function SetLanguageDialog({ setLanguage }) {
 };
 
 SetLanguageDialog.propTypes = {
+  languageReducers: PropTypes.object.isRequired,
   setLanguage: PropTypes.func.isRequired
 };
 
